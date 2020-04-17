@@ -1,7 +1,7 @@
 {
-  "name": "phaser3-project-template",
-  "version": "1.1.0",
-  "description": "A Phaser 3 Project Template",
+  "name": "ludem-dare-46",
+  "version": "0.0.1",
+  "description": "A game",
   "main": "src/index.js",
   "scripts": {
     "build": "webpack --config webpack/prod.js ",
@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/photonstorm/phaser3-project-template.git"
+    "url": "git+https://github.com/fatlewis/ludem-dare-46.git"
   },
-  "author": "Richard Davey <rdavey@gmail.com> (http://www.photonstorm.com)",
+  "author": "Matt Lewis <matt@m-lewis.co.uk>",
   "license": "MIT",
   "licenseUrl": "http://www.opensource.org/licenses/mit-license.php",
   "bugs": {
-    "url": "https://github.com/photonstorm/phaser3-project-template/issues"
+    "url": "https://github.com/fatlewis/ludem-dare-46/issues"
   },
-  "homepage": "https://github.com/photonstorm/phaser3-project-template#readme",
+  "homepage": "https://fatlewis.github.io/ludem-dare-46/",
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.5",
