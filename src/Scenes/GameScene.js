@@ -12,22 +12,20 @@ export default class GameScene extends Phaser.Scene {
     const { matter } = this;
     matter.world.setBounds(0, 0, config.width, config.height);
 
-    var fan = matter.add.image(100, 200, 'box', null, {
-            ignoreGravity: true,
-            plugin: {
-                attractors: [
-                function(bodyA, bodyB) {
-                    if (Math.abs(bodyA.position.y - bodyB.position.y) < 100
+    matter.add.image(100, 200, 'box', null, {
+      ignoreGravity: true,
+      plugin: {
+        attractors: [
+          (bodyA, bodyB) => {
+            if (Math.abs(bodyA.position.y - bodyB.position.y) < 100
                         && bodyA.position.x < bodyB.position.x) {
-                        return {x: 0.001, y: 0};
-                    }
-                    else
-                    {
-                        return {x: 0, y: 0};
-                    }
-                }]
+              return { x: 0.001, y: 0 };
             }
-        });
+
+            return { x: 0, y: 0 };
+          }],
+      },
+    });
 
     const balloon = matter.add.image(400, 200, 'balloon', null, {
       shape: {
