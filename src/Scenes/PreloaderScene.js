@@ -79,6 +79,8 @@ export default class PreloaderScene extends Phaser.Scene {
         this.load.image('box', 'assets/planet6.png');
         this.load.image('checkedBox', 'assets/checked1.png');
         this.load.image('Logo', 'assets/logo.png');
+        this.load.image('star', 'assets/star.png');
+
         
         this.load.audio('bgMusic', ['assets/Komiku_-_07_-_Run_against_the_universe.mp3']);
 
