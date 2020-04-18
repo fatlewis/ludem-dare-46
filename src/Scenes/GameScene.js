@@ -34,7 +34,7 @@ export default class GameScene extends Phaser.Scene {
         type: 'circle',
         radius: 32,
       },
-      mass: 0.1,
+      mass: 1,
       ignorePointer: true,
       gravityScale: { x: 1, y: -1 },
     });
