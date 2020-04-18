@@ -79,6 +79,8 @@ export default class PreloaderScene extends Phaser.Scene {
         this.load.image('box', 'assets/planet6.png');
         this.load.image('checkedBox', 'assets/checked1.png');
         this.load.image('Logo', 'assets/logo.png');
+        this.load.image('balloon', 'assets/pink.png');
+        this.load.image('rope', 'assets/blue-square.png');
         
         this.load.audio('bgMusic', ['assets/theme.mp3']);
 
