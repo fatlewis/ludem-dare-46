@@ -6,48 +6,58 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
-    const { config } = this.game;
     this.model = this.sys.game.globals.model;
-
     const { matter } = this;
-    matter.world.setBounds(0, 0, config.width, config.height);
+    matter.world.setBounds();
+    matter.add.mouseSpring();
+    this.addBalloon();
+  }
 
-    const balloon = matter.add.image(400, 200, 'balloon', null, {
+  addBalloon() {
+    const { matter } = this;
+
+    this.balloon = matter.add.image(400, 200, 'balloon', null, {
       shape: {
         type: 'circle',
         radius: 32,
       },
-      mass: 0.1,
+      mass: 1,
       ignorePointer: true,
-      gravityScale: { x: 1, y: -1 },
+      gravityScale: { y: -10 },
+    }).setInteractive();
+
+    this.balloon.on('pointerdown', () => {
+      this.popBalloon();
     });
 
-    const firstRope = this.matter.add.sprite(400, 231.5, 'rope', null, {
-      ignoreGravity: true,
+    const firstRopeSection = matter.add.image(400, 200, 'rope', null, {
+      mass: 1,
       ignorePointer: true,
     });
-    matter.add.joint(balloon, firstRope, 35);
+    matter.add.joint(this.balloon, firstRopeSection, 0, 1, { pointA: { x: 0, y: 35 } });
 
-    let prev = firstRope;
-    let i;
-    for (i = 0; i < 10; i += 1) {
-      const ropeSection = this.matter.add.image(400, 241.5 + (i * 10), 'rope', null, {
-        ignoreGravity: true,
+    let prev = firstRopeSection;
+    const segmentCount = 8;
+    for (let i = 0; i < segmentCount; i += 1) {
+      const ropeSection = matter.add.image(400, 235 + (i * 15), 'rope', null, {
+        mass: 1,
         ignorePointer: true,
       });
-      matter.add.joint(prev, ropeSection, 13);
+      matter.add.joint(prev, ropeSection, 15);
       prev = ropeSection;
     }
 
-    const lastRope = this.matter.add.image(400, 251.5 + (i * 10), 'rope', null, {
+    const lastRopeSection = matter.add.image(400, 235 + (segmentCount * 15), 'rope', null, {
       mass: 50000,
       ignoreGravity: true,
       frictionAir: 1,
       fixedRotation: true,
     });
-    matter.add.joint(prev, lastRope, 20);
+    matter.add.joint(prev, lastRopeSection, 15);
+  }
 
-    matter.add.mouseSpring();
+  popBalloon() {
+    this.balloon.destroy();
   }
 
   update() {

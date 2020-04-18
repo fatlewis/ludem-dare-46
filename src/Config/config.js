@@ -7,6 +7,6 @@ export default {
   height: 600,
   physics: {
     default: 'matter',
-    matter: { gravity: { y: 10 } },
+    matter: { gravity: { y: 3 } },
   },
 };
