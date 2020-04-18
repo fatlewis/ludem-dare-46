@@ -85,7 +85,7 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.audio('bgMusic', ['assets/theme.mp3']);
 
     this.load.image('background', 'assets/menubackground.png');
-
+    this.load.image('background-level1', 'assets/background/level1.png');
 
     // remove progress bar when complete
     this.load.on('complete', () => {
