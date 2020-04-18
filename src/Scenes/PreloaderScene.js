@@ -86,6 +86,7 @@ export default class PreloaderScene extends Phaser.Scene {
 
     this.load.image('background', 'assets/menubackground.png');
 
+
     // remove progress bar when complete
     this.load.on('complete', () => {
       this.game.registry.set('bgMusic', this.sound.add('bgMusic', { volume: 0.5, loop: true }));

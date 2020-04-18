@@ -1,9 +1,4 @@
 import 'phaser';
-import Button from '../Objects/Button';
-
-let player;
-let cursors;
-let playerSpeed;
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
@@ -11,38 +6,51 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
+    const { config } = this.game;
     this.model = this.sys.game.globals.model;
 
-    player = this.physics.add.image(500, 450, 'box');
+    const { matter } = this;
+    matter.world.setBounds(0, 0, config.width, config.height);
 
-    player.setCollideWorldBounds(true);
+    const balloon = matter.add.image(400, 200, 'balloon', null, {
+      shape: {
+        type: 'circle',
+        radius: 32,
+      },
+      mass: 0.1,
+      ignorePointer: true,
+      gravityScale: { x: 1, y: -1 },
+    });
 
-    //  Input Events
-    cursors = this.input.keyboard.createCursorKeys();
+    const firstRope = this.matter.add.sprite(400, 231.5, 'rope', null, {
+      ignoreGravity: true,
+      ignorePointer: true,
+    });
+    matter.add.joint(balloon, firstRope, 35);
 
-    playerSpeed = 200;
+    let prev = firstRope;
+    let i;
+    for (i = 0; i < 10; i += 1) {
+      const ropeSection = this.matter.add.image(400, 241.5 + (i * 10), 'rope', null, {
+        ignoreGravity: true,
+        ignorePointer: true,
+      });
+      matter.add.joint(prev, ropeSection, 13);
+      prev = ropeSection;
+    }
 
-    this.menuButton = new Button(this, 250, 480, 'Button', 'ButtonPressed', 'Menu', 'Title');
+    const lastRope = this.matter.add.image(400, 251.5 + (i * 10), 'rope', null, {
+      mass: 50000,
+      ignoreGravity: true,
+      frictionAir: 1,
+      fixedRotation: true,
+    });
+    matter.add.joint(prev, lastRope, 20);
+
+    matter.add.mouseSpring();
   }
 
   update() {
     this.model = this.sys.game.globals.model;
-
-
-    if (cursors.left.isDown) {
-      player.setVelocityX(-playerSpeed);
-    } else if (cursors.right.isDown) {
-      player.setVelocityX(playerSpeed);
-    } else {
-      player.setVelocityX(0);
-    }
-
-    if (cursors.up.isDown) {
-      player.setVelocityY(-playerSpeed);
-    } else if (cursors.down.isDown) {
-      player.setVelocityY(playerSpeed);
-    } else {
-      player.setVelocityY(0);
-    }
   }
 }
