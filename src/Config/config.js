@@ -8,9 +8,7 @@ export default {
     physics: {
         default: 'matter',
         matter: {
-            gravity: {
-                scale: 0
-            },
+            gravity: { y: 10},
             plugins: {
                 attractors: true
             }
