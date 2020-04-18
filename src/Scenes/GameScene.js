@@ -15,8 +15,6 @@ export default class GameScene extends Phaser.Scene {
         var config = this.game.config;
         this.model = this.sys.game.globals.model;
 
-        // The player and its settings
-        //Gets appropriate rocket color
         player = this.physics.add.image(500, 450, 'box');
 
         player.setCollideWorldBounds(true);
