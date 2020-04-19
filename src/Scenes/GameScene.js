@@ -45,6 +45,7 @@ export default class GameScene extends Phaser.Scene {
       frictionAir: 1,
       fixedRotation: true,
     });
+    lastRope.setInteractive({ useHandCursor: true });
     matter.add.joint(prev, lastRope, 20);
 
     matter.add.mouseSpring();
