@@ -86,8 +86,8 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('balloonYellow', 'assets/YellowBalloon.png');
     this.load.image('face', 'assets/Face_01.png');
 
-    this.load.spritesheet('balloons', 'assets/BalloonsSprite_01.png', {frameWidth: 288, frameHeight: 288});
-    this.load.spritesheet('accessories', 'assets/Accessories_01.png', {frameWidth: 288, frameHeight: 288});
+    this.load.spritesheet('balloons', 'assets/BalloonsSprite_01.png', { frameWidth: 288, frameHeight: 288 });
+    this.load.spritesheet('accessories', 'assets/Accessories_01.png', { frameWidth: 288, frameHeight: 288 });
 
     this.load.image('background', 'assets/menubackground.png');
     this.load.image('background-level1', 'assets/background/level1.png');

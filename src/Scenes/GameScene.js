@@ -37,6 +37,7 @@ export default class GameScene extends Phaser.Scene {
     this.debugMode = false;
     this.input.on('pointerdown', () => {
       if (this.debugMode) {
+        // eslint-disable-next-line no-console
         console.log(this.input.x, this.input.y);
       }
     });
@@ -55,23 +56,27 @@ export default class GameScene extends Phaser.Scene {
     const balloonBase = this.add.sprite(0, 0, 'balloons', this.model.colourFrame);
     const balloonFace = this.add.image(0, 0, 'face');
     const balloonAccessories = this.add.sprite(0, 0, 'accessories', this.model.accessoryframe);
-    const balloonContainer = this.add.container(400, 200, [balloonBase, balloonFace, balloonAccessories]);
+    const balloonContainer = this.add.container(
+      400,
+      200,
+      [balloonBase, balloonFace, balloonAccessories],
+    );
 
     this.balloon = matter.add.gameObject(balloonContainer, {
-      position: {x: 400, y: 200},
-      vertices: [ 
-        {x: 47, y: 0},
-        {x: 76, y: 11},
-        {x: 90, y: 31},
-        {x: 94, y: 59},
-        {x: 86, y: 91},
-        {x: 70, y: 112},
-        {x: 46, y: 125},
-        {x: 22, y: 112},
-        {x: 7, y: 91},
-        {x: 0, y: 59},
-        {x: 5, y: 31},
-        {x: 18, y: 11},
+      position: { x: 400, y: 200 },
+      vertices: [
+        { x: 47, y: 0 },
+        { x: 76, y: 11 },
+        { x: 90, y: 31 },
+        { x: 94, y: 59 },
+        { x: 86, y: 91 },
+        { x: 70, y: 112 },
+        { x: 46, y: 125 },
+        { x: 22, y: 112 },
+        { x: 7, y: 91 },
+        { x: 0, y: 59 },
+        { x: 5, y: 31 },
+        { x: 18, y: 11 },
       ],
       mass: 1,
       ignorePointer: true,
@@ -80,7 +85,8 @@ export default class GameScene extends Phaser.Scene {
 
     this.ropeSections = [];
 
-    let x = 400, y = 200;
+    const x = 400; let
+      y = 200;
     const firstRopeSection = matter.add.image(x, y, 'rope', null, {
       mass: 1,
       ignorePointer: true,
