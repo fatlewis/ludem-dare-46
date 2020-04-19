@@ -12,12 +12,27 @@ export default class GameScene extends Phaser.Scene {
     this.levelBackground = this.add.image(0, 0, 'background-level1').setOrigin(0, 0);
     matter.world.setBounds(0, -40, this.levelBackground.width, config.height);
 
+    matter.add.image(100, 200, 'box', null, {
+      ignoreGravity: true,
+      plugin: {
+        attractors: [
+          (bodyA, bodyB) => {
+            if (Math.abs(bodyA.position.y - bodyB.position.y) < 100
+                        && bodyA.position.x < bodyB.position.x) {
+              return { x: 0.001, y: 0 };
+            }
+
+            return { x: 0, y: 0 };
+          }],
+      },
+    });
+
     const balloon = matter.add.image(400, 200, 'balloon', null, {
       shape: {
         type: 'circle',
         radius: 32,
       },
-      mass: 0.1,
+      mass: 1,
       ignorePointer: true,
       gravityScale: { x: 1, y: -1 },
     });
