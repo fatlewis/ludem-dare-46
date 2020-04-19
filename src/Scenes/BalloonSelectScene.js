@@ -19,9 +19,9 @@ export default class BalloonSelectScene extends Phaser.Scene {
     let framecountcolour = 0;
     let framecountaccessory = 0;
 
-    var balloon = this.add.sprite(config.width * 0.75, config.height / 2, 'balloons', framecountcolour);
-    var accessory = this.add.sprite(config.width * 0.75, config.height / 2, 'accessories', framecountaccessory);
-    var face = this.add.image(config.width * 0.75, config.height / 2, 'face');
+    const balloon = this.add.sprite(config.width * 0.75, config.height / 2, 'balloons', framecountcolour);
+    const accessory = this.add.sprite(config.width * 0.75, config.height / 2, 'accessories', framecountaccessory);
+    this.add.image(config.width * 0.75, config.height / 2, 'face');
 
     this.colourButton1 = this.add.image(150, 200, 'checkedBox').setInteractive({ useHandCursor: true });
     this.colourText = this.add.text(200, 190, 'Colour', { fontSize: 24, fill: '#FFF' });
@@ -35,7 +35,7 @@ export default class BalloonSelectScene extends Phaser.Scene {
     this.colourButton1.on('pointerdown', () => {
       framecountcolour = (framecountcolour - 1) % 9;
       // JS modulo returns negative numbers, need to add 9 to get back to top of the loop
-      if (framecountcolour < 0) {framecountcolour += 9;}
+      if (framecountcolour < 0) { framecountcolour += 9; }
       balloon.setFrame(framecountcolour);
       this.model.colourframe = framecountcolour;
     });
@@ -49,10 +49,9 @@ export default class BalloonSelectScene extends Phaser.Scene {
     this.faceButton1.on('pointerdown', () => {
       framecountaccessory = (framecountaccessory - 1) % 7;
       // JS modulo returns negative numbers, need to add 9 to get back to top of the loop
-      if (framecountaccessory < 0) {framecountaccessory += 7;}
+      if (framecountaccessory < 0) { framecountaccessory += 7; }
       accessory.setFrame(framecountaccessory);
       this.model.accessoryframe = framecountaccessory;
-
     });
 
     this.faceButton2.on('pointerdown', () => {
@@ -60,9 +59,5 @@ export default class BalloonSelectScene extends Phaser.Scene {
       accessory.setFrame(framecountaccessory);
       this.model.accessoryframe = framecountaccessory;
     });
-
-
-
-
   }
 }

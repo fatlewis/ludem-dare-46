@@ -3,7 +3,8 @@ import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 
 export default {
   type: Phaser.AUTO,
-  parent: 'phaser-example',
+  autoCenter: true,
+  parent: 'game',
   width: 800,
   height: 600,
   physics: {
@@ -20,8 +21,8 @@ export default {
       {
         plugin: PhaserMatterCollisionPlugin,
         key: 'matterCollision',
-        mapping: 'matterCollision'
-      }
-    ]
-  }
+        mapping: 'matterCollision',
+      },
+    ],
+  },
 };

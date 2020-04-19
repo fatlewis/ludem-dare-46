@@ -32,10 +32,12 @@ export default class GameScene extends Phaser.Scene {
 
     this.addBalloon();
     this.addSpikeyThings();
+    this.addEndZone();
 
     this.debugMode = false;
     this.input.on('pointerdown', () => {
       if (this.debugMode) {
+        // eslint-disable-next-line no-console
         console.log(this.input.x, this.input.y);
       }
     });
@@ -51,11 +53,31 @@ export default class GameScene extends Phaser.Scene {
     const { matter } = this;
     this.model = this.sys.game.globals.model;
 
-    this.balloon = matter.add.sprite(400, 200, 'balloons', this.model.colourframe, {
-      shape: {
-        type: 'circle',
-        radius: 32,
-      },
+    const balloonBase = this.add.sprite(0, 0, 'balloons', this.model.colourFrame);
+    const balloonFace = this.add.image(0, 0, 'face');
+    const balloonAccessories = this.add.sprite(0, 0, 'accessories', this.model.accessoryframe);
+    const balloonContainer = this.add.container(
+      400,
+      200,
+      [balloonBase, balloonFace, balloonAccessories],
+    );
+
+    this.balloon = matter.add.gameObject(balloonContainer, {
+      position: { x: 400, y: 200 },
+      vertices: [
+        { x: 47, y: 0 },
+        { x: 76, y: 11 },
+        { x: 90, y: 31 },
+        { x: 94, y: 59 },
+        { x: 86, y: 91 },
+        { x: 70, y: 112 },
+        { x: 46, y: 125 },
+        { x: 22, y: 112 },
+        { x: 7, y: 91 },
+        { x: 0, y: 59 },
+        { x: 5, y: 31 },
+        { x: 18, y: 11 },
+      ],
       mass: 1,
       ignorePointer: true,
       gravityScale: { y: -10 },
@@ -63,12 +85,13 @@ export default class GameScene extends Phaser.Scene {
 
     this.ropeSections = [];
 
-    let x = 400, y = 200;
+    const x = 400; let
+      y = 200;
     const firstRopeSection = matter.add.image(x, y, 'rope', null, {
       mass: 1,
       ignorePointer: true,
     }).setVisible(false);
-    matter.add.joint(this.balloon, firstRopeSection, 0, 1, { pointA: { x: 0, y: 58 } });
+    matter.add.joint(this.balloon, firstRopeSection, 0, 1, { pointA: { x: 0, y: 66.5 } });
     this.ropeSections.push(firstRopeSection);
 
     let prev = firstRopeSection;
@@ -88,26 +111,24 @@ export default class GameScene extends Phaser.Scene {
     y = 251.5 + (segmentCount * 10);
     this.ropeAnchor = this.matter.add.image(x, y, 'rope', null, {
       mass: 50000,
-      ignoreGravity: false,
+      ignoreGravity: true,
       frictionAir: 1,
       fixedRotation: true,
     });
     this.ropeAnchor.setInteractive({ useHandCursor: true });
     this.ropeSections.push(this.ropeAnchor);
     matter.add.joint(prev, this.ropeAnchor, 20);
-    this.accessories = this.add.sprite(400,200, 'accessories', this.model.accessoryframe);
-    this.face = this.add.image(400, 200, 'face');
   }
 
   addSpikeyThings() {
     const { matter } = this;
 
-    this.spikeys = []
+    this.spikeys = [];
     this.spikeys.push(matter.add.image(500, 450, 'cactus', null, {
-      isStatic: true
+      isStatic: true,
     }));
     this.spikeys.push(matter.add.image(988, 320, 'knives', null, {
-      isStatic: true
+      isStatic: true,
     }));
 
     // Add the collision detection callback for the balloon.
@@ -115,15 +136,31 @@ export default class GameScene extends Phaser.Scene {
       this.matterCollision.addOnCollideStart({
         objectA: this.balloon,
         objectB: s,
-        callback: () => {this.popBalloon()},
-        context: this
+        callback: () => { this.popBalloon(); },
+        context: this,
       });
     });
   }
 
+  addEndZone() {
+    const endZoneRectangle = this.add.rectangle(
+      this.levelBackground.width,
+      this.game.config.height / 2,
+      1,
+      this.game.config.height,
+      0x000000,
+    );
+    this.endZone = this.matter.add.gameObject(endZoneRectangle, { isStatic: true });
+    this.matterCollision.addOnCollideStart({
+      objectA: this.balloon,
+      objectB: this.endZone,
+      callback: () => {
+        this.startGoalSequence();
+      },
+    });
+  }
+
   popBalloon() {
-    this.face.destroy();
-    this.accessories.destroy();
     this.balloon.destroy();
     this.ropeAnchor.setMass(1).setFrictionAir(0).setFixedRotation(false);
   }
@@ -137,18 +174,29 @@ export default class GameScene extends Phaser.Scene {
   }
 
   update() {
-    this.ropeCurve = new Phaser.Curves.Spline(this.getRopePoints());
-    this.graphics.clear();
-    this.graphics.lineStyle(1, 0x000000, 1);
-    this.ropeCurve.draw(this.graphics, 64);
-
-    this.recenterCamera();
     if (this.balloon.active) {
-      this.accessories.x = this.balloon.x;
-      this.accessories.y = this.balloon.y;
-      this.face.x = this.balloon.x;
-      this.face.y = this.balloon.y;
+      this.ropeCurve = new Phaser.Curves.Spline(this.getRopePoints());
+      this.graphics.clear();
+      this.graphics.lineStyle(1, 0x000000, 1);
+      this.ropeCurve.draw(this.graphics, 64);
     }
+
+    if (this.cameras.main) {
+      this.recenterCamera();
+    }
+  }
+
+  startGoalSequence() {
+    const titleScene = this.scene.get('Title');
+    titleScene.events.once('transitioncomplete', () => {
+      titleScene.cameras.main.fadeIn(500);
+    });
+    this.endZone.destroy();
+    this.cameras.main.fadeOut(500);
+    this.scene.transition({
+      duration: 500,
+      target: 'Title',
+    });
   }
 
   recenterCamera() {
@@ -161,7 +209,7 @@ export default class GameScene extends Phaser.Scene {
       screenCenterX,
       150,
     );
-    if (isOutsideCameraCenter && !this.input.activePointer.leftButtonDown()) {
+    if (isOutsideCameraCenter) { // } && !this.input.activePointer.leftButtonDown()) {
       const moveDistance = GameScene.getMoveDistance(ropeAnchorX, screenCenterX);
 
       const newScrollX = this.cameras.main.scrollX + moveDistance;
