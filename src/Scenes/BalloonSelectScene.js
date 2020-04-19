@@ -26,10 +26,6 @@ export default class BalloonSelectScene extends Phaser.Scene {
     this.faceText = this.add.text(200, 290, 'Face', { fontSize: 24, fill: '#FFF' });
     this.faceButton2 = this.add.image(350, 300, 'box').setInteractive({ useHandCursor: true });
 
-    // this.colourButton1.setInteractive();
-    // this.faceButton1.setInteractive();
-    // this.colourButton2.setInteractive();
-    // this.faceButton2.setInteractive();
 
     this.colourButton1.on('pointerdown', () => {
       this.colourButton1.setTexture('checkedBox');
