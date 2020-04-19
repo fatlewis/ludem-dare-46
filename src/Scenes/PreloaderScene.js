@@ -64,35 +64,63 @@ export default class PreloaderScene extends Phaser.Scene {
       assetText.setText(`Loading asset: ${file.key}`);
     });
 
-    // load assets needed in our game
-    this.load.image('Button', 'assets/button1.png');
-    this.load.image('ButtonPressed', 'assets/button1selected.png');
-    this.load.image('checkedBox', 'assets/checked1.png');
-    this.load.image('Logo', 'assets/logo.png');
-    this.load.image('balloon', 'assets/TealBalloon.png');
-    this.load.image('rope', 'assets/blue-square.png');
-    this.load.image('cactus', 'assets/Cactus_01.png');
-    this.load.image('fan-1', 'assets/Fan_01.png');
-    this.load.image('knives', 'assets/Knives_01.png');
+    // remove progress bar when complete
+    this.load.on('complete', () => {
+      progressBar.destroy();
+      progressBox.destroy();
+      loadingText.destroy();
+      percentText.destroy();
+      assetText.destroy();
+    });
 
-    this.load.image('balloonBlack', 'assets/BlackBalloon.png');
-    this.load.image('balloonBlue', 'assets/BlueBalloon.png');
-    this.load.image('balloonOrange', 'assets/OrangeBalloon.png');
-    this.load.image('balloonGreen', 'assets/GreenBalloon.png');
-    this.load.image('balloonPink', 'assets/PinkBalloon.png');
-    this.load.image('balloonPurple', 'assets/PurpleBalloon.png');
-    this.load.image('balloonRed', 'assets/RedBalloon.png');
-    this.load.image('balloonTeal', 'assets/TealBalloon.png');
-    this.load.image('balloonYellow', 'assets/YellowBalloon.png');
-    this.load.image('face', 'assets/Face_01.png');
+    // Balloons, accessories and ropes
+    this.load.image('balloonBlack', 'assets/balloon/colors/BalloonBlack.png');
+    this.load.image('balloonBlue', 'assets/balloon/colors/BalloonBlue.png');
+    this.load.image('balloonOrange', 'assets/balloon/colors/BalloonOrange.png');
+    this.load.image('balloonGreen', 'assets/balloon/colors/BalloonGreen.png');
+    this.load.image('balloonPink', 'assets/balloon/colors/BalloonPink.png');
+    this.load.image('balloonPurple', 'assets/balloon/colors/BalloonPurple.png');
+    this.load.image('balloonRed', 'assets/balloon/colors/BalloonRed.png');
+    this.load.image('balloonTeal', 'assets/balloon/colors/BalloonTeal.png');
+    this.load.image('balloonYellow', 'assets/balloon/colors/BalloonYellow.png');
+    this.load.spritesheet('balloons', 'assets/balloon/BalloonsSprite.png', {frameWidth: 288, frameHeight: 288});
+    this.load.spritesheet('accessories', 'assets/balloon/accessories/AccessoriesSprite.png', {frameWidth: 288, frameHeight: 288});
+    this.load.image('face', 'assets/balloon/Face_01.png');
+    this.load.image('rope', 'assets/balloon/RopeSection.png');
 
-    this.load.spritesheet('balloons', 'assets/BalloonsSprite_01.png', { frameWidth: 288, frameHeight: 288 });
-    this.load.spritesheet('accessories', 'assets/Accessories_01.png', { frameWidth: 288, frameHeight: 288 });
+    // Spikey things
+    this.load.image('cactus', 'assets/spikey/Cactus_01.png');
+    this.load.image('knives', 'assets/spikey/Knives_01.png');
 
-    this.load.image('background', 'assets/menubackground.png');
-    this.load.image('background-level1', 'assets/background/level1.png');
+    // Fans
+    this.load.spritesheet('fanGreen', 'assets/fan/FanSpriteGreen.png', {frameWidth: 104, frameHeight: 129});
+    this.load.spritesheet('fanOlive', 'assets/fan/FanSpriteOlive.png', {frameWidth: 104, frameHeight: 129});
+    this.load.spritesheet('fanOrange', 'assets/fan/FanSpriteOrange.png', {frameWidth: 104, frameHeight: 129});
+    this.load.spritesheet('fanPink', 'assets/fan/FanSpritePink.png', {frameWidth: 104, frameHeight: 129});
+    this.load.spritesheet('fanRed', 'assets/fan/FanSpriteRed.png', {frameWidth: 104, frameHeight: 129});
+    this.load.spritesheet('fanTeal', 'assets/fan/FanSpriteTeal.png', {frameWidth: 104, frameHeight: 129});
+    this.load.spritesheet('fanYellow', 'assets/fan/FanSpriteYellow.png', {frameWidth: 104, frameHeight: 129});
 
-    this.load.audio('bgMusic', ['assets/theme.mp3']);
+    // Backgrounds
+    this.load.image('background', 'assets/background/MainMenu.png');
+    this.load.image('background-level1', 'assets/background/level-1/BackgroundLevel1_01.png');
+
+    // Menu items
+    this.load.image('logo', 'assets/logo.png');
+    this.load.image('button', 'assets/ui/ButtonUp_01.png');
+    this.load.image('buttonPressed', 'assets/ui/ButtonDown_01.png');
+    this.load.image('playButton', 'assets/ui/PlayButtonUp_01.png');
+    this.load.image('playButtonPressed', 'assets/ui/PlayButtonDown_01.png');
+    this.load.image('optionsButton', 'assets/ui/OptionsButtonUp_01.png');
+    this.load.image('optionsButtonPressed', 'assets/ui/OptionsButtonDown_01.png');
+    this.load.image('aboutButton', 'assets/ui/AboutButtonUp_01.png');
+    this.load.image('aboutButtonPressed', 'assets/ui/AboutButtonDown_01.png');
+    this.load.image('creditsButton', 'assets/ui/CreditsButtonUp_01.png');
+    this.load.image('creditsButtonPressed', 'assets/ui/CreditsButtonDown_01.png');
+    this.load.image('checkedBox', 'assets/ui/checked.png');
+
+    // Audio
+    this.load.audio('bgMusic', ['assets/audio/theme.mp3']);
 
     // remove progress bar when complete
     this.load.on('complete', () => {

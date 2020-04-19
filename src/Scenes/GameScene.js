@@ -1,5 +1,5 @@
 import 'phaser';
-import Button from '../Objects/Button';
+import Fan from '../Objects/Fan';
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
@@ -14,25 +14,7 @@ export default class GameScene extends Phaser.Scene {
     matter.world.setBounds(0, -40, this.levelBackground.width, config.height);
     matter.add.mouseSpring();
 
-    this.scene.launch('HUD', {backgroundScene: this});
-
-    matter.add.image(100, 200, 'fan-1', null, {
-      ignoreGravity: true,
-      fixedRotation: true,
-      frictionAir: 1,
-      plugin: {
-        attractors: [
-          (bodyA, bodyB) => {
-            if (Math.abs(bodyA.position.y - bodyB.position.y) < 100
-                        && bodyA.position.x < bodyB.position.x) {
-              return { x: 0.001, y: 0 };
-            }
-
-            return { x: 0, y: 0 };
-          }],
-      },
-    });
-
+    this.addFan();
     this.addBalloon();
     this.addSpikeyThings();
     this.addEndZone();
@@ -50,6 +32,10 @@ export default class GameScene extends Phaser.Scene {
   // game.scene.scenes[5].toggleDebugMode()
   toggleDebugMode() {
     this.debugMode = !this.debugMode;
+  }
+
+  addFan() {
+    const fan = new Fan(this, 100, 100, 'green', 'right', 'medium');
   }
 
   addBalloon() {
