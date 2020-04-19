@@ -9,6 +9,7 @@ export default class GameScene extends Phaser.Scene {
     const { config } = this.game;
     const { matter } = this;
     this.levelBackground = this.add.image(0, 0, 'background-level1').setOrigin(0, 0);
+    this.graphics = this.add.graphics();
     matter.world.setBounds(0, -40, this.levelBackground.width, config.height);
     matter.add.mouseSpring();
 
@@ -60,36 +61,42 @@ export default class GameScene extends Phaser.Scene {
       gravityScale: { y: -10 },
     });
 
-    const firstRopeSection = matter.add.image(400, 200, 'rope', null, {
+    this.ropeSections = [];
+
+    let x = 400, y = 200;
+    const firstRopeSection = matter.add.image(x, y, 'rope', null, {
       mass: 1,
       ignorePointer: true,
-    });
-    matter.add.joint(this.balloon, firstRopeSection, 0, 1, { pointA: { x: 0, y: 35 } });
+    }).setVisible(false);
+    matter.add.joint(this.balloon, firstRopeSection, 0, 1, { pointA: { x: 0, y: 58 } });
+    this.ropeSections.push(firstRopeSection);
 
     let prev = firstRopeSection;
     const segmentCount = 8;
     for (let i = 0; i < segmentCount; i += 1) {
-      const ropeSection = matter.add.image(400, 235 + (i * 15), 'rope', null, {
+      y = 235 + (i * 15);
+      const ropeSection = matter.add.image(x, y, 'rope', null, {
         mass: 1,
         ignorePointer: true,
-      });
+        render: { opacity: 0 },
+      }).setVisible(false);
       matter.add.joint(prev, ropeSection, 15);
+      this.ropeSections.push(ropeSection);
       prev = ropeSection;
     }
 
-    this.ropeAnchor = this.matter.add.image(400, 251.5 + (segmentCount * 10), 'rope', null, {
+    y = 251.5 + (segmentCount * 10);
+    this.ropeAnchor = this.matter.add.image(x, y, 'rope', null, {
       mass: 50000,
       ignoreGravity: false,
       frictionAir: 1,
       fixedRotation: true,
     });
     this.ropeAnchor.setInteractive({ useHandCursor: true });
+    this.ropeSections.push(this.ropeAnchor);
     matter.add.joint(prev, this.ropeAnchor, 20);
-
     this.accessories = this.add.sprite(400,200, 'accessories', this.model.accessoryframe);
     this.face = this.add.image(400, 200, 'face');
-
-
   }
 
   addSpikeyThings() {
@@ -121,7 +128,20 @@ export default class GameScene extends Phaser.Scene {
     this.ropeAnchor.setMass(1).setFrictionAir(0).setFixedRotation(false);
   }
 
+  getRopePoints() {
+    const points = [];
+    this.ropeSections.forEach((p) => {
+      points.push(new Phaser.Math.Vector2(p.x, p.y));
+    });
+    return points;
+  }
+
   update() {
+    this.ropeCurve = new Phaser.Curves.Spline(this.getRopePoints());
+    this.graphics.clear();
+    this.graphics.lineStyle(1, 0x000000, 1);
+    this.ropeCurve.draw(this.graphics, 64);
+
     this.recenterCamera();
     if (this.balloon.active) {
       this.accessories.x = this.balloon.x;
