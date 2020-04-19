@@ -10,7 +10,7 @@ export default class HUDScene extends Phaser.Scene {
     create ()
     {
 
-      this.button = this.scene.scene.add.sprite(150, 550, 'Button').setInteractive({ useHandCursor: true });
+      this.button = this.scene.scene.add.sprite(150, 550, 'button').setInteractive({ useHandCursor: true });
       this.text = this.scene.scene.add.text(0, 0, 'Menu', { fontSize: '32px', fill: '#000' });
       Phaser.Display.Align.In.Center(this.text, this.button);
 

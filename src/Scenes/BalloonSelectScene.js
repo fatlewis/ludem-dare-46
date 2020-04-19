@@ -37,13 +37,13 @@ export default class BalloonSelectScene extends Phaser.Scene {
       // JS modulo returns negative numbers, need to add 9 to get back to top of the loop
       if (framecountcolour < 0) { framecountcolour += 9; }
       balloon.setFrame(framecountcolour);
-      this.model.colourframe = framecountcolour;
+      this.model.colourFrame = framecountcolour;
     });
 
     this.colourButton2.on('pointerdown', () => {
       framecountcolour = (framecountcolour + 1) % 9;
       balloon.setFrame(framecountcolour);
-      this.model.colourframe = framecountcolour;
+      this.model.colourFrame = framecountcolour;
     });
 
     this.faceButton1.on('pointerdown', () => {
@@ -51,13 +51,13 @@ export default class BalloonSelectScene extends Phaser.Scene {
       // JS modulo returns negative numbers, need to add 9 to get back to top of the loop
       if (framecountaccessory < 0) { framecountaccessory += 7; }
       accessory.setFrame(framecountaccessory);
-      this.model.accessoryframe = framecountaccessory;
+      this.model.accessoryFrame = framecountaccessory;
     });
 
     this.faceButton2.on('pointerdown', () => {
       framecountaccessory = (framecountaccessory + 1) % 7;
       accessory.setFrame(framecountaccessory);
-      this.model.accessoryframe = framecountaccessory;
+      this.model.accessoryFrame = framecountaccessory;
     });
   }
 }
