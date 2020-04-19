@@ -48,8 +48,9 @@ export default class GameScene extends Phaser.Scene {
 
   addBalloon() {
     const { matter } = this;
+    this.model = this.sys.game.globals.model;
 
-    this.balloon = matter.add.image(400, 200, 'balloon', null, {
+    this.balloon = matter.add.sprite(400, 200, 'balloons', this.model.colourframe, {
       shape: {
         type: 'circle',
         radius: 32,
@@ -84,6 +85,11 @@ export default class GameScene extends Phaser.Scene {
     });
     this.ropeAnchor.setInteractive({ useHandCursor: true });
     matter.add.joint(prev, this.ropeAnchor, 20);
+
+    this.accessories = this.add.sprite(400,200, 'accessories', this.model.accessoryframe);
+    this.face = this.add.image(400, 200, 'face');
+
+
   }
 
   addSpikeyThings() {
@@ -109,12 +115,20 @@ export default class GameScene extends Phaser.Scene {
   }
 
   popBalloon() {
+    this.face.destroy();
+    this.accessories.destroy();
     this.balloon.destroy();
     this.ropeAnchor.setMass(1).setFrictionAir(0).setFixedRotation(false);
   }
 
   update() {
     this.recenterCamera();
+    if (this.balloon.active) {
+      this.accessories.x = this.balloon.x;
+      this.accessories.y = this.balloon.y;
+      this.face.x = this.balloon.x;
+      this.face.y = this.balloon.y;
+    }
   }
 
   recenterCamera() {

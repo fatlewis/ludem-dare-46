@@ -16,31 +16,49 @@ export default class BalloonSelectScene extends Phaser.Scene {
     this.menuButton = new Button(this, config.width * 0.25, config.height * 0.85, 'Button', 'ButtonPressed', 'Menu', 'Title');
     this.gameButton = new Button(this, config.width * 0.75, config.height * 0.85, 'Button', 'ButtonPressed', 'Play', 'Game');
 
-    const balloon = this.add.image(config.width * 0.75, config.height / 2, 'balloonRed').setScale(2);
+    let framecountcolour = 0;
+    let framecountaccessory = 0;
 
-    this.colourButton1 = this.add.image(150, 200, 'box').setInteractive({ useHandCursor: true });
+    var balloon = this.add.sprite(config.width * 0.75, config.height / 2, 'balloons', framecountcolour);
+    var accessory = this.add.sprite(config.width * 0.75, config.height / 2, 'accessories', framecountaccessory);
+    var face = this.add.image(config.width * 0.75, config.height / 2, 'face');
+
+    this.colourButton1 = this.add.image(150, 200, 'checkedBox').setInteractive({ useHandCursor: true });
     this.colourText = this.add.text(200, 190, 'Colour', { fontSize: 24, fill: '#FFF' });
-    this.colourButton2 = this.add.image(350, 200, 'box').setInteractive({ useHandCursor: true });
+    this.colourButton2 = this.add.image(350, 200, 'checkedBox').setInteractive({ useHandCursor: true });
 
-    this.faceButton1 = this.add.image(150, 300, 'box').setInteractive({ useHandCursor: true });
+    this.faceButton1 = this.add.image(150, 300, 'checkedBox').setInteractive({ useHandCursor: true });
     this.faceText = this.add.text(200, 290, 'Face', { fontSize: 24, fill: '#FFF' });
-    this.faceButton2 = this.add.image(350, 300, 'box').setInteractive({ useHandCursor: true });
+    this.faceButton2 = this.add.image(350, 300, 'checkedBox').setInteractive({ useHandCursor: true });
 
 
     this.colourButton1.on('pointerdown', () => {
-      this.colourButton1.setTexture('checkedBox');
-    });
-
-    this.faceButton1.on('pointerdown', () => {
-      this.faceButton1.setTexture('checkedBox')
+      framecountcolour = (framecountcolour - 1) % 9;
+      // JS modulo returns negative numbers, need to add 9 to get back to top of the loop
+      if (framecountcolour < 0) {framecountcolour += 9;}
+      balloon.setFrame(framecountcolour);
+      this.model.colourframe = framecountcolour;
     });
 
     this.colourButton2.on('pointerdown', () => {
-      this.colourButton2.setTexture('checkedBox');
+      framecountcolour = (framecountcolour + 1) % 9;
+      balloon.setFrame(framecountcolour);
+      this.model.colourframe = framecountcolour;
+    });
+
+    this.faceButton1.on('pointerdown', () => {
+      framecountaccessory = (framecountaccessory - 1) % 7;
+      // JS modulo returns negative numbers, need to add 9 to get back to top of the loop
+      if (framecountaccessory < 0) {framecountaccessory += 7;}
+      accessory.setFrame(framecountaccessory);
+      this.model.accessoryframe = framecountaccessory;
+
     });
 
     this.faceButton2.on('pointerdown', () => {
-      this.faceButton2.setTexture('checkedBox')
+      framecountaccessory = (framecountaccessory + 1) % 7;
+      accessory.setFrame(framecountaccessory);
+      this.model.accessoryframe = framecountaccessory;
     });
 
 
