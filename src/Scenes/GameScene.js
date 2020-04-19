@@ -174,12 +174,16 @@ export default class GameScene extends Phaser.Scene {
   }
 
   update() {
-    this.ropeCurve = new Phaser.Curves.Spline(this.getRopePoints());
-    this.graphics.clear();
-    this.graphics.lineStyle(1, 0x000000, 1);
-    this.ropeCurve.draw(this.graphics, 64);
+    if (this.balloon.active) {
+      this.ropeCurve = new Phaser.Curves.Spline(this.getRopePoints());
+      this.graphics.clear();
+      this.graphics.lineStyle(1, 0x000000, 1);
+      this.ropeCurve.draw(this.graphics, 64);
+    }
 
-    this.recenterCamera();
+    if (this.cameras.main) {
+      this.recenterCamera();
+    }
   }
 
   startGoalSequence() {
@@ -196,10 +200,6 @@ export default class GameScene extends Phaser.Scene {
   }
 
   recenterCamera() {
-    if (!this.cameras.main) {
-      // Camera does not exist
-      return;
-    }
     const halfViewportWidth = this.game.config.width / 2;
     const screenCenterX = Math.round(this.cameras.main.scrollX + halfViewportWidth);
     const ropeAnchorX = Math.round(this.ropeAnchor.x);
