@@ -1,4 +1,5 @@
 import 'phaser';
+import Balloon from '../Objects/Balloon';
 import Fan from '../Objects/Fan';
 
 export default class GameScene extends Phaser.Scene {
@@ -54,37 +55,10 @@ export default class GameScene extends Phaser.Scene {
 
   addBalloon() {
     const { matter } = this;
-    this.model = this.sys.game.globals.model;
 
-    const balloonBase = this.add.sprite(0, 0, 'balloons', this.model.colourFrame);
-    const balloonFace = this.add.sprite(0, 0, 'face', 0);
-    const balloonAccessories = this.add.sprite(0, 0, 'accessories', this.model.accessoryFrame);
-    const balloonContainer = this.add.container(
-      400,
-      200,
-      [balloonBase, balloonFace, balloonAccessories],
-    );
-
-    this.balloon = matter.add.gameObject(balloonContainer, {
-      position: { x: 400, y: 200 },
-      vertices: [
-        { x: 42, y: 8 },
-        { x: 71, y: 19 },
-        { x: 85, y: 39 },
-        { x: 89, y: 67 },
-        { x: 81, y: 99 },
-        { x: 65, y: 120 },
-        { x: 41, y: 133 },
-        { x: 17, y: 120 },
-        { x: 2, y: 99 },
-        { x: -5, y: 67 },
-        { x: 0, y: 39 },
-        { x: 13, y: 19 },
-      ],
-      mass: 1,
-      ignorePointer: true,
-      gravityScale: { y: -10 },
-    });
+    const balloonContainer = new Balloon(this, 400, 200);
+    this.children.add(balloonContainer);
+    this.balloon = balloonContainer.matterObject;
 
     this.ropeSections = [];
 
