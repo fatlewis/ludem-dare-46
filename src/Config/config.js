@@ -21,8 +21,8 @@ export default {
       {
         plugin: PhaserMatterCollisionPlugin,
         key: 'matterCollision',
-        mapping: 'matterCollision'
-      }
-    ]
-  }
+        mapping: 'matterCollision',
+      },
+    ],
+  },
 };

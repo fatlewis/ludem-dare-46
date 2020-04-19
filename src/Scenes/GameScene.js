@@ -31,6 +31,7 @@ export default class GameScene extends Phaser.Scene {
 
     this.addBalloon();
     this.addSpikeyThings();
+    this.addEndZone();
 
     this.debugMode = false;
     this.input.on('pointerdown', () => {
@@ -49,7 +50,7 @@ export default class GameScene extends Phaser.Scene {
   addBalloon() {
     const { matter } = this;
 
-    const balloonVerts = "47 0 76 11 90 31 94 59 86 91 70 112 46 125 22 112 7 91 0 59 5 31 18 11";
+    const balloonVerts = '47 0 76 11 90 31 94 59 86 91 70 112 46 125 22 112 7 91 0 59 5 31 18 11';
     this.balloon = matter.add.image(400, 200, 'balloon', null, {
       shape: { type: 'fromVerts', verts: balloonVerts, flagInternal: true },
       mass: 1,
@@ -87,12 +88,12 @@ export default class GameScene extends Phaser.Scene {
   addSpikeyThings() {
     const { matter } = this;
 
-    this.spikeys = []
+    this.spikeys = [];
     this.spikeys.push(matter.add.image(500, 450, 'cactus', null, {
-      isStatic: true
+      isStatic: true,
     }));
     this.spikeys.push(matter.add.image(988, 320, 'knives', null, {
-      isStatic: true
+      isStatic: true,
     }));
 
     // Add the collision detection callback for the balloon.
@@ -100,9 +101,27 @@ export default class GameScene extends Phaser.Scene {
       this.matterCollision.addOnCollideStart({
         objectA: this.balloon,
         objectB: s,
-        callback: () => {this.popBalloon()},
-        context: this
+        callback: () => { this.popBalloon(); },
+        context: this,
       });
+    });
+  }
+
+  addEndZone() {
+    const endZoneRectangle = this.add.rectangle(
+      this.levelBackground.width,
+      this.game.config.height / 2,
+      1,
+      this.game.config.height,
+      0x000000,
+    );
+    this.endZone = this.matter.add.gameObject(endZoneRectangle, { isStatic: true });
+    this.matterCollision.addOnCollideStart({
+      objectA: this.balloon,
+      objectB: this.endZone,
+      callback: () => {
+        this.startGoalSequence();
+      },
     });
   }
 
@@ -115,7 +134,24 @@ export default class GameScene extends Phaser.Scene {
     this.recenterCamera();
   }
 
+  startGoalSequence() {
+    const titleScene = this.scene.get('Title');
+    titleScene.events.once('transitioncomplete', () => {
+      titleScene.cameras.main.fadeIn(500);
+    });
+    this.endZone.destroy();
+    this.cameras.main.fadeOut(500);
+    this.scene.transition({
+      duration: 500,
+      target: 'Title',
+    });
+  }
+
   recenterCamera() {
+    if (!this.cameras.main) {
+      // Camera does not exist
+      return;
+    }
     const halfViewportWidth = this.game.config.width / 2;
     const screenCenterX = Math.round(this.cameras.main.scrollX + halfViewportWidth);
     const ropeAnchorX = Math.round(this.ropeAnchor.x);
@@ -125,7 +161,7 @@ export default class GameScene extends Phaser.Scene {
       screenCenterX,
       150,
     );
-    if (isOutsideCameraCenter && !this.input.activePointer.leftButtonDown()) {
+    if (isOutsideCameraCenter) { // } && !this.input.activePointer.leftButtonDown()) {
       const moveDistance = GameScene.getMoveDistance(ropeAnchorX, screenCenterX);
 
       const newScrollX = this.cameras.main.scrollX + moveDistance;

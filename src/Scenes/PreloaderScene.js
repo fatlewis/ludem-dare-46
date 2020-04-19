@@ -64,15 +64,6 @@ export default class PreloaderScene extends Phaser.Scene {
       assetText.setText(`Loading asset: ${file.key}`);
     });
 
-    // remove progress bar when complete
-    this.load.on('complete', () => {
-      progressBar.destroy();
-      progressBox.destroy();
-      loadingText.destroy();
-      percentText.destroy();
-      assetText.destroy();
-    });
-
     // load assets needed in our game
     this.load.image('Button', 'assets/button1.png');
     this.load.image('ButtonPressed', 'assets/button1selected.png');
@@ -92,26 +83,18 @@ export default class PreloaderScene extends Phaser.Scene {
     // remove progress bar when complete
     this.load.on('complete', () => {
       this.game.registry.set('bgMusic', this.sound.add('bgMusic', { volume: 0.5, loop: true }));
-      progressBar.destroy();
-      progressBox.destroy();
-      loadingText.destroy();
-      percentText.destroy();
-      assetText.destroy();
       this.ready();
     });
-
-    this.timedEvent = this.time.delayedCall(3000, this.ready, [], this);
-  }
-
-  init() {
-    this.readyCount = 0;
   }
 
   ready() {
-    this.scene.start('Title');
-    // this.readyCount++;
-    // if (this.readyCount === 20) {
-    //     this.scene.start('Credits');
-    // }
+    this.cameras.main.fadeOut(1000);
+    this.cameras.main.once(
+      Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,
+      () => {
+        this.scene.start('Title');
+        this.scene.get('Title').cameras.main.fadeIn(1000);
+      },
+    );
   }
 }
