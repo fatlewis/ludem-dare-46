@@ -83,6 +83,8 @@ export default class PreloaderScene extends Phaser.Scene {
 
     this.load.audio('bgMusic', ['assets/theme.mp3']);
 
+    this.load.html('nameForm', 'assets/text/NameForm.html');
+
     // remove progress bar when complete
     this.load.on('complete', () => {
       this.game.registry.set('bgMusic', this.sound.add('bgMusic', { volume: 0.5, loop: true }));

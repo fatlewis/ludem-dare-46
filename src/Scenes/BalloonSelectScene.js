@@ -31,7 +31,6 @@ export default class BalloonSelectScene extends Phaser.Scene {
     this.faceText = this.add.text(200, 290, 'Face', { fontSize: 24, fill: '#FFF' });
     this.faceButton2 = this.add.image(350, 300, 'checkedBox').setInteractive({ useHandCursor: true });
 
-
     this.colourButton1.on('pointerdown', () => {
       framecountcolour = (framecountcolour - 1) % 9;
       // JS modulo returns negative numbers, need to add 9 to get back to top of the loop
@@ -58,6 +57,20 @@ export default class BalloonSelectScene extends Phaser.Scene {
       framecountaccessory = (framecountaccessory + 1) % 7;
       accessory.setFrame(framecountaccessory);
       this.model.accessoryframe = framecountaccessory;
+    });
+
+    const nameForm = this.add.dom(200, 400).createFromCache('nameForm');
+    this.events.once('render', () => {
+      const nameField = nameForm.getChildByName('nameField');
+      if (this.model.heroName) {
+        nameField.value = this.model.heroName;
+      }
+      nameField.addEventListener(
+        'input',
+        (event) => {
+          this.model.heroName = event.target.value;
+        },
+      );
     });
   }
 }
