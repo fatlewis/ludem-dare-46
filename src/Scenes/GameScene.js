@@ -7,8 +7,6 @@ export default class GameScene extends Phaser.Scene {
 
   create() {
     const { config } = this.game;
-
-  addBalloon() {
     const { matter } = this;
     this.levelBackground = this.add.image(0, 0, 'background-level1').setOrigin(0, 0);
     matter.world.setBounds(0, -40, this.levelBackground.width, config.height);
@@ -28,6 +26,14 @@ export default class GameScene extends Phaser.Scene {
       },
     });
 
+    this.addBalloon();
+    this.addSpikes();
+    matter.add.mouseSpring();
+  }
+
+  addBalloon() {
+    const { matter } = this;
+
     this.balloon = matter.add.image(400, 200, 'balloon', null, {
       shape: {
         type: 'circle',
@@ -37,10 +43,6 @@ export default class GameScene extends Phaser.Scene {
       ignorePointer: true,
       gravityScale: { y: -10 },
     }).setInteractive();
-
-    this.balloon.on('pointerdown', () => {
-      this.popBalloon();
-    });
 
     const firstRopeSection = matter.add.image(400, 200, 'rope', null, {
       mass: 1,
@@ -59,7 +61,7 @@ export default class GameScene extends Phaser.Scene {
       prev = ropeSection;
     }
 
-    this.ropeAnchor = this.matter.add.image(400, 251.5 + (i * 10), 'rope', null, {
+    this.ropeAnchor = this.matter.add.image(400, 251.5 + (segmentCount * 10), 'rope', null, {
       mass: 50000,
       ignoreGravity: false,
       frictionAir: 1,
@@ -67,9 +69,27 @@ export default class GameScene extends Phaser.Scene {
     });
     this.ropeAnchor.setInteractive({ useHandCursor: true });
     matter.add.joint(prev, this.ropeAnchor, 20);
+  }
+
+  addSpikes() {
+    const { matter } = this;
+
+    const spike = matter.add.image(600, 100, 'spike', null, {
+      isStatic: true
+    });
+
+    // Add the collision detection callback for the balloon.
+    this.matterCollision.addOnCollideStart({
+      objectA: this.balloon,
+      objectB: spike,
+      callback: () => {this.popBalloon()},
+      context: this
+    });
+  }
 
   popBalloon() {
     this.balloon.destroy();
+    this.ropeAnchor.setMass(1).setFrictionAir(0).setFixedRotation(false);
   }
 
   update() {
