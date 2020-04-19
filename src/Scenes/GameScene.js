@@ -14,7 +14,7 @@ export default class GameScene extends Phaser.Scene {
     matter.world.setBounds(0, -40, this.levelBackground.width, config.height);
     matter.add.mouseSpring();
 
-    this.scene.launch('HUD', {backgroundScene: this});
+    this.scene.launch('HUD', { backgroundScene: this });
 
     this.addFan();
     this.addBalloon();
@@ -37,7 +37,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   addFan() {
-    const fan = new Fan(this, 100, 100, 'green', 'right', 'medium');
+    return new Fan(this, 100, 100, 'green', 'right', 'medium');
 
     const particles = this.add.particles('rope');
     const emitter = particles.createEmitter({
@@ -49,6 +49,7 @@ export default class GameScene extends Phaser.Scene {
         angle: 0,
         blendMode: 'ADD'
     });
+
   }
 
   addBalloon() {
@@ -56,7 +57,7 @@ export default class GameScene extends Phaser.Scene {
     this.model = this.sys.game.globals.model;
 
     const balloonBase = this.add.sprite(0, 0, 'balloons', this.model.colourFrame);
-    const balloonFace = this.add.image(0, 0, 'face');
+    const balloonFace = this.add.sprite(0, 0, 'face', 0);
     const balloonAccessories = this.add.sprite(0, 0, 'accessories', this.model.accessoryFrame);
     const balloonContainer = this.add.container(
       400,
@@ -67,18 +68,18 @@ export default class GameScene extends Phaser.Scene {
     this.balloon = matter.add.gameObject(balloonContainer, {
       position: { x: 400, y: 200 },
       vertices: [
-        { x: 47, y: 0 },
-        { x: 76, y: 11 },
-        { x: 90, y: 31 },
-        { x: 94, y: 59 },
-        { x: 86, y: 91 },
-        { x: 70, y: 112 },
-        { x: 46, y: 125 },
-        { x: 22, y: 112 },
-        { x: 7, y: 91 },
-        { x: 0, y: 59 },
-        { x: 5, y: 31 },
-        { x: 18, y: 11 },
+        { x: 42, y: 8 },
+        { x: 71, y: 19 },
+        { x: 85, y: 39 },
+        { x: 89, y: 67 },
+        { x: 81, y: 99 },
+        { x: 65, y: 120 },
+        { x: 41, y: 133 },
+        { x: 17, y: 120 },
+        { x: 2, y: 99 },
+        { x: -5, y: 67 },
+        { x: 0, y: 39 },
+        { x: 13, y: 19 },
       ],
       mass: 1,
       ignorePointer: true,
@@ -87,13 +88,14 @@ export default class GameScene extends Phaser.Scene {
 
     this.ropeSections = [];
 
-    const x = 400; let
-      y = 200;
+    const x = 400;
+    let y = 200;
     const firstRopeSection = matter.add.image(x, y, 'rope', null, {
       mass: 1,
       ignorePointer: true,
     }).setVisible(false);
-    matter.add.joint(this.balloon, firstRopeSection, 0, 1, { pointA: { x: 0, y: 66.5 } });
+    const balloonNeckPoint = { x: -5, y: 70 };
+    matter.add.joint(this.balloon, firstRopeSection, 0, 1, { pointA: balloonNeckPoint });
     this.ropeSections.push(firstRopeSection);
 
     let prev = firstRopeSection;
@@ -176,7 +178,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   update() {
-    if (this.balloon.active) {
+    if (this.ropeAnchor.active) {
       this.ropeCurve = new Phaser.Curves.Spline(this.getRopePoints());
       this.graphics.clear();
       this.graphics.lineStyle(1, 0x000000, 1);
@@ -243,4 +245,3 @@ export default class GameScene extends Phaser.Scene {
     return ropeAnchorIsRightOfCenter ? moveDistance : -moveDistance;
   }
 }
-
