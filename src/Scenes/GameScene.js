@@ -9,6 +9,7 @@ export default class GameScene extends Phaser.Scene {
     const { config } = this.game;
     const { matter } = this;
     this.levelBackground = this.add.image(0, 0, 'background-level1').setOrigin(0, 0);
+    this.graphics = this.add.graphics();
     matter.world.setBounds(0, -40, this.levelBackground.width, config.height);
     matter.add.mouseSpring();
 
@@ -49,39 +50,67 @@ export default class GameScene extends Phaser.Scene {
 
   addBalloon() {
     const { matter } = this;
+    this.model = this.sys.game.globals.model;
 
-    const balloonVerts = '47 0 76 11 90 31 94 59 86 91 70 112 46 125 22 112 7 91 0 59 5 31 18 11';
-    this.balloon = matter.add.image(400, 200, 'balloon', null, {
-      shape: { type: 'fromVerts', verts: balloonVerts, flagInternal: true },
+    const balloonBase = this.add.sprite(0, 0, 'balloons', this.model.colourFrame);
+    const balloonFace = this.add.image(0, 0, 'face');
+    const balloonAccessories = this.add.sprite(0, 0, 'accessories', this.model.accessoryframe);
+    const balloonContainer = this.add.container(400, 200, [balloonBase, balloonFace, balloonAccessories]);
+
+    this.balloon = matter.add.gameObject(balloonContainer, {
+      position: {x: 400, y: 200},
+      vertices: [ 
+        {x: 47, y: 0},
+        {x: 76, y: 11},
+        {x: 90, y: 31},
+        {x: 94, y: 59},
+        {x: 86, y: 91},
+        {x: 70, y: 112},
+        {x: 46, y: 125},
+        {x: 22, y: 112},
+        {x: 7, y: 91},
+        {x: 0, y: 59},
+        {x: 5, y: 31},
+        {x: 18, y: 11},
+      ],
       mass: 1,
       ignorePointer: true,
       gravityScale: { y: -10 },
     });
 
-    const firstRopeSection = matter.add.image(400, 200, 'rope', null, {
+    this.ropeSections = [];
+
+    let x = 400, y = 200;
+    const firstRopeSection = matter.add.image(x, y, 'rope', null, {
       mass: 1,
       ignorePointer: true,
-    });
+    }).setVisible(false);
     matter.add.joint(this.balloon, firstRopeSection, 0, 1, { pointA: { x: 0, y: 66.5 } });
+    this.ropeSections.push(firstRopeSection);
 
     let prev = firstRopeSection;
     const segmentCount = 8;
     for (let i = 0; i < segmentCount; i += 1) {
-      const ropeSection = matter.add.image(400, 235 + (i * 15), 'rope', null, {
+      y = 235 + (i * 15);
+      const ropeSection = matter.add.image(x, y, 'rope', null, {
         mass: 1,
         ignorePointer: true,
-      });
+        render: { opacity: 0 },
+      }).setVisible(false);
       matter.add.joint(prev, ropeSection, 15);
+      this.ropeSections.push(ropeSection);
       prev = ropeSection;
     }
 
-    this.ropeAnchor = this.matter.add.image(400, 251.5 + (segmentCount * 10), 'rope', null, {
+    y = 251.5 + (segmentCount * 10);
+    this.ropeAnchor = this.matter.add.image(x, y, 'rope', null, {
       mass: 50000,
       ignoreGravity: true,
       frictionAir: 1,
       fixedRotation: true,
     });
     this.ropeAnchor.setInteractive({ useHandCursor: true });
+    this.ropeSections.push(this.ropeAnchor);
     matter.add.joint(prev, this.ropeAnchor, 20);
   }
 
@@ -130,7 +159,20 @@ export default class GameScene extends Phaser.Scene {
     this.ropeAnchor.setMass(1).setFrictionAir(0).setFixedRotation(false);
   }
 
+  getRopePoints() {
+    const points = [];
+    this.ropeSections.forEach((p) => {
+      points.push(new Phaser.Math.Vector2(p.x, p.y));
+    });
+    return points;
+  }
+
   update() {
+    this.ropeCurve = new Phaser.Curves.Spline(this.getRopePoints());
+    this.graphics.clear();
+    this.graphics.lineStyle(1, 0x000000, 1);
+    this.ropeCurve.draw(this.graphics, 64);
+
     this.recenterCamera();
   }
 
