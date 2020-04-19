@@ -21,7 +21,7 @@ export default class BalloonSelectScene extends Phaser.Scene {
 
     const balloon = this.add.sprite(config.width * 0.75, config.height / 2, 'balloons', framecountcolour);
     const accessory = this.add.sprite(config.width * 0.75, config.height / 2, 'accessories', framecountaccessory);
-    this.add.image(config.width * 0.75, config.height / 2, 'face');
+    this.add.sprite(config.width * 0.75, config.height / 2, 'face', 0);
 
     this.colourButton1 = this.add.image(150, 200, 'checkedBox').setInteractive({ useHandCursor: true });
     this.colourText = this.add.text(200, 190, 'Colour', { fontSize: 24, fill: '#FFF' });

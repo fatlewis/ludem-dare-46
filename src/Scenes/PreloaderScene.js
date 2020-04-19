@@ -69,25 +69,14 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('ButtonPressed', 'assets/button1selected.png');
     this.load.image('checkedBox', 'assets/checked1.png');
     this.load.image('Logo', 'assets/logo.png');
-    this.load.image('balloon', 'assets/TealBalloon.png');
     this.load.image('rope', 'assets/blue-square.png');
     this.load.image('cactus', 'assets/Cactus_01.png');
     this.load.image('fan-1', 'assets/Fan_01.png');
     this.load.image('knives', 'assets/Knives_01.png');
 
-    this.load.image('balloonBlack', 'assets/BlackBalloon.png');
-    this.load.image('balloonBlue', 'assets/BlueBalloon.png');
-    this.load.image('balloonOrange', 'assets/OrangeBalloon.png');
-    this.load.image('balloonGreen', 'assets/GreenBalloon.png');
-    this.load.image('balloonPink', 'assets/PinkBalloon.png');
-    this.load.image('balloonPurple', 'assets/PurpleBalloon.png');
-    this.load.image('balloonRed', 'assets/RedBalloon.png');
-    this.load.image('balloonTeal', 'assets/TealBalloon.png');
-    this.load.image('balloonYellow', 'assets/YellowBalloon.png');
-    this.load.image('face', 'assets/Face_01.png');
-
-    this.load.spritesheet('balloons', 'assets/BalloonsSprite_01.png', { frameWidth: 288, frameHeight: 288 });
-    this.load.spritesheet('accessories', 'assets/Accessories_01.png', { frameWidth: 288, frameHeight: 288 });
+    this.load.spritesheet('face', 'assets/FaceSprites.png', { frameWidth: 288, frameHeight: 288 });
+    this.load.spritesheet('balloons', 'assets/BalloonSprites.png', { frameWidth: 288, frameHeight: 288 });
+    this.load.spritesheet('accessories', 'assets/AccessoriesSprites.png', { frameWidth: 288, frameHeight: 288 });
 
     this.load.image('background', 'assets/menubackground.png');
     this.load.image('background-level1', 'assets/background/level1.png');
