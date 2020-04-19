@@ -1,4 +1,5 @@
 import 'phaser';
+import Button from '../Objects/Button';
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
@@ -12,6 +13,8 @@ export default class GameScene extends Phaser.Scene {
     this.graphics = this.add.graphics();
     matter.world.setBounds(0, -40, this.levelBackground.width, config.height);
     matter.add.mouseSpring();
+
+    this.scene.launch('HUD', {backgroundScene: this});
 
     matter.add.image(100, 200, 'fan-1', null, {
       ignoreGravity: true,
@@ -193,3 +196,4 @@ export default class GameScene extends Phaser.Scene {
     return ropeAnchorIsRightOfCenter ? moveDistance : -moveDistance;
   }
 }
+

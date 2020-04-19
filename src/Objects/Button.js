@@ -16,6 +16,7 @@ export default class Button extends Phaser.GameObjects.Container {
 
     this.button.on('pointerdown', () => {
       this.scene.scene.start(targetScene);
+      console.log("button pressed");
     });
 
     this.button.on('pointerover', () => {
