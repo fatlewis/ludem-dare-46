@@ -10,9 +10,12 @@ export default class GameScene extends Phaser.Scene {
     const { matter } = this;
     this.levelBackground = this.add.image(0, 0, 'background-level1').setOrigin(0, 0);
     matter.world.setBounds(0, -40, this.levelBackground.width, config.height);
+    matter.add.mouseSpring();
 
-    matter.add.image(100, 200, 'box', null, {
+    matter.add.image(100, 200, 'fan-1', null, {
       ignoreGravity: true,
+      fixedRotation: true,
+      frictionAir: 1,
       plugin: {
         attractors: [
           (bodyA, bodyB) => {
@@ -27,8 +30,20 @@ export default class GameScene extends Phaser.Scene {
     });
 
     this.addBalloon();
-    this.addSpikes();
-    matter.add.mouseSpring();
+    this.addSpikeyThings();
+
+    this.debugMode = false;
+    this.input.on('pointerdown', () => {
+      if (this.debugMode) {
+        console.log(this.input.x, this.input.y);
+      }
+    });
+  }
+
+  // for use in the chrome dev console via the command:
+  // game.scene.scenes[5].toggleDebugMode()
+  toggleDebugMode() {
+    this.debugMode = !this.debugMode;
   }
 
   addBalloon() {
@@ -42,7 +57,7 @@ export default class GameScene extends Phaser.Scene {
       mass: 1,
       ignorePointer: true,
       gravityScale: { y: -10 },
-    }).setInteractive();
+    });
 
     const firstRopeSection = matter.add.image(400, 200, 'rope', null, {
       mass: 1,
@@ -71,19 +86,25 @@ export default class GameScene extends Phaser.Scene {
     matter.add.joint(prev, this.ropeAnchor, 20);
   }
 
-  addSpikes() {
+  addSpikeyThings() {
     const { matter } = this;
 
-    const spike = matter.add.image(600, 100, 'spike', null, {
+    this.spikeys = []
+    this.spikeys.push(matter.add.image(500, 450, 'cactus', null, {
       isStatic: true
-    });
+    }));
+    this.spikeys.push(matter.add.image(988, 320, 'knives', null, {
+      isStatic: true
+    }));
 
     // Add the collision detection callback for the balloon.
-    this.matterCollision.addOnCollideStart({
-      objectA: this.balloon,
-      objectB: spike,
-      callback: () => {this.popBalloon()},
-      context: this
+    this.spikeys.forEach((s) => {
+      this.matterCollision.addOnCollideStart({
+        objectA: this.balloon,
+        objectB: s,
+        callback: () => {this.popBalloon()},
+        context: this
+      });
     });
   }
 
