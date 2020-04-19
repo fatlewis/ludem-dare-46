@@ -38,6 +38,17 @@ export default class GameScene extends Phaser.Scene {
 
   addFan() {
     const fan = new Fan(this, 100, 100, 'green', 'right', 'medium');
+
+    const particles = this.add.particles('rope');
+    const emitter = particles.createEmitter({
+        speed: 100,
+        x: fan.x,
+        y: { min: fan.y -60, max: fan.y +50 },
+        scale: { start: 1, end: 0 },
+        //angle will need to be 180 for left facing fans
+        angle: 0,
+        blendMode: 'ADD'
+    });
   }
 
   addBalloon() {
