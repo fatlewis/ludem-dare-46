@@ -1,4 +1,5 @@
 import 'phaser';
+import Fan from '../Objects/Fan';
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
@@ -13,23 +14,9 @@ export default class GameScene extends Phaser.Scene {
     matter.world.setBounds(0, -40, this.levelBackground.width, config.height);
     matter.add.mouseSpring();
 
-    matter.add.image(100, 200, 'fan-1', null, {
-      ignoreGravity: true,
-      fixedRotation: true,
-      frictionAir: 1,
-      plugin: {
-        attractors: [
-          (bodyA, bodyB) => {
-            if (Math.abs(bodyA.position.y - bodyB.position.y) < 100
-                        && bodyA.position.x < bodyB.position.x) {
-              return { x: 0.001, y: 0 };
-            }
+    this.scene.launch('HUD', { backgroundScene: this });
 
-            return { x: 0, y: 0 };
-          }],
-      },
-    });
-
+    this.addFan();
     this.addBalloon();
     this.addSpikeyThings();
     this.addEndZone();
@@ -49,14 +36,17 @@ export default class GameScene extends Phaser.Scene {
     this.debugMode = !this.debugMode;
   }
 
+  addFan() {
+    return new Fan(this, 100, 100, 'green', 'right', 'medium');
+  }
+
   addBalloon() {
     const { matter } = this;
     this.model = this.sys.game.globals.model;
 
     const balloonBase = this.add.sprite(0, 0, 'balloons', this.model.colourFrame);
     const balloonFace = this.add.sprite(0, 0, 'face', 0);
-    const balloonAccessories = this.add.sprite(0, 0, 'accessories', this.model.accessoryframe);
-
+    const balloonAccessories = this.add.sprite(0, 0, 'accessories', this.model.accessoryFrame);
     const balloonContainer = this.add.container(
       400,
       200,

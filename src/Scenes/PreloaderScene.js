@@ -64,25 +64,49 @@ export default class PreloaderScene extends Phaser.Scene {
       assetText.setText(`Loading asset: ${file.key}`);
     });
 
-    // load assets needed in our game
-    this.load.image('Button', 'assets/button1.png');
-    this.load.image('ButtonPressed', 'assets/button1selected.png');
-    this.load.image('checkedBox', 'assets/checked1.png');
-    this.load.image('Logo', 'assets/logo.png');
-    this.load.image('rope', 'assets/blue-square.png');
-    this.load.image('cactus', 'assets/Cactus_01.png');
-    this.load.image('fan-1', 'assets/Fan_01.png');
-    this.load.image('knives', 'assets/Knives_01.png');
+    // Balloons, accessories and ropes
+    this.load.spritesheet('balloons', 'assets/balloon/BalloonsSprite.png', { frameWidth: 288, frameHeight: 288 });
+    this.load.spritesheet('accessories', 'assets/balloon/accessories/AccessoriesSprite.png', { frameWidth: 288, frameHeight: 288 });
+    this.load.spritesheet('face', 'assets/balloon/FaceSprites.png', { frameWidth: 288, frameHeight: 288 });
+    this.load.image('rope', 'assets/balloon/RopeSection.png');
 
-    this.load.spritesheet('face', 'assets/FaceSprites.png', { frameWidth: 288, frameHeight: 288 });
-    this.load.spritesheet('balloons', 'assets/BalloonSprites.png', { frameWidth: 288, frameHeight: 288 });
-    this.load.spritesheet('accessories', 'assets/AccessoriesSprites.png', { frameWidth: 288, frameHeight: 288 });
+    // Spikey things
+    this.load.image('cactus', 'assets/spikey/Cactus_01.png');
+    this.load.image('knives', 'assets/spikey/Knives_01.png');
 
-    this.load.image('background', 'assets/menubackground.png');
-    this.load.image('background-level1', 'assets/background/level1.png');
+    // Fans
+    this.load.spritesheet('fanGreen', 'assets/fan/FanSpriteGreen.png', { frameWidth: 104, frameHeight: 129 });
+    this.load.spritesheet('fanOlive', 'assets/fan/FanSpriteOlive.png', { frameWidth: 104, frameHeight: 129 });
+    this.load.spritesheet('fanOrange', 'assets/fan/FanSpriteOrange.png', { frameWidth: 104, frameHeight: 129 });
+    this.load.spritesheet('fanPink', 'assets/fan/FanSpritePink.png', { frameWidth: 104, frameHeight: 129 });
+    this.load.spritesheet('fanRed', 'assets/fan/FanSpriteRed.png', { frameWidth: 104, frameHeight: 129 });
+    this.load.spritesheet('fanTeal', 'assets/fan/FanSpriteTeal.png', { frameWidth: 104, frameHeight: 129 });
+    this.load.spritesheet('fanYellow', 'assets/fan/FanSpriteYellow.png', { frameWidth: 104, frameHeight: 129 });
 
-    this.load.audio('bgMusic', ['assets/theme.mp3']);
+    // Backgrounds
+    this.load.image('background', 'assets/background/MainMenu.png');
+    this.load.image('background-level1', 'assets/background/level-1/BackgroundLevel1_01.png');
 
+    // Menu items
+    this.load.image('logo', 'assets/logo.png');
+    this.load.image('button', 'assets/buttons/ButtonUp_02.png');
+    this.load.image('buttonPressed', 'assets/buttons/ButtonDown_02.png');
+    this.load.image('playButton', 'assets/buttons/ButtonPlayUp_02.png');
+    this.load.image('playButtonPressed', 'assets/buttons/ButtonPlayDown_02.png');
+    this.load.image('menuButton', 'assets/buttons/ButtonMenuUp_02.png');
+    this.load.image('menuButtonPressed', 'assets/buttons/ButtonMenuDown_02.png');
+    this.load.image('optionsButton', 'assets/buttons/ButtonOptionsUp_02.png');
+    this.load.image('optionsButtonPressed', 'assets/buttons/ButtonOptionsDown_02.png');
+    this.load.image('aboutButton', 'assets/buttons/ButtonAboutUp_02.png');
+    this.load.image('aboutButtonPressed', 'assets/buttons/ButtonAboutDown_02.png');
+    this.load.image('creditsButton', 'assets/buttons/ButtonCreditsUp_02.png');
+    this.load.image('creditsButtonPressed', 'assets/buttons/ButtonCreditsDown_02.png');
+    this.load.image('checkedBox', 'assets/ui/checked.png');
+
+    // Audio
+    this.load.audio('bgMusic', ['assets/audio/theme.mp3']);
+
+    // DOM Elements
     this.load.html('nameForm', 'assets/text/NameForm.html');
 
     // remove progress bar when complete

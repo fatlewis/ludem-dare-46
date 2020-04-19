@@ -3,7 +3,7 @@ export default class Model {
     this.soundOn = true;
     this.musicOn = false;
     this.bgMusicPlaying = false;
-    this.colourframe = 0;
-    this.accessoryframe = 0;
+    this.colourFrame = 0;
+    this.accessoryFrame = 0;
   }
 }
