@@ -1,4 +1,5 @@
 import 'phaser';
+import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 
 export default {
   type: Phaser.AUTO,
@@ -14,4 +15,13 @@ export default {
       },
     },
   },
+  plugins: {
+    scene: [
+      {
+        plugin: PhaserMatterCollisionPlugin,
+        key: 'matterCollision',
+        mapping: 'matterCollision'
+      }
+    ]
+  }
 };
