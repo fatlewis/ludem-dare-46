@@ -14,6 +14,8 @@ export default class GameScene extends Phaser.Scene {
     matter.world.setBounds(0, -40, this.levelBackground.width, config.height);
     matter.add.mouseSpring();
 
+    this.scene.launch('HUD', {backgroundScene: this});
+
     this.addFan();
     this.addBalloon();
     this.addSpikeyThings();
@@ -44,7 +46,7 @@ export default class GameScene extends Phaser.Scene {
 
     const balloonBase = this.add.sprite(0, 0, 'balloons', this.model.colourFrame);
     const balloonFace = this.add.image(0, 0, 'face');
-    const balloonAccessories = this.add.sprite(0, 0, 'accessories', this.model.accessoryframe);
+    const balloonAccessories = this.add.sprite(0, 0, 'accessories', this.model.accessoryFrame);
     const balloonContainer = this.add.container(
       400,
       200,
