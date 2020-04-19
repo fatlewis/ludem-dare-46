@@ -7,13 +7,15 @@ export default class GameScene extends Phaser.Scene {
 
   create() {
     const { config } = this.game;
-
     const { matter } = this;
     this.levelBackground = this.add.image(0, 0, 'background-level1').setOrigin(0, 0);
     matter.world.setBounds(0, -40, this.levelBackground.width, config.height);
+    matter.add.mouseSpring();
 
-    matter.add.image(100, 200, 'box', null, {
+    matter.add.image(100, 200, 'fan-1', null, {
       ignoreGravity: true,
+      fixedRotation: true,
+      frictionAir: 1,
       plugin: {
         attractors: [
           (bodyA, bodyB) => {
@@ -27,34 +29,54 @@ export default class GameScene extends Phaser.Scene {
       },
     });
 
-    const balloon = matter.add.image(400, 200, 'balloon', null, {
+    this.addBalloon();
+    this.addSpikeyThings();
+
+    this.debugMode = false;
+    this.input.on('pointerdown', () => {
+      if (this.debugMode) {
+        console.log(this.input.x, this.input.y);
+      }
+    });
+  }
+
+  // for use in the chrome dev console via the command:
+  // game.scene.scenes[5].toggleDebugMode()
+  toggleDebugMode() {
+    this.debugMode = !this.debugMode;
+  }
+
+  addBalloon() {
+    const { matter } = this;
+
+    this.balloon = matter.add.image(400, 200, 'balloon', null, {
       shape: {
         type: 'circle',
         radius: 32,
       },
       mass: 1,
       ignorePointer: true,
-      gravityScale: { x: 1, y: -1 },
+      gravityScale: { y: -10 },
     });
 
-    const firstRope = this.matter.add.sprite(400, 231.5, 'rope', null, {
-      ignoreGravity: true,
+    const firstRopeSection = matter.add.image(400, 200, 'rope', null, {
+      mass: 1,
       ignorePointer: true,
     });
-    matter.add.joint(balloon, firstRope, 35);
+    matter.add.joint(this.balloon, firstRopeSection, 0, 1, { pointA: { x: 0, y: 35 } });
 
-    let prev = firstRope;
-    let i;
-    for (i = 0; i < 10; i += 1) {
-      const ropeSection = this.matter.add.image(400, 241.5 + (i * 10), 'rope', null, {
-        ignoreGravity: true,
+    let prev = firstRopeSection;
+    const segmentCount = 8;
+    for (let i = 0; i < segmentCount; i += 1) {
+      const ropeSection = matter.add.image(400, 235 + (i * 15), 'rope', null, {
+        mass: 1,
         ignorePointer: true,
       });
-      matter.add.joint(prev, ropeSection, 13);
+      matter.add.joint(prev, ropeSection, 15);
       prev = ropeSection;
     }
 
-    this.ropeAnchor = this.matter.add.image(400, 251.5 + (i * 10), 'rope', null, {
+    this.ropeAnchor = this.matter.add.image(400, 251.5 + (segmentCount * 10), 'rope', null, {
       mass: 50000,
       ignoreGravity: false,
       frictionAir: 1,
@@ -62,8 +84,33 @@ export default class GameScene extends Phaser.Scene {
     });
     this.ropeAnchor.setInteractive({ useHandCursor: true });
     matter.add.joint(prev, this.ropeAnchor, 20);
+  }
 
-    matter.add.mouseSpring();
+  addSpikeyThings() {
+    const { matter } = this;
+
+    this.spikeys = []
+    this.spikeys.push(matter.add.image(500, 450, 'cactus', null, {
+      isStatic: true
+    }));
+    this.spikeys.push(matter.add.image(988, 320, 'knives', null, {
+      isStatic: true
+    }));
+
+    // Add the collision detection callback for the balloon.
+    this.spikeys.forEach((s) => {
+      this.matterCollision.addOnCollideStart({
+        objectA: this.balloon,
+        objectB: s,
+        callback: () => {this.popBalloon()},
+        context: this
+      });
+    });
+  }
+
+  popBalloon() {
+    this.balloon.destroy();
+    this.ropeAnchor.setMass(1).setFrictionAir(0).setFixedRotation(false);
   }
 
   update() {

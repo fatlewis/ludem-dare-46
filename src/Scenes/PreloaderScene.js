@@ -76,11 +76,13 @@ export default class PreloaderScene extends Phaser.Scene {
     // load assets needed in our game
     this.load.image('Button', 'assets/button1.png');
     this.load.image('ButtonPressed', 'assets/button1selected.png');
-    this.load.image('box', 'assets/planet6.png');
     this.load.image('checkedBox', 'assets/checked1.png');
     this.load.image('Logo', 'assets/logo.png');
-    this.load.image('balloon', 'assets/pink.png');
+    this.load.image('balloon', 'assets/TealBalloon.png');
     this.load.image('rope', 'assets/blue-square.png');
+    this.load.image('cactus', 'assets/Cactus_01.png');
+    this.load.image('fan-1', 'assets/Fan_01.png');
+    this.load.image('knives', 'assets/Knives_01.png');
 
     this.load.image('balloonBlack', 'assets/BlackBalloon.png');
     this.load.image('balloonBlue', 'assets/BlueBalloon.png');
@@ -92,10 +94,10 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('balloonTeal', 'assets/TealBalloon.png');
     this.load.image('balloonYellow', 'assets/YellowBalloon.png');
 
-    this.load.audio('bgMusic', ['assets/theme.mp3']);
-
     this.load.image('background', 'assets/menubackground.png');
     this.load.image('background-level1', 'assets/background/level1.png');
+
+    this.load.audio('bgMusic', ['assets/theme.mp3']);
 
     // remove progress bar when complete
     this.load.on('complete', () => {
