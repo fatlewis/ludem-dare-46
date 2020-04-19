@@ -49,11 +49,9 @@ export default class GameScene extends Phaser.Scene {
   addBalloon() {
     const { matter } = this;
 
-    this.balloon = matter.add.image(400, 200, 'balloon', null, {
-      shape: {
-        type: 'circle',
-        radius: 32,
-      },
+    const balloonVerts = "47 0 76 11 90 31 94 59 86 91 70 112 46 125 22 112 7 91 0 59 5 31 18 11";
+    const balloon = matter.add.image(400, 200, 'balloon', null, {
+      shape: { type: 'fromVerts', verts: balloonVerts, flagInternal: true },
       mass: 1,
       ignorePointer: true,
       gravityScale: { y: -10 },
@@ -63,7 +61,7 @@ export default class GameScene extends Phaser.Scene {
       mass: 1,
       ignorePointer: true,
     });
-    matter.add.joint(this.balloon, firstRopeSection, 0, 1, { pointA: { x: 0, y: 35 } });
+    matter.add.joint(this.balloon, firstRopeSection, 0, 1, { pointA: { x: 0, y: 66.5 } });
 
     let prev = firstRopeSection;
     const segmentCount = 8;
