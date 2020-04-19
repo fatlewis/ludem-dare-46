@@ -1,7 +1,6 @@
-import 'phaser'
+import 'phaser';
 
 export default class Fan extends Phaser.GameObjects.Container {
-  
   constructor(scene, x, y, color, direction, strength) {
     super(scene);
     this.scene = scene;
@@ -9,45 +8,41 @@ export default class Fan extends Phaser.GameObjects.Container {
     this.y = y;
 
     const colorMap = {
-      'green': 'fanGreen',
-      'olive': 'fanOlive',
-      'orange': 'fanOrange',
-      'pink': 'fanPink',
-      'red': 'fanRed',
-      'teal': 'fanTeal',
-      'yellow': 'fanYellow',
+      green: 'fanGreen',
+      olive: 'fanOlive',
+      orange: 'fanOrange',
+      pink: 'fanPink',
+      red: 'fanRed',
+      teal: 'fanTeal',
+      yellow: 'fanYellow',
     };
     const textureKey = colorMap[color];
 
     const strengthMap = {
-      'low': 0.001,
-      'medium': 0.01,
-      'high': 0.03,
+      low: 0.001,
+      medium: 0.01,
+      high: 0.03,
     };
-    const strengthValue = strengthMap[strength]
+    const strengthValue = strengthMap[strength];
 
     const directionMap = {
-      'left': {
-        activeCondition: (a, b) => {
-          return (Math.abs(a.position.y - b.position.y) < 100
-                  && b.position.x < a.position.x)
-        },
-        forceVector: {x: -strengthValue, y: 0},
+      left: {
+        activeCondition: (a, b) => (Math.abs(a.position.y - b.position.y) < 100
+                  && b.position.x < a.position.x),
+        forceVector: { x: -strengthValue, y: 0 },
       },
-      'right': {
-        activeCondition: (a, b) => {
-          return (Math.abs(a.position.y - b.position.y) < 100
-                  && a.position.x < b.position.x)
-        },
-        forceVector: {x: strengthValue, y: 0},
+      right: {
+        activeCondition: (a, b) => (Math.abs(a.position.y - b.position.y) < 100
+                  && a.position.x < b.position.x),
+        forceVector: { x: strengthValue, y: 0 },
       },
     };
     const condition = directionMap[direction].activeCondition;
-    const forceVector = directionMap[direction].forceVector;
+    const { forceVector } = directionMap[direction];
 
     this.scene.anims.create({
       key: 'spin',
-      frames: this.scene.anims.generateFrameNumbers(textureKey, {start: 0, end: -1}),
+      frames: this.scene.anims.generateFrameNumbers(textureKey, { start: 0, end: -1 }),
       frameRate: 10,
       repeat: -1,
     });
@@ -62,8 +57,9 @@ export default class Fan extends Phaser.GameObjects.Container {
             if (condition(bodyA, bodyB)) {
               return forceVector;
             }
+            return undefined;
           }],
       },
-    }).anims.play('spin', true);    
+    }).anims.play('spin', true);
   }
 }

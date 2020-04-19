@@ -64,28 +64,10 @@ export default class PreloaderScene extends Phaser.Scene {
       assetText.setText(`Loading asset: ${file.key}`);
     });
 
-    // remove progress bar when complete
-    this.load.on('complete', () => {
-      progressBar.destroy();
-      progressBox.destroy();
-      loadingText.destroy();
-      percentText.destroy();
-      assetText.destroy();
-    });
-
     // Balloons, accessories and ropes
-    this.load.image('balloonBlack', 'assets/balloon/colors/BalloonBlack.png');
-    this.load.image('balloonBlue', 'assets/balloon/colors/BalloonBlue.png');
-    this.load.image('balloonOrange', 'assets/balloon/colors/BalloonOrange.png');
-    this.load.image('balloonGreen', 'assets/balloon/colors/BalloonGreen.png');
-    this.load.image('balloonPink', 'assets/balloon/colors/BalloonPink.png');
-    this.load.image('balloonPurple', 'assets/balloon/colors/BalloonPurple.png');
-    this.load.image('balloonRed', 'assets/balloon/colors/BalloonRed.png');
-    this.load.image('balloonTeal', 'assets/balloon/colors/BalloonTeal.png');
-    this.load.image('balloonYellow', 'assets/balloon/colors/BalloonYellow.png');
-    this.load.spritesheet('balloons', 'assets/balloon/BalloonsSprite.png', {frameWidth: 288, frameHeight: 288});
-    this.load.spritesheet('accessories', 'assets/balloon/accessories/AccessoriesSprite.png', {frameWidth: 288, frameHeight: 288});
-    this.load.image('face', 'assets/balloon/Face_01.png');
+    this.load.spritesheet('balloons', 'assets/balloon/BalloonsSprite.png', { frameWidth: 288, frameHeight: 288 });
+    this.load.spritesheet('accessories', 'assets/balloon/accessories/AccessoriesSprite.png', { frameWidth: 288, frameHeight: 288 });
+    this.load.spritesheet('face', 'assets/balloon/FaceSprites.png', { frameWidth: 288, frameHeight: 288 });
     this.load.image('rope', 'assets/balloon/RopeSection.png');
 
     // Spikey things
@@ -93,13 +75,13 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('knives', 'assets/spikey/Knives_01.png');
 
     // Fans
-    this.load.spritesheet('fanGreen', 'assets/fan/FanSpriteGreen.png', {frameWidth: 104, frameHeight: 129});
-    this.load.spritesheet('fanOlive', 'assets/fan/FanSpriteOlive.png', {frameWidth: 104, frameHeight: 129});
-    this.load.spritesheet('fanOrange', 'assets/fan/FanSpriteOrange.png', {frameWidth: 104, frameHeight: 129});
-    this.load.spritesheet('fanPink', 'assets/fan/FanSpritePink.png', {frameWidth: 104, frameHeight: 129});
-    this.load.spritesheet('fanRed', 'assets/fan/FanSpriteRed.png', {frameWidth: 104, frameHeight: 129});
-    this.load.spritesheet('fanTeal', 'assets/fan/FanSpriteTeal.png', {frameWidth: 104, frameHeight: 129});
-    this.load.spritesheet('fanYellow', 'assets/fan/FanSpriteYellow.png', {frameWidth: 104, frameHeight: 129});
+    this.load.spritesheet('fanGreen', 'assets/fan/FanSpriteGreen.png', { frameWidth: 104, frameHeight: 129 });
+    this.load.spritesheet('fanOlive', 'assets/fan/FanSpriteOlive.png', { frameWidth: 104, frameHeight: 129 });
+    this.load.spritesheet('fanOrange', 'assets/fan/FanSpriteOrange.png', { frameWidth: 104, frameHeight: 129 });
+    this.load.spritesheet('fanPink', 'assets/fan/FanSpritePink.png', { frameWidth: 104, frameHeight: 129 });
+    this.load.spritesheet('fanRed', 'assets/fan/FanSpriteRed.png', { frameWidth: 104, frameHeight: 129 });
+    this.load.spritesheet('fanTeal', 'assets/fan/FanSpriteTeal.png', { frameWidth: 104, frameHeight: 129 });
+    this.load.spritesheet('fanYellow', 'assets/fan/FanSpriteYellow.png', { frameWidth: 104, frameHeight: 129 });
 
     // Backgrounds
     this.load.image('background', 'assets/background/MainMenu.png');
@@ -123,6 +105,9 @@ export default class PreloaderScene extends Phaser.Scene {
 
     // Audio
     this.load.audio('bgMusic', ['assets/audio/theme.mp3']);
+
+    // DOM Elements
+    this.load.html('nameForm', 'assets/text/NameForm.html');
 
     // remove progress bar when complete
     this.load.on('complete', () => {

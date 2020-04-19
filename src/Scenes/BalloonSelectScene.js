@@ -21,7 +21,7 @@ export default class BalloonSelectScene extends Phaser.Scene {
 
     const balloon = this.add.sprite(config.width * 0.75, config.height / 2, 'balloons', framecountcolour);
     const accessory = this.add.sprite(config.width * 0.75, config.height / 2, 'accessories', framecountaccessory);
-    this.add.image(config.width * 0.75, config.height / 2, 'face');
+    this.add.sprite(config.width * 0.75, config.height / 2, 'face', 0);
 
     this.colourButton1 = this.add.image(150, 200, 'checkedBox').setInteractive({ useHandCursor: true });
     this.colourText = this.add.text(200, 190, 'Colour', { fontSize: 24, fill: '#FFF' });
@@ -30,7 +30,6 @@ export default class BalloonSelectScene extends Phaser.Scene {
     this.faceButton1 = this.add.image(150, 300, 'checkedBox').setInteractive({ useHandCursor: true });
     this.faceText = this.add.text(200, 290, 'Face', { fontSize: 24, fill: '#FFF' });
     this.faceButton2 = this.add.image(350, 300, 'checkedBox').setInteractive({ useHandCursor: true });
-
 
     this.colourButton1.on('pointerdown', () => {
       framecountcolour = (framecountcolour - 1) % 9;
@@ -58,6 +57,20 @@ export default class BalloonSelectScene extends Phaser.Scene {
       framecountaccessory = (framecountaccessory + 1) % 7;
       accessory.setFrame(framecountaccessory);
       this.model.accessoryFrame = framecountaccessory;
+    });
+
+    const nameForm = this.add.dom(200, 400).createFromCache('nameForm');
+    this.events.once('render', () => {
+      const nameField = nameForm.getChildByName('nameField');
+      if (this.model.heroName) {
+        nameField.value = this.model.heroName;
+      }
+      nameField.addEventListener(
+        'input',
+        (event) => {
+          this.model.heroName = event.target.value;
+        },
+      );
     });
   }
 }

@@ -1,32 +1,26 @@
 import 'phaser';
-import Button from '../Objects/Button';
 
 export default class HUDScene extends Phaser.Scene {
-    constructor ()
-    {
-        super('HUD');
-    }
+  constructor() {
+    super('HUD');
+  }
 
-    create ()
-    {
+  create() {
+    this.button = this.scene.scene.add.sprite(150, 550, 'menuButton').setInteractive({ useHandCursor: true });
 
-      this.button = this.scene.scene.add.sprite(150, 550, 'menuButton').setInteractive({ useHandCursor: true });
+    const bgScene = this.scene.settings.data.backgroundScene;
 
-      const bgScene = this.scene.settings.data.backgroundScene;
+    this.button.on('pointerdown', () => {
+      bgScene.scene.stop();
+      this.scene.start('Title');
+    });
 
-      this.button.on('pointerdown', () => {
-        bgScene.scene.stop();
-        this.scene.start('Title');
-      });
+    this.button.on('pointerover', () => {
+      this.button.setTexture('menuButtonPressed');
+    });
 
-      this.button.on('pointerover', () => {
-        this.button.setTexture('menuButtonPressed');
-      });
-
-      this.button.on('pointerout', () => {
-        this.button.setTexture('menuButton');
-      });  
-
-
-    }
+    this.button.on('pointerout', () => {
+      this.button.setTexture('menuButton');
+    });
+  }
 }
