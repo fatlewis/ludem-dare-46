@@ -50,7 +50,7 @@ export default class GameScene extends Phaser.Scene {
     const { matter } = this;
 
     const balloonVerts = "47 0 76 11 90 31 94 59 86 91 70 112 46 125 22 112 7 91 0 59 5 31 18 11";
-    const balloon = matter.add.image(400, 200, 'balloon', null, {
+    this.balloon = matter.add.image(400, 200, 'balloon', null, {
       shape: { type: 'fromVerts', verts: balloonVerts, flagInternal: true },
       mass: 1,
       ignorePointer: true,
@@ -76,7 +76,7 @@ export default class GameScene extends Phaser.Scene {
 
     this.ropeAnchor = this.matter.add.image(400, 251.5 + (segmentCount * 10), 'rope', null, {
       mass: 50000,
-      ignoreGravity: false,
+      ignoreGravity: true,
       frictionAir: 1,
       fixedRotation: true,
     });
