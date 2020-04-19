@@ -82,6 +82,16 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('balloon', 'assets/pink.png');
     this.load.image('rope', 'assets/blue-square.png');
 
+    this.load.image('balloonBlack', 'assets/BlackBalloon.png');
+    this.load.image('balloonBlue', 'assets/BlueBalloon.png');
+    this.load.image('balloonOrange', 'assets/OrangeBalloon.png');
+    this.load.image('balloonGreen', 'assets/GreenBalloon.png');
+    this.load.image('balloonPink', 'assets/PinkBalloon.png');
+    this.load.image('balloonPurple', 'assets/PurpleBalloon.png');
+    this.load.image('balloonRed', 'assets/RedBalloon.png');
+    this.load.image('balloonTeal', 'assets/TealBalloon.png');
+    this.load.image('balloonYellow', 'assets/YellowBalloon.png');
+
     this.load.audio('bgMusic', ['assets/theme.mp3']);
 
     this.load.image('background', 'assets/menubackground.png');
