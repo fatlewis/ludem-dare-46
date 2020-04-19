@@ -107,16 +107,18 @@ export default class PreloaderScene extends Phaser.Scene {
 
     // Menu items
     this.load.image('logo', 'assets/logo.png');
-    this.load.image('button', 'assets/ui/ButtonUp_01.png');
-    this.load.image('buttonPressed', 'assets/ui/ButtonDown_01.png');
-    this.load.image('playButton', 'assets/ui/PlayButtonUp_01.png');
-    this.load.image('playButtonPressed', 'assets/ui/PlayButtonDown_01.png');
-    this.load.image('optionsButton', 'assets/ui/OptionsButtonUp_01.png');
-    this.load.image('optionsButtonPressed', 'assets/ui/OptionsButtonDown_01.png');
-    this.load.image('aboutButton', 'assets/ui/AboutButtonUp_01.png');
-    this.load.image('aboutButtonPressed', 'assets/ui/AboutButtonDown_01.png');
-    this.load.image('creditsButton', 'assets/ui/CreditsButtonUp_01.png');
-    this.load.image('creditsButtonPressed', 'assets/ui/CreditsButtonDown_01.png');
+    this.load.image('button', 'assets/buttons/ButtonUp_02.png');
+    this.load.image('buttonPressed', 'assets/buttons/ButtonDown_02.png');
+    this.load.image('playButton', 'assets/buttons/ButtonPlayUp_02.png');
+    this.load.image('playButtonPressed', 'assets/buttons/ButtonPlayDown_02.png');
+    this.load.image('menuButton', 'assets/buttons/ButtonMenuUp_02.png');
+    this.load.image('menuButtonPressed', 'assets/buttons/ButtonMenuDown_02.png');
+    this.load.image('optionsButton', 'assets/buttons/ButtonOptionsUp_02.png');
+    this.load.image('optionsButtonPressed', 'assets/buttons/ButtonOptionsDown_02.png');
+    this.load.image('aboutButton', 'assets/buttons/ButtonAboutUp_02.png');
+    this.load.image('aboutButtonPressed', 'assets/buttons/ButtonAboutDown_02.png');
+    this.load.image('creditsButton', 'assets/buttons/ButtonCreditsUp_02.png');
+    this.load.image('creditsButtonPressed', 'assets/buttons/ButtonCreditsDown_02.png');
     this.load.image('checkedBox', 'assets/ui/checked.png');
 
     // Audio

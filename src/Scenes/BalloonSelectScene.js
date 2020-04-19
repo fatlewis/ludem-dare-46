@@ -13,8 +13,8 @@ export default class BalloonSelectScene extends Phaser.Scene {
     this.add.image(config.width / 2, config.height / 2, 'background');
 
     this.add.text(config.width * 0.1, config.height * 0.11, 'Balloon select scene', { align: 'center', fontSize: '25px', fill: '#FFF' });
-    this.menuButton = new Button(this, config.width * 0.25, config.height * 0.85, 'button', 'buttonPressed', 'Title');
-    this.gameButton = new Button(this, config.width * 0.75, config.height * 0.85, 'button', 'buttonPressed', 'Game');
+    this.menuButton = new Button(this, config.width * 0.25, config.height * 0.85, 'menuButton', 'menuButtonPressed', 'Title');
+    this.gameButton = new Button(this, config.width * 0.75, config.height * 0.85, 'playButton', 'playButtonPressed', 'Game');
 
     let framecountcolour = 0;
     let framecountaccessory = 0;
