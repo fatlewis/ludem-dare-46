@@ -37,7 +37,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   addFan() {
-    return new Fan(this, 100, 100, 'green', 'right', 'medium');
+    const fan = new Fan(this, 100, 100, 'green', 'right', 'medium');
 
     const particles = this.add.particles('rope');
     const emitter = particles.createEmitter({
