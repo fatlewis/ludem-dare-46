@@ -41,15 +41,13 @@ export default class GameScene extends Phaser.Scene {
     this.input.on('pointerdown', () => {
       if (this.debugMode) {
         // eslint-disable-next-line no-console
-        console.log(this.cameras.main.scrollX + this.input.x, this.input.y);
+        console.log(this.cameras.main.scrollX + this.input.x, this.cameras.main.scrollY + this.input.y);
       }
     });
 
     this.cameras.main.fadeIn(500);
   }
 
-  // for use in the chrome dev console via the command:
-  // game.scene.scenes[5].toggleDebugMode()
   toggleDebugMode() {
     this.debugMode = !this.debugMode;
   }
@@ -179,6 +177,8 @@ export default class GameScene extends Phaser.Scene {
 
   addLevel3SpikeyThings() {
     this.spikeys = [];
+
+    this.addBirds();
 
     // Add the collision detection callback for the balloon.
     this.spikeys.forEach((s) => {
@@ -326,6 +326,116 @@ export default class GameScene extends Phaser.Scene {
     });
   }
 
+  addBirds() {
+    const { matter } = this;
+
+    this.scene.scene.anims.create({
+      key: 'fly',
+      frames: this.scene.scene.anims.generateFrameNumbers('bird', { start: 0, end: -1 }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    const birdConfig = {
+      ignoreGravity: true,
+      ignorePointer: true,
+      fixedRotation: true,
+      frictionAir: 1,
+    };
+
+    this.bird1 = matter.add.sprite(1994, 207, 'bird', 0, birdConfig).anims.play('fly', true);
+    this.bird2 = matter.add.sprite(1994, 207, 'bird', 0, birdConfig).anims.play('fly', true);
+    this.bird3 = matter.add.sprite(1994, 207, 'bird', 0, birdConfig).anims.play('fly', true);
+    this.bird4 = matter.add.sprite(1994, 207, 'bird', 0, birdConfig).anims.play('fly', true);
+    this.bird5 = matter.add.sprite(1994, 207, 'bird', 0, birdConfig).anims.play('fly', true);
+
+    this.spikeys.push(this.bird1);
+    this.spikeys.push(this.bird2);
+    this.spikeys.push(this.bird3);
+    this.spikeys.push(this.bird4);
+    this.spikeys.push(this.bird5);
+
+    // Birds want to move along a path
+    const birdPoints1 = [
+      new Phaser.Math.Vector2(60, 1840),
+      new Phaser.Math.Vector2(750, 1840),
+    ];
+    const birdPoints2 = [
+      new Phaser.Math.Vector2(750, 1300),
+      new Phaser.Math.Vector2(60, 1300),
+    ];
+    const birdPoints3 = [
+      new Phaser.Math.Vector2(60, 900),
+      new Phaser.Math.Vector2(430, 900),
+    ];
+    const birdPoints4 = [
+      new Phaser.Math.Vector2(410, 460),
+      new Phaser.Math.Vector2(750, 460),
+    ];
+    const birdPoints5 = [
+      new Phaser.Math.Vector2(60, 40),
+      new Phaser.Math.Vector2(750, 40),
+    ];
+
+    this.birdPath1 = new Phaser.Curves.Spline(birdPoints1);
+    this.birdPath2 = new Phaser.Curves.Spline(birdPoints2);
+    this.birdPath3 = new Phaser.Curves.Spline(birdPoints3);
+    this.birdPath4 = new Phaser.Curves.Spline(birdPoints4);
+    this.birdPath5 = new Phaser.Curves.Spline(birdPoints5);
+
+    this.follower1 = { t: 0, vec: new Phaser.Math.Vector2() };
+    this.follower2 = { t: 0, vec: new Phaser.Math.Vector2() };
+    this.follower3 = { t: 0, vec: new Phaser.Math.Vector2() };
+    this.follower4 = { t: 0, vec: new Phaser.Math.Vector2() };
+    this.follower5 = { t: 0, vec: new Phaser.Math.Vector2() };
+
+    this.tweens.add({
+      targets: this.follower1,
+      t: 1,
+      ease: 'Sine.easeInOut',
+      yoyo: true,
+      duration: 4000,
+      repeat: -1,
+      delay: 0,
+    });
+    this.tweens.add({
+      targets: this.follower2,
+      t: 1,
+      ease: 'Sine.easeInOut',
+      yoyo: true,
+      duration: 4000,
+      repeat: -1,
+      delay: 1000,
+    });
+    this.tweens.add({
+      targets: this.follower3,
+      t: 1,
+      ease: 'Sine.easeInOut',
+      yoyo: true,
+      duration: 4000,
+      repeat: -1,
+      delay: 2000,
+    });
+    this.tweens.add({
+      targets: this.follower4,
+      t: 1,
+      ease: 'Sine.easeInOut',
+      yoyo: true,
+      duration: 4000,
+      repeat: -1,
+      delay: 3000,
+    });
+    this.tweens.add({
+      targets: this.follower5,
+      t: 1,
+      ease: 'Sine.easeInOut',
+      yoyo: true,
+      duration: 4000,
+      repeat: -1,
+      delay: 4000,
+    });
+  }
+
   addEndZone() {
     const endZoneRectangle = this.add.rectangle(
       this.levelBackground.width,
@@ -383,6 +493,25 @@ export default class GameScene extends Phaser.Scene {
       this.bee1.y = point1.y;
       this.bee2.x = point2.x;
       this.bee2.y = point2.y;
+    }
+
+    // Update the birds
+    if (!this.ending && this.model.level === 3) {
+      const point1 = this.birdPath1.getPoint(this.follower1.t, this.follower1.vec);
+      const point2 = this.birdPath2.getPoint(this.follower2.t, this.follower2.vec);
+      const point3 = this.birdPath3.getPoint(this.follower3.t, this.follower3.vec);
+      const point4 = this.birdPath4.getPoint(this.follower4.t, this.follower4.vec);
+      const point5 = this.birdPath5.getPoint(this.follower5.t, this.follower5.vec);
+      this.bird1.x = point1.x;
+      this.bird1.y = point1.y;
+      this.bird2.x = point2.x;
+      this.bird2.y = point2.y;
+      this.bird3.x = point3.x;
+      this.bird3.y = point3.y;
+      this.bird4.x = point4.x;
+      this.bird4.y = point4.y;
+      this.bird5.x = point5.x;
+      this.bird5.y = point5.y;
     }
   }
 
