@@ -67,12 +67,21 @@ export default class PreloaderScene extends Phaser.Scene {
     // Balloons, accessories and ropes
     this.load.spritesheet('balloons', 'assets/balloon/BalloonsSprite.png', { frameWidth: 288, frameHeight: 288 });
     this.load.spritesheet('accessories', 'assets/balloon/accessories/AccessoriesSprite.png', { frameWidth: 288, frameHeight: 288 });
+    this.load.spritesheet('hairstyles', 'assets/balloon/accessories/HairSprites.png', { frameWidth: 288, frameHeight: 288 });
     this.load.spritesheet('face', 'assets/balloon/FaceSprites.png', { frameWidth: 288, frameHeight: 288 });
     this.load.image('rope', 'assets/balloon/RopeSection.png');
 
     // Spikey things
+    this.load.image('bee', 'assets/spikey/Bee_01.png');
     this.load.image('cactus', 'assets/spikey/Cactus_01.png');
+    this.load.image('candles', 'assets/spikey/Candles_01.png');
+    this.load.image('ironFence', 'assets/spikey/IronFence_02.png');
     this.load.image('knives', 'assets/spikey/Knives_01.png');
+    this.load.image('tree1', 'assets/spikey/Tree_01.png');
+    this.load.image('tree2', 'assets/spikey/Tree_02.png');
+    this.load.image('tree3', 'assets/spikey/Tree_03.png');
+    this.load.image('tree4', 'assets/spikey/Tree_04.png');
+    this.load.image('woodFence', 'assets/spikey/WoodFence_02.png');
 
     // Fans
     this.load.spritesheet('fanGreen', 'assets/fan/FanSpriteGreen.png', { frameWidth: 104, frameHeight: 129 });
@@ -85,7 +94,10 @@ export default class PreloaderScene extends Phaser.Scene {
 
     // Backgrounds
     this.load.image('background', 'assets/background/MainMenu.png');
+    this.load.image('background-customize', 'assets/CustomizePage_01.png');
+    this.load.image('background-options', 'assets/OptionsMenu_01.png');
     this.load.image('background-level1', 'assets/background/level-1/BackgroundLevel1_01.png');
+    this.load.image('background-level2', 'assets/background/level-2/BackgroundLevel2.png');
 
     // Menu items
     this.load.image('logo', 'assets/logo.png');
@@ -101,6 +113,10 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('aboutButtonPressed', 'assets/buttons/ButtonAboutDown_02.png');
     this.load.image('creditsButton', 'assets/buttons/ButtonCreditsUp_02.png');
     this.load.image('creditsButtonPressed', 'assets/buttons/ButtonCreditsDown_02.png');
+    this.load.image('leftArrowUp', 'assets/buttons/LeftArrowUp_01.png');
+    this.load.image('leftArrowDown', 'assets/buttons/LeftArrowDown_01.png');
+    this.load.image('rightArrowUp', 'assets/buttons/RightArrowUp_01.png');
+    this.load.image('rightArrowDown', 'assets/buttons/RightArrowDown_01.png');
     this.load.image('checkedBox', 'assets/ui/checked.png');
 
     // Audio

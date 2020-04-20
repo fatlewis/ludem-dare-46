@@ -11,23 +11,29 @@ export default class GameScene extends Phaser.Scene {
   create() {
     const { config } = this.game;
     const { matter } = this;
-    this.levelBackground = this.add.image(0, 0, 'background-level1').setOrigin(0, 0);
-    this.graphics = this.add.graphics();
-    matter.world.setBounds(0, -40, this.levelBackground.width, config.height);
-    matter.add.mouseSpring();
 
     this.scene.launch('HUD', { backgroundScene: this });
 
-    this.addFan();
-    this.addBalloon();
-    this.addSpikeyThings();
-    this.addEndZone();
+    this.model = this.sys.game.globals.model;
+    switch (this.model.level) {
+      case 1:
+        this.addLevel1();
+        break;
+      case 2:
+        this.addLevel2();
+        break;
+    }
+
+    matter.world.setBounds(0, -40, this.levelBackground.width, config.height);
+    this.graphics = this.add.graphics();
+    matter.add.mouseSpring();
+
 
     this.debugMode = false;
     this.input.on('pointerdown', () => {
       if (this.debugMode) {
         // eslint-disable-next-line no-console
-        console.log(this.input.x, this.input.y);
+        console.log(this.cameras.main.scrollX + this.input.x, this.input.y);
       }
     });
   }
@@ -36,6 +42,21 @@ export default class GameScene extends Phaser.Scene {
   // game.scene.scenes[5].toggleDebugMode()
   toggleDebugMode() {
     this.debugMode = !this.debugMode;
+  }
+
+  addLevel1() {
+    this.levelBackground = this.add.image(0, 0, 'background-level1').setOrigin(0, 0);
+    this.addFan();
+    this.addBalloon();
+    this.addLevel1SpikeyThings();
+    this.addEndZone();
+  }
+
+  addLevel2() {
+    this.levelBackground = this.add.image(0, 0, 'background-level2').setOrigin(0, 0);
+    this.addBalloon();
+    this.addLevel2SpikeyThings();
+    this.addEndZone();
   }
 
   addFan() {
@@ -55,8 +76,6 @@ export default class GameScene extends Phaser.Scene {
   }
 
   addBalloon() {
-    const { matter } = this;
-
     const balloonContainer = new Balloon(this, 100, 250, undefined, { yGravity: -1 });
     this.add.existing(balloonContainer);
     this.balloon = balloonContainer.matterObject;
@@ -72,16 +91,12 @@ export default class GameScene extends Phaser.Scene {
     this.rope = Rope.createBetweenObjects(this, this.balloon, this.ropeAnchor, 15, { pointA: { x:-5, y:70 }});
   }
 
-  addSpikeyThings() {
+  addLevel1SpikeyThings() {
     const { matter } = this;
 
     this.spikeys = [];
-    this.spikeys.push(matter.add.image(500, 450, 'cactus', null, {
-      isStatic: true,
-    }));
-    this.spikeys.push(matter.add.image(988, 320, 'knives', null, {
-      isStatic: true,
-    }));
+    this.spikeys.push(matter.add.image(500, 450, 'cactus', null, {isStatic: true,}));
+    this.spikeys.push(matter.add.image(988, 320, 'knives', null, {isStatic: true,}));
 
     // Add the collision detection callback for the balloon.
     this.spikeys.forEach((s) => {
@@ -92,6 +107,95 @@ export default class GameScene extends Phaser.Scene {
         context: this,
       });
     });
+  }
+
+  addLevel2SpikeyThings() {
+    const { matter } = this;
+
+    this.spikeys = [];
+    this.spikeys.push(matter.add.image(1886, 467, 'tree1', null, { isStatic: true }));
+    this.spikeys.push(matter.add.image(1744, 352, 'tree2', null, { isStatic: true }));
+    this.spikeys.push(matter.add.image(1616, 460, 'tree3', null, { isStatic: true }));
+    this.spikeys.push(matter.add.image(3049, 324, 'tree4', null, { isStatic: true }));
+    this.spikeys.push(matter.add.image(635, 504, 'ironFence', null, { isStatic: true }));
+    this.spikeys.push(matter.add.image(836, 504, 'ironFence', null, { isStatic: true }));
+    this.spikeys.push(matter.add.image(1076, 504, 'ironFence', null, { isStatic: true }));
+    this.spikeys.push(matter.add.image(1279, 504, 'ironFence', null, { isStatic: true }));
+    this.spikeys.push(matter.add.image(2790, 504, 'ironFence', null, { isStatic: true }));
+    this.spikeys.push(matter.add.image(2992, 504, 'ironFence', null, { isStatic: true }));
+    this.spikeys.push(matter.add.image(86, 504, 'woodFence', null, { isStatic: true }));
+    this.spikeys.push(matter.add.image(260, 504, 'woodFence', null, { isStatic: true }));
+    this.spikeys.push(matter.add.image(2443, 504, 'woodFence', null, { isStatic: true }));
+    this.spikeys.push(matter.add.image(2616, 504, 'woodFence', null, { isStatic: true }));
+    this.spikeys.push(matter.add.image(3211, 504, 'woodFence', null, { isStatic: true }));
+    this.spikeys.push(matter.add.image(3383, 504, 'woodFence', null, { isStatic: true }));
+
+    this.addBees();
+
+    // Add the collision detection callback for the balloon.
+    this.spikeys.forEach((s) => {
+      this.matterCollision.addOnCollideStart({
+        objectA: this.balloon,
+        objectB: s,
+        callback: () => { this.popBalloon(); },
+        context: this,
+      });
+    });
+  }
+
+  addBees() {
+    const { matter } = this;
+
+    this.bee1 = matter.add.image(1994, 207, 'bee', null, {
+      ignoreGravity: true,
+      ignorePointer: true,
+      fixedRotation: true,
+      frictionAir: 1,
+    });
+    this.bee2 = matter.add.image(1994, 207, 'bee', null, {
+      ignoreGravity: true,
+      ignorePointer: true,
+      fixedRotation: true,
+      frictionAir: 1,
+    });
+
+    this.spikeys.push(this.bee1);
+    this.spikeys.push(this.bee2);
+
+    // Bees want to move along a path
+    const beePoints1 = [
+      new Phaser.Math.Vector2(1891, 56),
+      new Phaser.Math.Vector2(2291, 338),
+      new Phaser.Math.Vector2(2329, 93),
+      new Phaser.Math.Vector2(1939, 298),
+      new Phaser.Math.Vector2(1891, 56),
+    ];
+    const beePoints2 = [
+      new Phaser.Math.Vector2(2090, 500),
+      new Phaser.Math.Vector2(2233, 488),
+    ];
+
+    this.beePath1 = new Phaser.Curves.Spline(beePoints1);
+    this.beePath2 = new Phaser.Curves.Spline(beePoints2);
+
+    this.follower1 = { t: 0, vec: new Phaser.Math.Vector2() };
+    this.follower2 = { t: 0, vec: new Phaser.Math.Vector2() };
+
+    this.tweens.add({
+      targets: this.follower1,
+      t: 1,
+      ease: 'Linear',
+      duration: 4000,
+      repeat: -1,
+    });
+    this.tweens.add({
+      targets: this.follower2,
+      t: 1,
+      ease: 'Sine.easeInOut',
+      yoyo: true,
+      duration: 1500,
+      repeat: -1,
+    })
   }
 
   addEndZone() {
@@ -134,6 +238,16 @@ export default class GameScene extends Phaser.Scene {
 
     if (this.cameras.main) {
       this.recenterCamera();
+    }
+
+    // Update the bees
+    if (this.model.level == 2) {
+      const point1 = this.beePath1.getPoint(this.follower1.t, this.follower1.vec);
+      const point2 = this.beePath2.getPoint(this.follower2.t, this.follower2.vec);
+      this.bee1.x = point1.x;
+      this.bee1.y = point1.y;
+      this.bee2.x = point2.x;
+      this.bee2.y = point2.y;
     }
   }
 
