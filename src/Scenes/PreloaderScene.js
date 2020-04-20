@@ -82,6 +82,7 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('tree3', 'assets/spikey/Tree_03.png');
     this.load.image('tree4', 'assets/spikey/Tree_04.png');
     this.load.image('woodFence', 'assets/spikey/WoodFence_02.png');
+    this.load.image('laser', 'assets/spikey/Lazer_01.png');
 
     // Fans
     this.load.spritesheet('fanGreen', 'assets/fan/FanSpriteGreen.png', { frameWidth: 104, frameHeight: 129 });
@@ -100,10 +101,12 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('foreground-level1', 'assets/background/level-1/Foreground_doorframes_01.png');
     this.load.image('background-level2', 'assets/background/level-2/BackgroundLevel2.png');
     this.load.image('background-level3', 'assets/background/level-3/ThirdLevel_01.png');
-    this.load.image('background-level4', 'assets/background/level-2/BackgroundLevel2.png');
+    this.load.image('background-level4', 'assets/background/level-4/FourthLevel_01.png');
     this.load.image('background-stageComplete', 'assets/background/StageComplete_01.png');
     this.load.image('background-missionSuccess', 'assets/background/MissionSuccess_01.png');
     this.load.image('background-missionFail', 'assets/background/Death_01.png');
+
+    this.load.image('endButton', 'assets/buttons/FinalLevelButtonUp_01.png');
 
     // Menu items
     this.load.image('logo', 'assets/logo.png');

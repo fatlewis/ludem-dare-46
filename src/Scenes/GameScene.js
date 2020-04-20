@@ -78,6 +78,7 @@ export default class GameScene extends Phaser.Scene {
 
   addLevel4() {
     this.levelBackground = this.add.image(0, 0, 'background-level4').setOrigin(0, 0);
+    this.endButton = this.add.image(770, 275, 'endButton');
     this.addBalloon();
     this.addLevel4SpikeyThings();
     this.addEndZone();
@@ -189,7 +190,19 @@ export default class GameScene extends Phaser.Scene {
     const { matter } = this;
 
     this.spikeys = [];
-    
+
+    this.laser1 = matter.add.image(260, 50, 'laser', null, {isStatic: true, angle: 30});
+    this.laser2 = matter.add.image(200, 0, 'laser', null, {isStatic: true, angle: 320});
+    this.laser3 = matter.add.image(300, 500, 'laser', null, {isStatic: true, angle: 40});
+    this.laser4 = matter.add.image(400, 200, 'laser', null, {isStatic: true, angle: 30});
+    this.laser5 = matter.add.image(500, 300, 'laser', null, {isStatic: true, angle: 10});
+
+    this.spikeys.push(this.laser1);
+    this.spikeys.push(this.laser2);
+    this.spikeys.push(this.laser3);
+    this.spikeys.push(this.laser4);
+    this.spikeys.push(this.laser5);
+
     // Add the collision detection callback for the balloon.
     this.spikeys.forEach((s) => {
       this.matterCollision.addOnCollideStart({
@@ -199,6 +212,54 @@ export default class GameScene extends Phaser.Scene {
         context: this,
       });
     });
+
+    this.toggle1 = false;
+    this.toggle2 = false;
+
+    this.time.addEvent({
+      delay: 2000,
+      loop: true,
+      startAt: 2000,
+      callback: () => {
+        this.toggle1 = !this.toggle1;
+        if (this.toggle1) {
+          this.laser1.destroy();
+          this.laser2.destroy();
+          this.laser3.destroy();
+        } else {
+          this.laser1 = matter.add.image(260, 50, 'laser', null, {isStatic: true, angle: 30});
+          this.laser2 = matter.add.image(200, 0, 'laser', null, {isStatic: true, angle: 320});
+          this.laser3 = matter.add.image(300, 500, 'laser', null, {isStatic: true, angle: 40});
+          [this.laser1, this.laser2, this.laser3].forEach( (l) => {this.matterCollision.addOnCollideStart({
+            objectA: this.balloon,
+            objectB: l,
+            callback: () => { this.popBalloon(); },
+            context: this,
+          })});
+        }
+      }});
+
+    this.time.addEvent({
+      delay: 2000,
+      loop: true,
+      startAt: 4000,
+      callback: () => {
+        this.toggle2 = !this.toggle2;
+        if (this.toggle2) {
+          this.laser4.destroy();
+          this.laser5.destroy();
+        } else {
+          this.laser4 = matter.add.image(400, 200, 'laser', null, {isStatic: true, angle: 30});
+          this.laser5 = matter.add.image(500, 300, 'laser', null, {isStatic: true, angle: 10});
+          [this.laser4, this.laser5].forEach( (l) => {this.matterCollision.addOnCollideStart({
+            objectA: this.balloon,
+            objectB: l,
+            callback: () => { this.popBalloon(); },
+            context: this,
+          })});
+        }
+      }});
+    
 
   }
 
