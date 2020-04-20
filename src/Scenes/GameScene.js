@@ -445,16 +445,16 @@ export default class GameScene extends Phaser.Scene {
       }
     }
 
-    const halfViewportHeight = this.game.config.height / 2;
-    const screenCenterY = Math.round(this.cameras.main.scrollY + halfViewportHeight);
+    const threeQuartersViewportHeight = this.game.config.height * 0.75;
+    const screenPivotY = Math.round(this.cameras.main.scrollY + threeQuartersViewportHeight);
     const ropeAnchorY = Math.round(this.ropeAnchor.y);
     const isOutsideCameraCenterY = GameScene.isOutsideCameraCenter(
       ropeAnchorY,
-      screenCenterY,
+      screenPivotY,
       0,
     );
     if (isOutsideCameraCenterY) {
-      const moveDistance = GameScene.getMoveDistance(ropeAnchorY, screenCenterY);
+      const moveDistance = GameScene.getMoveDistance(ropeAnchorY, screenPivotY);
       const newScrollY = this.cameras.main.scrollY + moveDistance;
       if (
         (newScrollY > 0)
