@@ -14,15 +14,12 @@ export default class OptionsScene extends Phaser.Scene {
 
     this.add.image(config.width / 2, config.height / 2, 'background-options');
 
-    this.text = this.add.text(300, 100, 'Options', { fontSize: 40, fill: '#000' });
-    this.musicButton = this.add.image(200, 200, 'checkedBox');
-    this.musicText = this.add.text(250, 190, 'Music Enabled', { fontSize: 24, fill: '#000' });
+    this.musicButton = this.add.image(490, 300, 'checkMark').setInteractive({ useHandCursor: true });
 
-    this.soundButton = this.add.image(200, 300, 'checkedBox');
-    this.soundText = this.add.text(250, 290, 'Sound Enabled', { fontSize: 24, fill: '#000' });
+    this.soundButton = this.add.image(490, 380, 'checkMark').setInteractive({ useHandCursor: true });
 
-    this.musicButton.setInteractive();
-    this.soundButton.setInteractive();
+    // this.musicButton.setInteractive();
+    // this.soundButton.setInteractive();
 
     this.musicButton.on('pointerdown', () => {
       this.model.musicOn = !this.model.musicOn;
@@ -36,17 +33,17 @@ export default class OptionsScene extends Phaser.Scene {
 
     this.updateAudio();
 
-    this.menuButton = new Button(this, 400, 500, 'menuButton', 'menuButtonPressed', 'Title');
+    this.menuButton = new Button(this, 550, 500, 'menuButton', 'menuButtonPressed', 'Title');
     this.updateAudio();
   }
 
   updateAudio() {
     if (this.model.musicOn === false) {
-      this.musicButton.setTexture('box');
+      this.musicButton.setAlpha(0.001);
       this.game.registry.get('bgMusic').stop();
       this.model.bgMusicPlaying = false;
     } else {
-      this.musicButton.setTexture('checkedBox');
+      this.musicButton.setAlpha(1);
       if (this.model.bgMusicPlaying === false) {
         this.game.registry.get('bgMusic').play();
         this.model.bgMusicPlaying = true;
@@ -54,9 +51,10 @@ export default class OptionsScene extends Phaser.Scene {
     }
 
     if (this.model.soundOn === false) {
-      this.soundButton.setTexture('box');
+      //this.soundButton.setTexture('box');
+      this.soundButton.setAlpha(0.001);
     } else {
-      this.soundButton.setTexture('checkedBox');
+      this.soundButton.setAlpha(1);
     }
   }
 }
