@@ -1,5 +1,7 @@
 import 'phaser';
+import Balloon from '../Objects/Balloon';
 import Fan from '../Objects/Fan';
+import Rope from '../Objects/Rope';
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
@@ -97,76 +99,20 @@ export default class GameScene extends Phaser.Scene {
   }
 
   addBalloon() {
-    const { matter } = this;
-    this.model = this.sys.game.globals.model;
+    const balloonContainer = new Balloon(this, 100, 250, undefined, { yGravity: -1 });
+    this.add.existing(balloonContainer);
+    this.balloon = balloonContainer.matterObject;
 
-    const balloonBase = this.add.sprite(0, 0, 'balloons', this.model.colourFrame);
-    const balloonFace = this.add.sprite(0, 0, 'face', this.model.faceFrame);
-    const balloonAccessories = this.add.sprite(0, 0, 'accessories', this.model.accessoryFrame);
-    const balloonHair = this.add.sprite(0, 0, 'hairstyles', this.model.hairFrame);
-    const balloonContainer = this.add.container(
-      400,
-      200,
-      [balloonBase, balloonFace, balloonAccessories, balloonHair],
-    );
-
-    this.balloon = matter.add.gameObject(balloonContainer, {
-      position: { x: 400, y: 200 },
-      vertices: [
-        { x: 42, y: 8 },
-        { x: 71, y: 19 },
-        { x: 85, y: 39 },
-        { x: 89, y: 67 },
-        { x: 81, y: 99 },
-        { x: 65, y: 120 },
-        { x: 41, y: 133 },
-        { x: 17, y: 120 },
-        { x: 2, y: 99 },
-        { x: -5, y: 67 },
-        { x: 0, y: 39 },
-        { x: 13, y: 19 },
-      ],
-      mass: 1,
-      ignorePointer: true,
-      gravityScale: { y: -10 },
-    });
-
-    this.ropeSections = [];
-
-    const x = 400;
-    let y = 200;
-    const firstRopeSection = matter.add.image(x, y, 'rope', null, {
-      mass: 1,
-      ignorePointer: true,
-    }).setVisible(false);
-    const balloonNeckPoint = { x: -5, y: 70 };
-    matter.add.joint(this.balloon, firstRopeSection, 0, 1, { pointA: balloonNeckPoint });
-    this.ropeSections.push(firstRopeSection);
-
-    let prev = firstRopeSection;
-    const segmentCount = 8;
-    for (let i = 0; i < segmentCount; i += 1) {
-      y = 235 + (i * 15);
-      const ropeSection = matter.add.image(x, y, 'rope', null, {
-        mass: 1,
-        ignorePointer: true,
-        render: { opacity: 0 },
-      }).setVisible(false);
-      matter.add.joint(prev, ropeSection, 15);
-      this.ropeSections.push(ropeSection);
-      prev = ropeSection;
-    }
-
-    y = 251.5 + (segmentCount * 10);
-    this.ropeAnchor = this.matter.add.image(x, y, 'rope', null, {
+    this.ropeAnchor = this.matter.add.image(100, 350, 'rope', null, {
       mass: 50000,
-      ignoreGravity: true,
+      ignoreGravity: false,
       frictionAir: 1,
       fixedRotation: true,
     });
     this.ropeAnchor.setInteractive({ useHandCursor: true });
-    this.ropeSections.push(this.ropeAnchor);
-    matter.add.joint(prev, this.ropeAnchor, 20);
+
+    this.rope = Rope.createBetweenObjects(this, this.balloon, this.ropeAnchor, 15, { pointA: { x:-5, y:70 },
+                                                                                     pointB: { x:0, y:-12 } });
   }
 
   addLevel1SpikeyThings() {
@@ -331,6 +277,8 @@ export default class GameScene extends Phaser.Scene {
   popBalloon() {
     this.model = this.sys.game.globals.model;
     this.balloon.destroy();
+    this.matter.world.removeConstraint(this.rope.initialJoint);
+    this.matter.world.removeConstraint(this.rope.finalJoint);
     this.ropeAnchor.setMass(1).setFrictionAir(0).setFixedRotation(false);
     if (this.model.soundOn == true) {
       this.game.registry.get('pop').play();
@@ -340,17 +288,16 @@ export default class GameScene extends Phaser.Scene {
   getRopePoints() {
     const points = [];
     this.ropeSections.forEach((p) => {
-      points.push(new Phaser.Math.Vector2(p.x, p.y));
+      points.push(new Phaser.Math.Vector2(p.position.x, p.position.y));
     });
     return points;
   }
 
   update() {
     if (this.ropeAnchor.active) {
-      this.ropeCurve = new Phaser.Curves.Spline(this.getRopePoints());
       this.graphics.clear();
       this.graphics.lineStyle(1, 0x000000, 1);
-      this.ropeCurve.draw(this.graphics, 64);
+      this.rope.drawCurve(this);
     }
 
     if (this.cameras.main) {

@@ -6,7 +6,7 @@ export default class HUDScene extends Phaser.Scene {
   }
 
   create() {
-    this.button = this.scene.scene.add.sprite(150, 550, 'menuButton').setInteractive({ useHandCursor: true });
+    this.button = this.scene.scene.add.sprite(720, 50, 'menuButton').setInteractive({ useHandCursor: true });
 
     this.button.on('pointerdown', () => {
       this.fadeToScene('Title');
