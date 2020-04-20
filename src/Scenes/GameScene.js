@@ -31,7 +31,7 @@ export default class GameScene extends Phaser.Scene {
         break;
     }
 
-    matter.world.setBounds(0, -40, this.levelBackground.width, config.height);
+    matter.world.setBounds(0, -40, this.levelBackground.width, this.levelBackground.height);
     this.graphics = this.add.graphics();
     matter.add.mouseSpring();
 
@@ -70,7 +70,8 @@ export default class GameScene extends Phaser.Scene {
 
   addLevel3() {
     this.levelBackground = this.add.image(0, 0, 'background-level3').setOrigin(0, 0);
-    this.addBalloon();
+    this.initialiseCamera();
+    this.addBalloon(100, this.levelBackground.height - 250);
     this.addLevel3SpikeyThings();
     this.addEndZone();
   }
@@ -80,6 +81,11 @@ export default class GameScene extends Phaser.Scene {
     this.addBalloon();
     this.addLevel4SpikeyThings();
     this.addEndZone();
+  }
+
+  initialiseCamera() {
+    this.cameras.main.scrollX = 0;
+    this.cameras.main.scrollY = this.levelBackground.height - this.game.config.height;
   }
 
   addFan() {
@@ -98,12 +104,12 @@ export default class GameScene extends Phaser.Scene {
 
   }
 
-  addBalloon() {
-    const balloonContainer = new Balloon(this, 100, 350, undefined, { yGravity: -1 });
+  addBalloon(x = 100, y = 350) {
+    const balloonContainer = new Balloon(this, x, y, undefined, { yGravity: -1 });
     this.add.existing(balloonContainer);
     this.balloon = balloonContainer.matterObject;
 
-    this.ropeAnchor = this.matter.add.image(100, 450, 'rope', null, {
+    this.ropeAnchor = this.matter.add.image(x, y + 100, 'rope', null, {
       mass: 50000,
       ignoreGravity: false,
       frictionAir: 1,
@@ -359,14 +365,13 @@ export default class GameScene extends Phaser.Scene {
     const screenCenterX = Math.round(this.cameras.main.scrollX + halfViewportWidth);
     const ropeAnchorX = Math.round(this.ropeAnchor.x);
 
-    const isOutsideCameraCenter = GameScene.isOutsideCameraCenter(
+    const isOutsideCameraCenterX = GameScene.isOutsideCameraCenter(
       ropeAnchorX,
       screenCenterX,
       150,
     );
-    if (isOutsideCameraCenter) {
+    if (isOutsideCameraCenterX) {
       const moveDistance = GameScene.getMoveDistance(ropeAnchorX, screenCenterX);
-
       const newScrollX = this.cameras.main.scrollX + moveDistance;
       if (
         (newScrollX > 0)
@@ -375,24 +380,42 @@ export default class GameScene extends Phaser.Scene {
         this.cameras.main.scrollX += moveDistance;
       }
     }
+
+    const halfViewportHeight = this.game.config.height / 2;
+    const screenCenterY = Math.round(this.cameras.main.scrollY + halfViewportHeight);
+    const ropeAnchorY = Math.round(this.ropeAnchor.y);
+    const isOutsideCameraCenterY = GameScene.isOutsideCameraCenter(
+      ropeAnchorY,
+      screenCenterY,
+      0,
+    );
+    if (isOutsideCameraCenterY) {
+      const moveDistance = GameScene.getMoveDistance(ropeAnchorY, screenCenterY);
+      const newScrollY = this.cameras.main.scrollY + moveDistance;
+      if (
+        (newScrollY > 0)
+        && (newScrollY < (this.levelBackground.height - this.game.config.height))
+      ) {
+        this.cameras.main.scrollY += moveDistance;
+      }
+    }
   }
 
-  static isOutsideCameraCenter(xValue, screenCenterX, offsetTolerationSize) {
+  static isOutsideCameraCenter(value, screenCenterValue, offsetTolerationSize) {
     if (
-      xValue >= (screenCenterX - offsetTolerationSize)
-      && xValue <= (screenCenterX + offsetTolerationSize)
+      value >= (screenCenterValue - offsetTolerationSize)
+      && value <= (screenCenterValue + offsetTolerationSize)
     ) {
       return false;
     }
     return true;
   }
 
-  static getMoveDistance(ropeAnchorX, screenCenterX) {
+  static getMoveDistance(ropeAnchorValue, screenCenterValue) {
     const moveDistance = Math.min(
-      Math.abs(ropeAnchorX - screenCenterX),
+      Math.abs(ropeAnchorValue - screenCenterValue),
       5,
     );
-    const ropeAnchorIsRightOfCenter = ropeAnchorX > screenCenterX;
-    return ropeAnchorIsRightOfCenter ? moveDistance : -moveDistance;
+    return (ropeAnchorValue > screenCenterValue) ? moveDistance : -moveDistance;
   }
 }
