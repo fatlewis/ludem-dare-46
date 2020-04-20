@@ -341,7 +341,10 @@ export default class GameScene extends Phaser.Scene {
       Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,
       () => {
         this.scene.start(target);
-        this.scene.get(target).cameras.main.fadeIn(500);
+        this.scene.get(target).events.once(
+          Phaser.Scenes.Events.CREATE,
+          () => this.scene.get(target).cameras.main.fadeIn(500),
+        );
       },
     );
   }
