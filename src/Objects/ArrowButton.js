@@ -15,41 +15,34 @@ export default class ArrowButton extends Phaser.GameObjects.Container {
     let frameCount;
 
     this.button.on('pointerdown', () => {
-      if (option == 'colour') { 
+      if (option === 'colour') {
         frameCount = this.scene.model.colourFrame;
-      }
-      else if (option == 'accessory') {
+      } else if (option === 'accessory') {
         frameCount = this.scene.model.accessoryFrame;
-      }
-      else if (option == 'hair') {
+      } else if (option === 'hair') {
         frameCount = this.scene.model.hairFrame;
-      }
-      else if (option == 'face') {
+      } else if (option === 'face') {
         frameCount = this.scene.model.faceFrame;
       }
 
-      if (direction == 'left') { 
+      if (direction === 'left') {
         frameCount = (frameCount - 1) % frames;
         if (frameCount < 0) { frameCount += frames; }
       }
 
-      if (direction == 'right') {
+      if (direction === 'right') {
         frameCount = (frameCount + 1) % frames;
       }
 
-      if (option == 'colour') { 
+      if (option === 'colour') {
         this.scene.model.colourFrame = frameCount;
-      }
-      else if (option == 'accessory') {
+      } else if (option === 'accessory') {
         this.scene.model.accessoryFrame = frameCount;
-      }
-      else if (option == 'hair') {
+      } else if (option === 'hair') {
         this.scene.model.hairFrame = frameCount;
-      }
-      else if (option == 'face') {
+      } else if (option === 'face') {
         this.scene.model.faceFrame = frameCount;
       }
-
     });
 
     this.button.on('pointerover', () => {

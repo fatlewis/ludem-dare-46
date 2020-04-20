@@ -16,10 +16,10 @@ export default class BalloonSelectScene extends Phaser.Scene {
     this.menuButton = new Button(this, 100, config.height * 0.85, 'menuButton', 'menuButtonPressed', 'Title');
     this.gameButton = new Button(this, 250, config.height * 0.85, 'playButton', 'playButtonPressed', 'Game', true);
 
-    let framecountcolour = this.model.colourFrame || 0;
-    let framecountaccessory = this.model.accessoryFrame || 0;
-    let framecounthair = this.model.hairFrame || 0;
-    let framecountface = this.model.faceFrame || 0;
+    const framecountcolour = this.model.colourFrame || 0;
+    const framecountaccessory = this.model.accessoryFrame || 0;
+    const framecounthair = this.model.hairFrame || 0;
+    const framecountface = this.model.faceFrame || 0;
 
     this.balloon = this.add.sprite(config.width * 0.75, config.height / 2, 'balloons', framecountcolour);
     this.accessory = this.add.sprite(config.width * 0.75, config.height / 2, 'accessories', framecountaccessory);
@@ -62,6 +62,5 @@ export default class BalloonSelectScene extends Phaser.Scene {
     this.accessory.setFrame(this.model.accessoryFrame);
     this.hair.setFrame(this.model.hairFrame);
     this.faces.setFrame(this.model.faceFrame);
-
   }
 }

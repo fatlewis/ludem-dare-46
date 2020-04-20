@@ -23,14 +23,14 @@ export default class Rope {
 
     const xDistance = Math.abs(start.x - end.x);
     const yDistance = Math.abs(start.y - end.y);
-    const distance = Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
+    const distance = Math.sqrt((xDistance ** 2) + (yDistance ** 2));
 
     // Ensure each segment has a distance of <= segmentLength
     const numberOfPoints = distance / segmentLength;
     let xSpacingDistance = xDistance / numberOfPoints;
-    if (start.x > end.x) { xSpacingDistance = xSpacingDistance * -1 }
+    if (start.x > end.x) { xSpacingDistance *= -1; }
     let ySpacingDistance = yDistance / numberOfPoints;
-    if (start.y > end.y) { ySpacingDistance = ySpacingDistance * -1 }
+    if (start.y > end.y) { ySpacingDistance *= -1; }
 
     // Add initial point and connect it to object
     const initialPoint = Rope.createPoint(scene, start.x, start.y);
@@ -39,7 +39,7 @@ export default class Rope {
       initialPoint,
       0,
       undefined,
-      (options && options.pointA) ? { pointA: options.pointA } : undefined
+      (options && options.pointA) ? { pointA: options.pointA } : undefined,
     );
 
     let nextX;
@@ -68,7 +68,7 @@ export default class Rope {
       secondObject,
       0,
       undefined,
-      (options && options.pointB) ? { pointB: options.pointB } : undefined
+      (options && options.pointB) ? { pointB: options.pointB } : undefined,
     );
 
     // Return an instance with the list of rope points
