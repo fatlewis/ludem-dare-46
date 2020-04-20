@@ -9,8 +9,6 @@ export default class GameScene extends Phaser.Scene {
   create() {
     const { config } = this.game;
     const { matter } = this;
-    this.graphics = this.add.graphics();
-    matter.add.mouseSpring();
 
     this.scene.launch('HUD', { backgroundScene: this });
 
@@ -25,6 +23,9 @@ export default class GameScene extends Phaser.Scene {
     }
 
     matter.world.setBounds(0, -40, this.levelBackground.width, config.height);
+    this.graphics = this.add.graphics();
+    matter.add.mouseSpring();
+
 
     this.debugMode = false;
     this.input.on('pointerdown', () => {
