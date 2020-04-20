@@ -31,7 +31,7 @@ export default class GameScene extends Phaser.Scene {
     this.input.on('pointerdown', () => {
       if (this.debugMode) {
         // eslint-disable-next-line no-console
-        console.log(this.input.x, this.input.y);
+        console.log(this.cameras.main.scrollX + this.input.x, this.input.y);
       }
     });
   }
@@ -149,12 +149,8 @@ export default class GameScene extends Phaser.Scene {
     const { matter } = this;
 
     this.spikeys = [];
-    this.spikeys.push(matter.add.image(500, 450, 'cactus', null, {
-      isStatic: true,
-    }));
-    this.spikeys.push(matter.add.image(988, 320, 'knives', null, {
-      isStatic: true,
-    }));
+    this.spikeys.push(matter.add.image(500, 450, 'cactus', null, {isStatic: true,}));
+    this.spikeys.push(matter.add.image(988, 320, 'knives', null, {isStatic: true,}));
 
     // Add the collision detection callback for the balloon.
     this.spikeys.forEach((s) => {
@@ -171,36 +167,24 @@ export default class GameScene extends Phaser.Scene {
     const { matter } = this;
 
     this.spikeys = [];
-    this.spikeys.push(matter.add.image(500, 450, 'tree1', null, {
-      isStatic: true,
-    }));
-    this.spikeys.push(matter.add.image(600, 450, 'tree2', null, {
-      isStatic: true,
-    }));
-    this.spikeys.push(matter.add.image(700, 450, 'tree3', null, {
-      isStatic: true,
-    }));
-    this.spikeys.push(matter.add.image(800, 450, 'tree4', null, {
-      isStatic: true,
-    }));
-    this.spikeys.push(matter.add.image(900, 320, 'bee', null, {
-      isStatic: true,
-    }));
-    this.spikeys.push(matter.add.image(988, 320, 'bee', null, {
-      isStatic: true,
-    }));
-    this.spikeys.push(matter.add.image(1088, 450, 'ironFence', null, {
-      isStatic: true,
-    }));
-    this.spikeys.push(matter.add.image(1188, 450, 'ironFence', null, {
-      isStatic: true,
-    }));
-    this.spikeys.push(matter.add.image(1288, 450, 'woodFence', null, {
-      isStatic: true,
-    }));
-    this.spikeys.push(matter.add.image(1388, 450, 'woodFence', null, {
-      isStatic: true,
-    }));
+    this.spikeys.push(matter.add.image(1886, 467, 'tree1', null, {isStatic: true,}));
+    this.spikeys.push(matter.add.image(1744, 352, 'tree2', null, {isStatic: true,}));
+    this.spikeys.push(matter.add.image(1616, 460, 'tree3', null, {isStatic: true,}));
+    this.spikeys.push(matter.add.image(3049, 324, 'tree4', null, {isStatic: true,}));
+    this.spikeys.push(matter.add.image(1994, 207, 'bee', null, {isStatic: true,}));
+    this.spikeys.push(matter.add.image(2242, 341, 'bee', null, {isStatic: true,}));
+    this.spikeys.push(matter.add.image(635, 504, 'ironFence', null, {isStatic: true,}));
+    this.spikeys.push(matter.add.image(836, 504, 'ironFence', null, {isStatic: true,}));
+    this.spikeys.push(matter.add.image(1076, 504, 'ironFence', null, {isStatic: true,}));
+    this.spikeys.push(matter.add.image(1279, 504, 'ironFence', null, {isStatic: true,}));
+    this.spikeys.push(matter.add.image(2790, 504, 'ironFence', null, {isStatic: true,}));
+    this.spikeys.push(matter.add.image(2992, 504, 'ironFence', null, {isStatic: true,}));
+    this.spikeys.push(matter.add.image(86, 504, 'woodFence', null, {isStatic: true,}));
+    this.spikeys.push(matter.add.image(260, 504, 'woodFence', null, {isStatic: true,}));
+    this.spikeys.push(matter.add.image(2443, 504, 'woodFence', null, {isStatic: true,}));
+    this.spikeys.push(matter.add.image(2616, 504, 'woodFence', null, {isStatic: true,}));
+    this.spikeys.push(matter.add.image(3211, 504, 'woodFence', null, {isStatic: true,}));
+    this.spikeys.push(matter.add.image(3383, 504, 'woodFence', null, {isStatic: true,}));
 
     // Add the collision detection callback for the balloon.
     this.spikeys.forEach((s) => {
