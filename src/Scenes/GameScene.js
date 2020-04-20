@@ -283,6 +283,7 @@ export default class GameScene extends Phaser.Scene {
     if (this.model.soundOn == true) {
       this.game.registry.get('pop').play();
     }
+    this.startFailSequence();
   }
 
   getRopePoints() {
@@ -320,6 +321,24 @@ export default class GameScene extends Phaser.Scene {
     this.endZone.destroy();
 
     const target = 'StageComplete';
+    this.cameras.main.fadeOut(500);
+    this.cameras.main.once(
+      Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,
+      () => {
+        this.scene.start(target);
+        this.scene.get(target).events.once(
+          Phaser.Scenes.Events.CREATE,
+          () => this.scene.get(target).cameras.main.fadeIn(500),
+        );
+      },
+    );
+  }
+
+  startFailSequence() {
+    this.ending = true;
+    this.endZone.destroy();
+
+    const target = 'MissionFail';
     this.cameras.main.fadeOut(500);
     this.cameras.main.once(
       Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,

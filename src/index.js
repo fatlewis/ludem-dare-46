@@ -11,6 +11,7 @@ import BalloonSelectScene from './Scenes/BalloonSelectScene';
 import HUDScene from './Scenes/HUDScene';
 import StageCompleteScene from './Scenes/StageCompleteScene';
 import MissionSuccessScene from './Scenes/MissionSuccessScene';
+import MissionFailScene from './Scenes/MissionFailScene';
 
 import Model from './Model';
 
@@ -30,6 +31,7 @@ class Game extends Phaser.Game {
     this.scene.add('HUD', HUDScene);
     this.scene.add('StageComplete', StageCompleteScene);
     this.scene.add('MissionSuccess', MissionSuccessScene);
+    this.scene.add('MissionFail', MissionFailScene);
 
     this.scene.start('Boot');
   }
