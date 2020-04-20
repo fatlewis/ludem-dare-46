@@ -59,6 +59,7 @@ export default class GameScene extends Phaser.Scene {
     this.addBalloon();
     this.addLevel1SpikeyThings();
     this.addEndZone();
+    this.levelForeground = this.add.image(0, 0, 'foreground-level1').setOrigin(0, 0);
   }
 
   addLevel2() {

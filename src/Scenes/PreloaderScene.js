@@ -96,7 +96,8 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('background', 'assets/background/MainMenu.png');
     this.load.image('background-customize', 'assets/background/CustomizePage_01.png');
     this.load.image('background-options', 'assets/background/OptionsMenu_01.png');
-    this.load.image('background-level1', 'assets/background/level-1/BackgroundLevel1_01.png');
+    this.load.image('background-level1', 'assets/background/level-1/BackgroundLevel1_02.png');
+    this.load.image('foreground-level1', 'assets/background/level-1/Foreground_doorframes_01.png');
     this.load.image('background-level2', 'assets/background/level-2/BackgroundLevel2.png');
     this.load.image('background-level3', 'assets/background/level-3/ThirdLevel_01.png');
     this.load.image('background-level4', 'assets/background/level-2/BackgroundLevel2.png');
