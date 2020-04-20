@@ -99,11 +99,11 @@ export default class GameScene extends Phaser.Scene {
   }
 
   addBalloon() {
-    const balloonContainer = new Balloon(this, 100, 250, undefined, { yGravity: -1 });
+    const balloonContainer = new Balloon(this, 100, 350, undefined, { yGravity: -1 });
     this.add.existing(balloonContainer);
     this.balloon = balloonContainer.matterObject;
 
-    this.ropeAnchor = this.matter.add.image(100, 350, 'rope', null, {
+    this.ropeAnchor = this.matter.add.image(100, 450, 'rope', null, {
       mass: 50000,
       ignoreGravity: false,
       frictionAir: 1,
@@ -325,7 +325,10 @@ export default class GameScene extends Phaser.Scene {
       Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,
       () => {
         this.scene.start(target);
-        this.scene.get(target).cameras.main.fadeIn(500);
+        this.scene.get(target).events.once(
+          Phaser.Scenes.Events.CREATE,
+          () => this.scene.get(target).cameras.main.fadeIn(500),
+        );
       },
     );
   }
