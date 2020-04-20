@@ -21,6 +21,12 @@ export default class ArrowButton extends Phaser.GameObjects.Container {
       else if (option == 'accessory') {
         frameCount = this.scene.model.accessoryFrame;
       }
+      else if (option == 'hair') {
+        frameCount = this.scene.model.hairFrame;
+      }
+      else if (option == 'face') {
+        frameCount = this.scene.model.faceFrame;
+      }
 
       if (direction == 'left') { 
         frameCount = (frameCount - 1) % frames;
@@ -28,7 +34,7 @@ export default class ArrowButton extends Phaser.GameObjects.Container {
       }
 
       if (direction == 'right') {
-        frameCount = (frameCount + 1) % 9;
+        frameCount = (frameCount + 1) % frames;
       }
 
       if (option == 'colour') { 
@@ -36,6 +42,12 @@ export default class ArrowButton extends Phaser.GameObjects.Container {
       }
       else if (option == 'accessory') {
         this.scene.model.accessoryFrame = frameCount;
+      }
+      else if (option == 'hair') {
+        this.scene.model.hairFrame = frameCount;
+      }
+      else if (option == 'face') {
+        this.scene.model.faceFrame = frameCount;
       }
 
     });

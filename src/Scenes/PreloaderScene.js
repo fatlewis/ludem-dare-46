@@ -67,6 +67,7 @@ export default class PreloaderScene extends Phaser.Scene {
     // Balloons, accessories and ropes
     this.load.spritesheet('balloons', 'assets/balloon/BalloonsSprite.png', { frameWidth: 288, frameHeight: 288 });
     this.load.spritesheet('accessories', 'assets/balloon/accessories/AccessoriesSprite.png', { frameWidth: 288, frameHeight: 288 });
+    this.load.spritesheet('hairstyles', 'assets/balloon/accessories/HairSprites.png', { frameWidth: 288, frameHeight: 288 });
     this.load.spritesheet('face', 'assets/balloon/FaceSprites.png', { frameWidth: 288, frameHeight: 288 });
     this.load.image('rope', 'assets/balloon/RopeSection.png');
 

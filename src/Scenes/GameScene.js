@@ -78,12 +78,13 @@ export default class GameScene extends Phaser.Scene {
     this.model = this.sys.game.globals.model;
 
     const balloonBase = this.add.sprite(0, 0, 'balloons', this.model.colourFrame);
-    const balloonFace = this.add.sprite(0, 0, 'face', 0);
+    const balloonFace = this.add.sprite(0, 0, 'face', this.model.faceFrame);
     const balloonAccessories = this.add.sprite(0, 0, 'accessories', this.model.accessoryFrame);
+    const balloonHair = this.add.sprite(0, 0, 'hairstyles', this.model.hairFrame);
     const balloonContainer = this.add.container(
       400,
       200,
-      [balloonBase, balloonFace, balloonAccessories],
+      [balloonBase, balloonFace, balloonAccessories, balloonHair],
     );
 
     this.balloon = matter.add.gameObject(balloonContainer, {
