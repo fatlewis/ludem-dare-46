@@ -121,6 +121,7 @@ export default class PreloaderScene extends Phaser.Scene {
 
     // Audio
     this.load.audio('bgMusic', ['assets/audio/theme.mp3']);
+    this.load.audio('pop', ['assets/audio/pop.mp3']);
 
     // DOM Elements
     this.load.html('nameForm', 'assets/text/NameForm.html');
@@ -128,6 +129,7 @@ export default class PreloaderScene extends Phaser.Scene {
     // remove progress bar when complete
     this.load.on('complete', () => {
       this.game.registry.set('bgMusic', this.sound.add('bgMusic', { volume: 0.5, loop: true }));
+      this.game.registry.set('pop', this.sound.add('pop', { volume: 0.5 }));
       this.ready();
     });
   }

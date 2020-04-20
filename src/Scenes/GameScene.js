@@ -272,8 +272,12 @@ export default class GameScene extends Phaser.Scene {
   }
 
   popBalloon() {
+    this.model = this.sys.game.globals.model;
     this.balloon.destroy();
     this.ropeAnchor.setMass(1).setFrictionAir(0).setFixedRotation(false);
+    if (this.model.soundOn == true) {
+      this.game.registry.get('pop').play();
+    }
   }
 
   getRopePoints() {
