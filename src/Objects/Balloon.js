@@ -6,8 +6,9 @@ export default class Balloon extends Phaser.GameObjects.Container {
 
   	const model = scene.sys.game.globals.model;
     const balloonBase = scene.add.sprite(0, 0, 'balloons', options.baseFrame || model.colourFrame);
-    const balloonFace = scene.add.sprite(0, 0, 'face', options.FaceFrame || 0);
+    const balloonFace = scene.add.sprite(0, 0, 'face', options.faceFrame || 0);
     const balloonAccessories = scene.add.sprite(0, 0, 'accessories', options.accessoryFrame || model.accessoryFrame);
+
     this.add([balloonBase, balloonFace, balloonAccessories]);
 
     this.matterObject = scene.matter.add.gameObject(this, {
@@ -15,7 +16,7 @@ export default class Balloon extends Phaser.GameObjects.Container {
       vertices: Balloon.vertices,
       mass: 1,
       ignorePointer: true,
-      gravityScale: { y: -10 },
+      gravityScale: { y: options.yGravity || -10 },
     });
   }
 }
