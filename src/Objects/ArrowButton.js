@@ -37,7 +37,6 @@ export default class ArrowButton extends Phaser.GameObjects.Container {
       else if (option == 'accessory') {
         this.scene.model.accessoryFrame = frameCount;
       }
-      console.log(this.scene.model.colourFrame);
 
     });
 
