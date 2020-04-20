@@ -54,7 +54,7 @@ export default class GameScene extends Phaser.Scene {
 
   addLevel1() {
     this.levelBackground = this.add.image(0, 0, 'background-level1').setOrigin(0, 0);
-    this.addFan();
+    this.addLevel1Fan();
     this.addBalloon();
     this.addLevel1SpikeyThings();
     this.addEndZone();
@@ -63,7 +63,7 @@ export default class GameScene extends Phaser.Scene {
 
   addLevel2() {
     this.levelBackground = this.add.image(0, 0, 'background-level2').setOrigin(0, 0);
-    this.addBalloon();
+    this.addBalloon(170);
     this.addLevel2SpikeyThings();
     this.addEndZone();
   }
@@ -89,17 +89,17 @@ export default class GameScene extends Phaser.Scene {
     this.cameras.main.scrollY = this.levelBackground.height - this.game.config.height;
   }
 
-  addFan() {
-    const fan = new Fan(this, 2143, 294, 'green', 'left', 'medium');
+  addLevel1Fan() {
+    this.fan1 = new Fan(this, 1295, 270, 'green', 'right', 'medium');
 
     const particles = this.add.particles('rope');
     particles.createEmitter({
       speed: 100,
-      x: fan.x,
-      y: { min: fan.y - 60, max: fan.y + 50 },
+      x: this.fan1.x,
+      y: { min: this.fan1.y - 60, max: this.fan1.y + 50 },
       scale: { start: 1, end: 0 },
       // angle will need to be 180 for left facing fans
-      angle: 180,
+      angle: 0,
       blendMode: 'ADD',
     });
   }
