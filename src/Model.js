@@ -1,7 +1,7 @@
 export default class Model {
   constructor() {
     this.soundOn = true;
-    this.musicOn = false;
+    this.musicOn = true;
     this.bgMusicPlaying = false;
     this.colourFrame = 0;
     this.accessoryFrame = 0;
