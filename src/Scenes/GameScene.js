@@ -88,7 +88,8 @@ export default class GameScene extends Phaser.Scene {
     });
     this.ropeAnchor.setInteractive({ useHandCursor: true });
 
-    this.rope = Rope.createBetweenObjects(this, this.balloon, this.ropeAnchor, 15, { pointA: { x:-5, y:70 }});
+    this.rope = Rope.createBetweenObjects(this, this.balloon, this.ropeAnchor, 15, { pointA: { x:-5, y:70 },
+                                                                                     pointB: { x:0, y:-12 } });
   }
 
   addLevel1SpikeyThings() {
@@ -218,6 +219,8 @@ export default class GameScene extends Phaser.Scene {
 
   popBalloon() {
     this.balloon.destroy();
+    this.matter.world.removeConstraint(this.rope.initialJoint);
+    this.matter.world.removeConstraint(this.rope.finalJoint);
     this.ropeAnchor.setMass(1).setFrictionAir(0).setFixedRotation(false);
   }
 

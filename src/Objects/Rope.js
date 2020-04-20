@@ -1,8 +1,10 @@
 import 'phaser';
 
 export default class Rope {
-  constructor(ropePoints) {
+  constructor(ropePoints, initialJoint, finalJoint) {
     this.ropePoints = ropePoints;
+    this.initialJoint = initialJoint;
+    this.finalJoint = finalJoint;
   }
 
   drawCurve(scene) {
@@ -32,7 +34,7 @@ export default class Rope {
 
     // Add initial point and connect it to object
     const initialPoint = Rope.createPoint(scene, start.x, start.y);
-    scene.matter.add.joint(
+    const initialJoint = scene.matter.add.joint(
       firstObject,
       initialPoint,
       0,
@@ -61,7 +63,7 @@ export default class Rope {
     const finalPoint = Rope.createPoint(scene, end.x, end.y);
     ropePoints.push(finalPoint);
     scene.matter.add.joint(prevPoint, finalPoint, segmentLength);
-    scene.matter.add.joint(
+    const finalJoint = scene.matter.add.joint(
       finalPoint,
       secondObject,
       0,
@@ -70,7 +72,7 @@ export default class Rope {
     );
 
     // Return an instance with the list of rope points
-    return new Rope(ropePoints);
+    return new Rope(ropePoints, initialJoint, finalJoint);
   }
 
   static createPoint(scene, x, y) {
