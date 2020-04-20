@@ -70,6 +70,7 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.spritesheet('hairstyles', 'assets/balloon/accessories/HairSprites.png', { frameWidth: 288, frameHeight: 288 });
     this.load.spritesheet('face', 'assets/balloon/FaceSprites.png', { frameWidth: 288, frameHeight: 288 });
     this.load.image('rope', 'assets/balloon/RopeSection.png');
+    this.load.image('nametag', 'assets/balloon/NametagHandle_01.png');
 
     // Spikey things
     this.load.image('bee', 'assets/spikey/Bee_01.png');

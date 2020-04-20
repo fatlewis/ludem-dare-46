@@ -55,7 +55,7 @@ export default class TitleScene extends Phaser.Scene {
       }),
     ];
 
-    this.ropeAnchor = this.matter.add.image(175, 575, 'rope', null, {
+    this.ropeAnchor = this.matter.add.image(175, 575, 'nametag', null, {
       mass: 50000,
       ignoreGravity: false,
       frictionAir: 1,
