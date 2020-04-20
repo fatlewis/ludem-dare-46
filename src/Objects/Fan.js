@@ -19,9 +19,9 @@ export default class Fan extends Phaser.GameObjects.Container {
     const textureKey = colorMap[color];
 
     const strengthMap = {
-      low: 0.001,
-      medium: 0.01,
-      high: 0.03,
+      low: 0.0001,
+      medium: 0.002,
+      high: 0.005,
     };
     const strengthValue = strengthMap[strength];
 

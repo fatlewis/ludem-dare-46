@@ -18,17 +18,17 @@ export default class GameScene extends Phaser.Scene {
     this.model = this.sys.game.globals.model;
     switch (this.model.level) {
       case 1:
-      this.addLevel1();
-      break;
+        this.addLevel1();
+        break;
       case 2:
-      this.addLevel2();
-      break;
+        this.addLevel2();
+        break;
       case 3:
-      this.addLevel3();
-      break;
+        this.addLevel3();
+        break;
       case 4:
-      this.addLevel4();
-      break;
+        this.addLevel4();
+        break;
     }
 
     matter.world.setBounds(0, -40, this.levelBackground.width, config.height);
@@ -59,6 +59,7 @@ export default class GameScene extends Phaser.Scene {
     this.addBalloon();
     this.addLevel1SpikeyThings();
     this.addEndZone();
+    this.levelForeground = this.add.image(0, 0, 'foreground-level1').setOrigin(0, 0);
   }
 
   addLevel2() {
@@ -88,23 +89,23 @@ export default class GameScene extends Phaser.Scene {
 
     const particles = this.add.particles('rope');
     const emitter = particles.createEmitter({
-      speed: 100,
-      x: fan.x,
-      y: { min: fan.y -60, max: fan.y +50 },
-      scale: { start: 1, end: 0 },
+        speed: 100,
+        x: fan.x,
+        y: { min: fan.y -60, max: fan.y +50 },
+        scale: { start: 1, end: 0 },
         //angle will need to be 180 for left facing fans
         angle: 0,
         blendMode: 'ADD'
-      });
+    });
 
   }
 
   addBalloon() {
-    const balloonContainer = new Balloon(this, 100, 250, undefined, { yGravity: -1 });
+    const balloonContainer = new Balloon(this, 100, 350, undefined, { yGravity: -1 });
     this.add.existing(balloonContainer);
     this.balloon = balloonContainer.matterObject;
 
-    this.ropeAnchor = this.matter.add.image(100, 350, 'rope', null, {
+    this.ropeAnchor = this.matter.add.image(100, 450, 'rope', null, {
       mass: 50000,
       ignoreGravity: false,
       frictionAir: 1,
@@ -113,7 +114,7 @@ export default class GameScene extends Phaser.Scene {
     this.ropeAnchor.setInteractive({ useHandCursor: true });
 
     this.rope = Rope.createBetweenObjects(this, this.balloon, this.ropeAnchor, 15, { pointA: { x:-5, y:70 },
-     pointB: { x:0, y:-12 } });
+                                                                                     pointB: { x:0, y:-12 } });
   }
 
   addLevel1SpikeyThings() {
@@ -283,15 +284,15 @@ export default class GameScene extends Phaser.Scene {
 
     // Bees want to move along a path
     const beePoints1 = [
-    new Phaser.Math.Vector2(1891, 56),
-    new Phaser.Math.Vector2(2291, 338),
-    new Phaser.Math.Vector2(2329, 93),
-    new Phaser.Math.Vector2(1939, 298),
-    new Phaser.Math.Vector2(1891, 56),
+      new Phaser.Math.Vector2(1891, 56),
+      new Phaser.Math.Vector2(2291, 338),
+      new Phaser.Math.Vector2(2329, 93),
+      new Phaser.Math.Vector2(1939, 298),
+      new Phaser.Math.Vector2(1891, 56),
     ];
     const beePoints2 = [
-    new Phaser.Math.Vector2(2090, 500),
-    new Phaser.Math.Vector2(2233, 488),
+      new Phaser.Math.Vector2(2090, 500),
+      new Phaser.Math.Vector2(2233, 488),
     ];
 
     this.beePath1 = new Phaser.Curves.Spline(beePoints1);
@@ -324,7 +325,7 @@ export default class GameScene extends Phaser.Scene {
       1,
       this.game.config.height,
       0x000000,
-      );
+    );
     this.endZone = this.matter.add.gameObject(endZoneRectangle, { isStatic: true });
     this.matterCollision.addOnCollideStart({
       objectA: this.balloon,
@@ -344,6 +345,7 @@ export default class GameScene extends Phaser.Scene {
     if (this.model.soundOn == true) {
       this.game.registry.get('pop').play();
     }
+    this.startFailSequence();
   }
 
   getRopePoints() {
@@ -379,6 +381,7 @@ export default class GameScene extends Phaser.Scene {
   startGoalSequence() {
     this.ending = true;
     this.endZone.destroy();
+    this.scene.stop('HUD');
 
     const target = 'StageComplete';
     this.cameras.main.fadeOut(500);
@@ -386,9 +389,31 @@ export default class GameScene extends Phaser.Scene {
       Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,
       () => {
         this.scene.start(target);
-        this.scene.get(target).cameras.main.fadeIn(500);
+        this.scene.get(target).events.once(
+          Phaser.Scenes.Events.CREATE,
+          () => this.scene.get(target).cameras.main.fadeIn(500),
+        );
       },
-      );
+    );
+  }
+
+  startFailSequence() {
+    this.ending = true;
+    this.endZone.destroy();
+    this.scene.stop('HUD');
+
+    const target = 'MissionFail';
+    this.cameras.main.fadeOut(500);
+    this.cameras.main.once(
+      Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,
+      () => {
+        this.scene.start(target);
+        this.scene.get(target).events.once(
+          Phaser.Scenes.Events.CREATE,
+          () => this.scene.get(target).cameras.main.fadeIn(500),
+        );
+      },
+    );
   }
 
   recenterCamera() {
@@ -400,36 +425,36 @@ export default class GameScene extends Phaser.Scene {
       ropeAnchorX,
       screenCenterX,
       150,
-      );
-    if (isOutsideCameraCenter) { // } && !this.input.activePointer.leftButtonDown()) {
+    );
+    if (isOutsideCameraCenter) {
       const moveDistance = GameScene.getMoveDistance(ropeAnchorX, screenCenterX);
 
       const newScrollX = this.cameras.main.scrollX + moveDistance;
       if (
         (newScrollX > 0)
         && (newScrollX < (this.levelBackground.width - this.game.config.width))
-        ) {
+      ) {
         this.cameras.main.scrollX += moveDistance;
+      }
     }
   }
-}
 
-static isOutsideCameraCenter(xValue, screenCenterX, offsetTolerationSize) {
-  if (
-    xValue >= (screenCenterX - offsetTolerationSize)
-    && xValue <= (screenCenterX + offsetTolerationSize)
+  static isOutsideCameraCenter(xValue, screenCenterX, offsetTolerationSize) {
+    if (
+      xValue >= (screenCenterX - offsetTolerationSize)
+      && xValue <= (screenCenterX + offsetTolerationSize)
     ) {
-    return false;
-}
-return true;
-}
+      return false;
+    }
+    return true;
+  }
 
-static getMoveDistance(ropeAnchorX, screenCenterX) {
-  const moveDistance = Math.min(
-    Math.abs(ropeAnchorX - screenCenterX),
-    5,
+  static getMoveDistance(ropeAnchorX, screenCenterX) {
+    const moveDistance = Math.min(
+      Math.abs(ropeAnchorX - screenCenterX),
+      5,
     );
-  const ropeAnchorIsRightOfCenter = ropeAnchorX > screenCenterX;
-  return ropeAnchorIsRightOfCenter ? moveDistance : -moveDistance;
-}
+    const ropeAnchorIsRightOfCenter = ropeAnchorX > screenCenterX;
+    return ropeAnchorIsRightOfCenter ? moveDistance : -moveDistance;
+  }
 }
