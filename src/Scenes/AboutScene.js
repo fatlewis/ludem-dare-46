@@ -10,9 +10,8 @@ export default class AboutScene extends Phaser.Scene {
     const { config } = this.game;
     this.model = this.sys.game.globals.model;
 
-    this.add.image(config.width / 2, config.height / 2, 'background');
-
-    this.add.text(config.width * 0.1, config.height * 0.11, 'About text.', { align: 'center', fontSize: '25px', fill: '#000' });
+    this.add.image(config.width / 2, config.height / 2, 'background-about');
+    
     this.menuButton = new Button(this, 550, 500, 'menuButton', 'menuButtonPressed', 'Title');
   }
 }
