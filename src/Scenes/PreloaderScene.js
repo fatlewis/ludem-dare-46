@@ -84,7 +84,12 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('tree4', 'assets/spikey/Tree_04.png');
     this.load.image('woodFence', 'assets/spikey/WoodFence_02.png');
     this.load.image('laser', 'assets/spikey/Lazer_01.png');
-    this.load.spritesheet('bird', 'assets/spikey/BirdRedSprite_01.png', { frameWidth: 163, frameHeight: 135 });
+    this.load.image('bin', 'assets/spikey/Trash_01.png');
+    this.load.spritesheet('birdBlue', 'assets/spikey/BirdBlueSprite_01.png', { frameWidth: 163, frameHeight: 135 });
+    this.load.spritesheet('birdGreen', 'assets/spikey/BirdGreenSprite_01.png', { frameWidth: 163, frameHeight: 135 });
+    this.load.spritesheet('birdMint', 'assets/spikey/BirdMintSprite_01.png', { frameWidth: 163, frameHeight: 135 });
+    this.load.spritesheet('birdRed', 'assets/spikey/BirdRedSprite_01.png', { frameWidth: 163, frameHeight: 135 });
+    this.load.spritesheet('birdYellow', 'assets/spikey/BirdYellowSprite_01.png', { frameWidth: 163, frameHeight: 135 });
 
     // Fans
     this.load.spritesheet('fanGreen', 'assets/fan/FanSpriteGreen.png', { frameWidth: 105, frameHeight: 136 });
@@ -105,10 +110,11 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('background-level3', 'assets/background/level-3/ThirdLevel_01.png');
     this.load.image('background-level4', 'assets/background/level-4/FourthLevel_01.png');
     this.load.image('background-stageComplete', 'assets/background/StageComplete_01.png');
-    this.load.image('background-missionSuccess', 'assets/background/MissionSuccess_01.png');
-    this.load.image('background-missionFail', 'assets/background/Death_01.png');
+    this.load.image('background-missionSuccess', 'assets/background/MissionSuccess_02.png');
+    this.load.image('background-missionFail', 'assets/background/MissionFail_02.png');
 
     this.load.image('endButton', 'assets/buttons/FinalLevelButtonUp_01.png');
+    this.load.image('family', 'assets/SadFamily_02.png');    
 
     // Menu items
     this.load.image('logo', 'assets/logo.png');
@@ -132,6 +138,8 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('leftArrowDown', 'assets/buttons/LeftArrowDown_01.png');
     this.load.image('rightArrowUp', 'assets/buttons/RightArrowUp_01.png');
     this.load.image('rightArrowDown', 'assets/buttons/RightArrowDown_01.png');
+    this.load.image('replayUp', 'assets/buttons/ButtonReplayUp_02.png');
+    this.load.image('replayDown', 'assets/buttons/ButtonReplayDown_02.png');
     this.load.image('checkMark', 'assets/buttons/OptionCheckmark_02.png');
 
     // Audio

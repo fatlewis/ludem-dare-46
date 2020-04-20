@@ -90,7 +90,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   addFan() {
-    const fan = new Fan(this, 100, 100, 'green', 'right', 'medium');
+    const fan = new Fan(this, 2143, 294, 'green', 'left', 'medium');
 
     const particles = this.add.particles('rope');
     particles.createEmitter({
@@ -99,7 +99,7 @@ export default class GameScene extends Phaser.Scene {
       y: { min: fan.y - 60, max: fan.y + 50 },
       scale: { start: 1, end: 0 },
       // angle will need to be 180 for left facing fans
-      angle: 0,
+      angle: 180,
       blendMode: 'ADD',
     });
   }
@@ -127,8 +127,9 @@ export default class GameScene extends Phaser.Scene {
     const { matter } = this;
 
     this.spikeys = [];
-    this.spikeys.push(matter.add.image(500, 450, 'cactus', null, { isStatic: true }));
+    this.spikeys.push(matter.add.image(450, 450, 'cactus', null, { isStatic: true }));
     this.spikeys.push(matter.add.image(988, 320, 'knives', null, { isStatic: true }));
+    this.spikeys.push(matter.add.image(1714, 485, 'bin', null, { isStatic: true }));
 
     // Add the collision detection callback for the balloon.
     this.spikeys.forEach((s) => {
@@ -163,6 +164,7 @@ export default class GameScene extends Phaser.Scene {
     this.spikeys.push(matter.add.image(3383, 504, 'woodFence', null, { isStatic: true }));
 
     this.addBees();
+    this.addLevel2Birds();
 
     // Add the collision detection callback for the balloon.
     this.spikeys.forEach((s) => {
@@ -178,7 +180,7 @@ export default class GameScene extends Phaser.Scene {
   addLevel3SpikeyThings() {
     this.spikeys = [];
 
-    this.addBirds();
+    this.addLevel3Birds();
 
     // Add the collision detection callback for the balloon.
     this.spikeys.forEach((s) => {
@@ -326,12 +328,12 @@ export default class GameScene extends Phaser.Scene {
     });
   }
 
-  addBirds() {
+  addLevel2Birds() {
     const { matter } = this;
 
     this.scene.scene.anims.create({
-      key: 'fly',
-      frames: this.scene.scene.anims.generateFrameNumbers('bird', { start: 0, end: -1 }),
+      key: 'flyGreen',
+      frames: this.scene.scene.anims.generateFrameNumbers('birdGreen', { start: 0, end: -1 }),
       frameRate: 10,
       repeat: -1,
     });
@@ -343,11 +345,80 @@ export default class GameScene extends Phaser.Scene {
       frictionAir: 1,
     };
 
-    this.bird1 = matter.add.sprite(1994, 207, 'bird', 0, birdConfig).anims.play('fly', true);
-    this.bird2 = matter.add.sprite(1994, 207, 'bird', 0, birdConfig).anims.play('fly', true);
-    this.bird3 = matter.add.sprite(1994, 207, 'bird', 0, birdConfig).anims.play('fly', true);
-    this.bird4 = matter.add.sprite(1994, 207, 'bird', 0, birdConfig).anims.play('fly', true);
-    this.bird5 = matter.add.sprite(1994, 207, 'bird', 0, birdConfig).anims.play('fly', true);
+    this.bird1 = matter.add.sprite(1994, 207, 'birdGreen', 0, birdConfig).anims.play('flyGreen', true).toggleFlipX();
+
+    this.spikeys.push(this.bird1);
+
+    // Birds want to move along a path
+    const birdPoints1 = [
+      new Phaser.Math.Vector2(1350, 82),
+      new Phaser.Math.Vector2(650, 160),
+      new Phaser.Math.Vector2(240, 82),
+    ];
+
+    this.birdPath1 = new Phaser.Curves.Spline(birdPoints1);
+
+    this.follower1 = { t: 0, vec: new Phaser.Math.Vector2() };
+
+    this.tweens.add({
+      targets: this.follower1,
+      t: 1,
+      ease: 'Sine.easeInOut',
+      yoyo: true,
+      onYoyo: () => {this.bird1.toggleFlipX()},
+      onRepeat: () => {this.bird1.toggleFlipX()},
+      duration: 4000,
+      repeat: -1,
+      delay: 0,
+    });
+  }
+
+  addLevel3Birds() {
+    const { matter } = this;
+
+    this.scene.scene.anims.create({
+      key: 'flyRed',
+      frames: this.scene.scene.anims.generateFrameNumbers('birdRed', { start: 0, end: -1 }),
+      frameRate: 10,
+      repeat: -1,
+    });
+    this.scene.scene.anims.create({
+      key: 'flyBlue',
+      frames: this.scene.scene.anims.generateFrameNumbers('birdBlue', { start: 0, end: -1 }),
+      frameRate: 10,
+      repeat: -1,
+    });
+    this.scene.scene.anims.create({
+      key: 'flyYellow',
+      frames: this.scene.scene.anims.generateFrameNumbers('birdYellow', { start: 0, end: -1 }),
+      frameRate: 10,
+      repeat: -1,
+    });
+    this.scene.scene.anims.create({
+      key: 'flyMint',
+      frames: this.scene.scene.anims.generateFrameNumbers('birdMint', { start: 0, end: -1 }),
+      frameRate: 10,
+      repeat: -1,
+    });
+    this.scene.scene.anims.create({
+      key: 'flyGreen',
+      frames: this.scene.scene.anims.generateFrameNumbers('birdGreen', { start: 0, end: -1 }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    const birdConfig = {
+      ignoreGravity: true,
+      ignorePointer: true,
+      fixedRotation: true,
+      frictionAir: 1,
+    };
+
+    this.bird1 = matter.add.sprite(1994, 207, 'birdRed', 0, birdConfig).anims.play('flyRed', true);
+    this.bird2 = matter.add.sprite(1994, 207, 'birdBlue', 0, birdConfig).anims.play('flyBlue', true).toggleFlipX();
+    this.bird3 = matter.add.sprite(1994, 207, 'birdYellow', 0, birdConfig).anims.play('flyYellow', true);
+    this.bird4 = matter.add.sprite(1994, 207, 'birdMint', 0, birdConfig).anims.play('flyMint', true);
+    this.bird5 = matter.add.sprite(1994, 207, 'birdGreen', 0, birdConfig).anims.play('flyGreen', true);
 
     this.spikeys.push(this.bird1);
     this.spikeys.push(this.bird2);
@@ -394,6 +465,8 @@ export default class GameScene extends Phaser.Scene {
       t: 1,
       ease: 'Sine.easeInOut',
       yoyo: true,
+      onYoyo: () => {this.bird1.toggleFlipX()},
+      onRepeat: () => {this.bird1.toggleFlipX()},
       duration: 4000,
       repeat: -1,
       delay: 0,
@@ -403,6 +476,8 @@ export default class GameScene extends Phaser.Scene {
       t: 1,
       ease: 'Sine.easeInOut',
       yoyo: true,
+      onYoyo: () => {this.bird2.toggleFlipX()},
+      onRepeat: () => {this.bird2.toggleFlipX()},
       duration: 4000,
       repeat: -1,
       delay: 1000,
@@ -412,6 +487,8 @@ export default class GameScene extends Phaser.Scene {
       t: 1,
       ease: 'Sine.easeInOut',
       yoyo: true,
+      onYoyo: () => {this.bird3.toggleFlipX()},
+      onRepeat: () => {this.bird3.toggleFlipX()},
       duration: 4000,
       repeat: -1,
       delay: 2000,
@@ -421,6 +498,8 @@ export default class GameScene extends Phaser.Scene {
       t: 1,
       ease: 'Sine.easeInOut',
       yoyo: true,
+      onYoyo: () => {this.bird4.toggleFlipX()},
+      onRepeat: () => {this.bird4.toggleFlipX()},
       duration: 4000,
       repeat: -1,
       delay: 3000,
@@ -430,6 +509,8 @@ export default class GameScene extends Phaser.Scene {
       t: 1,
       ease: 'Sine.easeInOut',
       yoyo: true,
+      onYoyo: () => {this.bird5.toggleFlipX()},
+      onRepeat: () => {this.bird5.toggleFlipX()},
       duration: 4000,
       repeat: -1,
       delay: 4000,
@@ -485,6 +566,13 @@ export default class GameScene extends Phaser.Scene {
       this.recenterCamera();
     }
 
+    // update level 2 birds
+    if (!this.ending && this.model.level === 2) {
+      const point1 = this.birdPath1.getPoint(this.follower1.t, this.follower1.vec);
+      this.bird1.x = point1.x;
+      this.bird1.y = point1.y;
+    }
+
     // Update the bees
     if (!this.ending && this.model.level === 2) {
       const point1 = this.beePath1.getPoint(this.follower1.t, this.follower1.vec);
@@ -495,7 +583,7 @@ export default class GameScene extends Phaser.Scene {
       this.bee2.y = point2.y;
     }
 
-    // Update the birds
+    // Update level 3 birds
     if (!this.ending && this.model.level === 3) {
       const point1 = this.birdPath1.getPoint(this.follower1.t, this.follower1.vec);
       const point2 = this.birdPath2.getPoint(this.follower2.t, this.follower2.vec);

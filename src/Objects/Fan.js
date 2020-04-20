@@ -28,12 +28,14 @@ export default class Fan extends Phaser.GameObjects.Container {
     const directionMap = {
       left: {
         activeCondition: (a, b) => (Math.abs(a.position.y - b.position.y) < 100
-                  && b.position.x < a.position.x),
+                                    && b.position.x < a.position.x
+                                    && (a.position.x - b.position.x) < 400),
         forceVector: { x: -strengthValue, y: 0 },
       },
       right: {
         activeCondition: (a, b) => (Math.abs(a.position.y - b.position.y) < 100
-                  && a.position.x < b.position.x),
+                                    && a.position.x < b.position.x
+                                    && (b.position.x - a.position.x) < 400),
         forceVector: { x: strengthValue, y: 0 },
       },
     };
@@ -51,6 +53,7 @@ export default class Fan extends Phaser.GameObjects.Container {
       ignoreGravity: true,
       fixedRotation: true,
       frictionAir: 1,
+      isStatic: true,
       plugin: {
         attractors: [
           (bodyA, bodyB) => {
