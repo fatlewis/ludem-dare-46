@@ -41,6 +41,8 @@ export default class GameScene extends Phaser.Scene {
         console.log(this.cameras.main.scrollX + this.input.x, this.input.y);
       }
     });
+
+    this.cameras.main.fadeIn(500);
   }
 
   // for use in the chrome dev console via the command:
@@ -364,17 +366,17 @@ export default class GameScene extends Phaser.Scene {
 
   startGoalSequence() {
     this.ending = true;
-    const target = 'StageComplete';
-    const targetScene = this.scene.get(target);
-    targetScene.events.once('transitioncomplete', () => {
-      targetScene.cameras.main.fadeIn(500);
-    });
     this.endZone.destroy();
+
+    const target = 'StageComplete';
     this.cameras.main.fadeOut(500);
-    this.scene.transition({
-      duration: 500,
-      target: target,
-    });
+    this.cameras.main.once(
+      Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,
+      () => {
+        this.scene.start(target);
+        this.scene.get(target).cameras.main.fadeIn(500);
+      },
+    );
   }
 
   recenterCamera() {

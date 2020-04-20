@@ -18,9 +18,9 @@ export default class StageCompleteScene extends Phaser.Scene {
     this.button.on('pointerdown', () => {
       if (this.model.level < 4) {
         this.model.level += 1;
-        this.scene.start('Game');
+        this.fadeToScene('Game');
       } else {
-        this.scene.start('MissionSuccess');
+        this.fadeToScene('MissionSuccess');
       }
     });
 
@@ -31,5 +31,15 @@ export default class StageCompleteScene extends Phaser.Scene {
     this.button.on('pointerout', () => {
       this.button.setTexture('continueButton');
     });
+  }
+
+  fadeToScene(scene) {
+    this.cameras.main.fadeOut(500);
+    this.cameras.main.once(
+      Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,
+      () => {
+        this.scene.start(scene);
+      },
+    );
   }
 }

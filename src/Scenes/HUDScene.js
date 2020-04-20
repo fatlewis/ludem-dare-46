@@ -8,11 +8,8 @@ export default class HUDScene extends Phaser.Scene {
   create() {
     this.button = this.scene.scene.add.sprite(150, 550, 'menuButton').setInteractive({ useHandCursor: true });
 
-    const bgScene = this.scene.settings.data.backgroundScene;
-
     this.button.on('pointerdown', () => {
-      bgScene.scene.stop();
-      this.scene.start('Title');
+      this.fadeToScene('Title');
     });
 
     this.button.on('pointerover', () => {
@@ -22,5 +19,18 @@ export default class HUDScene extends Phaser.Scene {
     this.button.on('pointerout', () => {
       this.button.setTexture('menuButton');
     });
+  }
+
+  fadeToScene(scene) {
+    const bgScene = this.scene.settings.data.backgroundScene;
+    this.cameras.main.fadeOut(500);
+    bgScene.cameras.main.fadeOut(500);
+    bgScene.cameras.main.once(
+      Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,
+      () => {
+        bgScene.scene.stop();
+        this.scene.start(scene);
+      },
+    );
   }
 }
