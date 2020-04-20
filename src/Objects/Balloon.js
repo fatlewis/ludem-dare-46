@@ -6,9 +6,9 @@ export default class Balloon extends Phaser.GameObjects.Container {
 
     const { model } = scene.sys.game.globals;
     const balloonBase = scene.add.sprite(0, 0, 'balloons', options.baseFrame || model.colourFrame);
-    const balloonFace = scene.add.sprite(0, 0, 'face', options.faceFrame || 0);
+    const balloonFace = scene.add.sprite(0, 0, 'face', options.faceFrame || model.faceFrame);
     const balloonAccessories = scene.add.sprite(0, 0, 'accessories', options.accessoryFrame || model.accessoryFrame);
-    const balloonHair = scene.add.sprite(0, 0, 'hairstyles', model.hairFrame);
+    const balloonHair = scene.add.sprite(0, 0, 'hairstyles', options.hairFrame || model.hairFrame);
 
     this.add([balloonBase, balloonFace, balloonAccessories, balloonHair]);
 

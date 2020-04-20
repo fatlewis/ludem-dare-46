@@ -12,5 +12,6 @@ export default class MissionSuccessScene extends Phaser.Scene {
     this.menuButton = new Button(this, 170, 520, 'menuButton', 'menuButtonPressed', 'Title');
 
     this.add.text(490, 295, this.model.heroName, { align: 'center', fontSize: '25px', fill: '#000' });
+    this.sys.game.globals.model.level = 1;
   }
 }
