@@ -43,9 +43,9 @@ export default class Fan extends Phaser.GameObjects.Container {
     const { forceVector } = directionMap[direction];
 
     this.scene.anims.create({
-      key: 'spin',
+      key: `spin${textureKey}`,
       frames: this.scene.anims.generateFrameNumbers(textureKey, { start: 0, end: -1 }),
-      frameRate: 10,
+      frameRate: 20,
       repeat: -1,
     });
 
@@ -63,6 +63,6 @@ export default class Fan extends Phaser.GameObjects.Container {
             return undefined;
           }],
       },
-    }).anims.play('spin', true);
+    }).anims.play(`spin${textureKey}`, true);
   }
 }
