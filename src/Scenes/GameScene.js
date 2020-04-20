@@ -18,17 +18,17 @@ export default class GameScene extends Phaser.Scene {
     this.model = this.sys.game.globals.model;
     switch (this.model.level) {
       case 1:
-        this.addLevel1();
-        break;
+      this.addLevel1();
+      break;
       case 2:
-        this.addLevel2();
-        break;
+      this.addLevel2();
+      break;
       case 3:
-        this.addLevel3();
-        break;
+      this.addLevel3();
+      break;
       case 4:
-        this.addLevel4();
-        break;
+      this.addLevel4();
+      break;
     }
 
     matter.world.setBounds(0, -40, this.levelBackground.width, config.height);
@@ -77,6 +77,7 @@ export default class GameScene extends Phaser.Scene {
 
   addLevel4() {
     this.levelBackground = this.add.image(0, 0, 'background-level4').setOrigin(0, 0);
+    this.endButton = this.add.image(770, 275, 'endButton');
     this.addBalloon();
     this.addLevel4SpikeyThings();
     this.addEndZone();
@@ -87,14 +88,14 @@ export default class GameScene extends Phaser.Scene {
 
     const particles = this.add.particles('rope');
     const emitter = particles.createEmitter({
-        speed: 100,
-        x: fan.x,
-        y: { min: fan.y -60, max: fan.y +50 },
-        scale: { start: 1, end: 0 },
+      speed: 100,
+      x: fan.x,
+      y: { min: fan.y -60, max: fan.y +50 },
+      scale: { start: 1, end: 0 },
         //angle will need to be 180 for left facing fans
         angle: 0,
         blendMode: 'ADD'
-    });
+      });
 
   }
 
@@ -112,7 +113,7 @@ export default class GameScene extends Phaser.Scene {
     this.ropeAnchor.setInteractive({ useHandCursor: true });
 
     this.rope = Rope.createBetweenObjects(this, this.balloon, this.ropeAnchor, 15, { pointA: { x:-5, y:70 },
-                                                                                     pointB: { x:0, y:-12 } });
+     pointB: { x:0, y:-12 } });
   }
 
   addLevel1SpikeyThings() {
@@ -188,7 +189,19 @@ export default class GameScene extends Phaser.Scene {
     const { matter } = this;
 
     this.spikeys = [];
-    
+
+    this.laser1 = matter.add.image(260, 50, 'laser', null, {isStatic: true, angle: 30});
+    this.laser2 = matter.add.image(200, 0, 'laser', null, {isStatic: true, angle: 320});
+    this.laser3 = matter.add.image(300, 500, 'laser', null, {isStatic: true, angle: 40});
+    this.laser4 = matter.add.image(400, 200, 'laser', null, {isStatic: true, angle: 30});
+    this.laser5 = matter.add.image(500, 300, 'laser', null, {isStatic: true, angle: 10});
+
+    this.spikeys.push(this.laser1);
+    this.spikeys.push(this.laser2);
+    this.spikeys.push(this.laser3);
+    this.spikeys.push(this.laser4);
+    this.spikeys.push(this.laser5);
+
     // Add the collision detection callback for the balloon.
     this.spikeys.forEach((s) => {
       this.matterCollision.addOnCollideStart({
@@ -198,6 +211,54 @@ export default class GameScene extends Phaser.Scene {
         context: this,
       });
     });
+
+    this.toggle1 = false;
+    this.toggle2 = false;
+
+    this.time.addEvent({
+      delay: 2000,
+      loop: true,
+      startAt: 2000,
+      callback: () => {
+        this.toggle1 = !this.toggle1;
+        if (this.toggle1) {
+          this.laser1.destroy();
+          this.laser2.destroy();
+          this.laser3.destroy();
+        } else {
+          this.laser1 = matter.add.image(260, 50, 'laser', null, {isStatic: true, angle: 30});
+          this.laser2 = matter.add.image(200, 0, 'laser', null, {isStatic: true, angle: 320});
+          this.laser3 = matter.add.image(300, 500, 'laser', null, {isStatic: true, angle: 40});
+          [this.laser1, this.laser2, this.laser3].forEach( (l) => {this.matterCollision.addOnCollideStart({
+            objectA: this.balloon,
+            objectB: l,
+            callback: () => { this.popBalloon(); },
+            context: this,
+          })});
+        }
+      }});
+
+    this.time.addEvent({
+      delay: 2000,
+      loop: true,
+      startAt: 4000,
+      callback: () => {
+        this.toggle2 = !this.toggle2;
+        if (this.toggle2) {
+          this.laser4.destroy();
+          this.laser5.destroy();
+        } else {
+          this.laser4 = matter.add.image(400, 200, 'laser', null, {isStatic: true, angle: 30});
+          this.laser5 = matter.add.image(500, 300, 'laser', null, {isStatic: true, angle: 10});
+          [this.laser4, this.laser5].forEach( (l) => {this.matterCollision.addOnCollideStart({
+            objectA: this.balloon,
+            objectB: l,
+            callback: () => { this.popBalloon(); },
+            context: this,
+          })});
+        }
+      }});
+    
 
   }
 
@@ -222,15 +283,15 @@ export default class GameScene extends Phaser.Scene {
 
     // Bees want to move along a path
     const beePoints1 = [
-      new Phaser.Math.Vector2(1891, 56),
-      new Phaser.Math.Vector2(2291, 338),
-      new Phaser.Math.Vector2(2329, 93),
-      new Phaser.Math.Vector2(1939, 298),
-      new Phaser.Math.Vector2(1891, 56),
+    new Phaser.Math.Vector2(1891, 56),
+    new Phaser.Math.Vector2(2291, 338),
+    new Phaser.Math.Vector2(2329, 93),
+    new Phaser.Math.Vector2(1939, 298),
+    new Phaser.Math.Vector2(1891, 56),
     ];
     const beePoints2 = [
-      new Phaser.Math.Vector2(2090, 500),
-      new Phaser.Math.Vector2(2233, 488),
+    new Phaser.Math.Vector2(2090, 500),
+    new Phaser.Math.Vector2(2233, 488),
     ];
 
     this.beePath1 = new Phaser.Curves.Spline(beePoints1);
@@ -263,7 +324,7 @@ export default class GameScene extends Phaser.Scene {
       1,
       this.game.config.height,
       0x000000,
-    );
+      );
     this.endZone = this.matter.add.gameObject(endZoneRectangle, { isStatic: true });
     this.matterCollision.addOnCollideStart({
       objectA: this.balloon,
@@ -327,7 +388,7 @@ export default class GameScene extends Phaser.Scene {
         this.scene.start(target);
         this.scene.get(target).cameras.main.fadeIn(500);
       },
-    );
+      );
   }
 
   recenterCamera() {
@@ -339,7 +400,7 @@ export default class GameScene extends Phaser.Scene {
       ropeAnchorX,
       screenCenterX,
       150,
-    );
+      );
     if (isOutsideCameraCenter) { // } && !this.input.activePointer.leftButtonDown()) {
       const moveDistance = GameScene.getMoveDistance(ropeAnchorX, screenCenterX);
 
@@ -347,28 +408,28 @@ export default class GameScene extends Phaser.Scene {
       if (
         (newScrollX > 0)
         && (newScrollX < (this.levelBackground.width - this.game.config.width))
-      ) {
+        ) {
         this.cameras.main.scrollX += moveDistance;
-      }
     }
   }
+}
 
-  static isOutsideCameraCenter(xValue, screenCenterX, offsetTolerationSize) {
-    if (
-      xValue >= (screenCenterX - offsetTolerationSize)
-      && xValue <= (screenCenterX + offsetTolerationSize)
+static isOutsideCameraCenter(xValue, screenCenterX, offsetTolerationSize) {
+  if (
+    xValue >= (screenCenterX - offsetTolerationSize)
+    && xValue <= (screenCenterX + offsetTolerationSize)
     ) {
-      return false;
-    }
-    return true;
-  }
+    return false;
+}
+return true;
+}
 
-  static getMoveDistance(ropeAnchorX, screenCenterX) {
-    const moveDistance = Math.min(
-      Math.abs(ropeAnchorX - screenCenterX),
-      5,
+static getMoveDistance(ropeAnchorX, screenCenterX) {
+  const moveDistance = Math.min(
+    Math.abs(ropeAnchorX - screenCenterX),
+    5,
     );
-    const ropeAnchorIsRightOfCenter = ropeAnchorX > screenCenterX;
-    return ropeAnchorIsRightOfCenter ? moveDistance : -moveDistance;
-  }
+  const ropeAnchorIsRightOfCenter = ropeAnchorX > screenCenterX;
+  return ropeAnchorIsRightOfCenter ? moveDistance : -moveDistance;
+}
 }
