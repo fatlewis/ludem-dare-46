@@ -1,5 +1,4 @@
 import 'phaser';
-import Button from '../Objects/Button';
 
 export default class StageCompleteScene extends Phaser.Scene {
   constructor() {
@@ -9,7 +8,6 @@ export default class StageCompleteScene extends Phaser.Scene {
   create() {
     const { config } = this.game;
     this.model = this.sys.game.globals.model;
-    console.log(this.model);
 
     this.add.image(config.width / 2, config.height / 2, 'background-stageComplete');
 

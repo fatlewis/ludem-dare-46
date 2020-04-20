@@ -17,7 +17,7 @@ export default class OptionsScene extends Phaser.Scene {
     this.musicButton = this.add.image(490, 300, 'checkMark').setInteractive({ useHandCursor: true });
 
     this.soundButton = this.add.image(490, 380, 'checkMark').setInteractive({ useHandCursor: true });
-    
+
     this.musicButton.on('pointerdown', () => {
       this.model.musicOn = !this.model.musicOn;
       this.updateAudio();

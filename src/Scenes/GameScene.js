@@ -9,7 +9,6 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
-    const { config } = this.game;
     const { matter } = this;
 
     this.scene.launch('HUD', { backgroundScene: this });
@@ -28,6 +27,8 @@ export default class GameScene extends Phaser.Scene {
         break;
       case 4:
         this.addLevel4();
+        break;
+      default:
         break;
     }
 
@@ -92,16 +93,15 @@ export default class GameScene extends Phaser.Scene {
     const fan = new Fan(this, 100, 100, 'green', 'right', 'medium');
 
     const particles = this.add.particles('rope');
-    const emitter = particles.createEmitter({
-        speed: 100,
-        x: fan.x,
-        y: { min: fan.y -60, max: fan.y +50 },
-        scale: { start: 1, end: 0 },
-        //angle will need to be 180 for left facing fans
-        angle: 0,
-        blendMode: 'ADD'
+    particles.createEmitter({
+      speed: 100,
+      x: fan.x,
+      y: { min: fan.y - 60, max: fan.y + 50 },
+      scale: { start: 1, end: 0 },
+      // angle will need to be 180 for left facing fans
+      angle: 0,
+      blendMode: 'ADD',
     });
-
   }
 
   addBalloon(x = 100, y = 350) {
@@ -117,16 +117,18 @@ export default class GameScene extends Phaser.Scene {
     });
     this.ropeAnchor.setInteractive({ useHandCursor: true });
 
-    this.rope = Rope.createBetweenObjects(this, this.balloon, this.ropeAnchor, 15, { pointA: { x:-5, y:70 },
-                                                                                     pointB: { x:0, y:-12 } });
+    this.rope = Rope.createBetweenObjects(this, this.balloon, this.ropeAnchor, 15, {
+      pointA: { x: -5, y: 70 },
+      pointB: { x: 0, y: -12 },
+    });
   }
 
   addLevel1SpikeyThings() {
     const { matter } = this;
 
     this.spikeys = [];
-    this.spikeys.push(matter.add.image(500, 450, 'cactus', null, {isStatic: true,}));
-    this.spikeys.push(matter.add.image(988, 320, 'knives', null, {isStatic: true,}));
+    this.spikeys.push(matter.add.image(500, 450, 'cactus', null, { isStatic: true }));
+    this.spikeys.push(matter.add.image(988, 320, 'knives', null, { isStatic: true }));
 
     // Add the collision detection callback for the balloon.
     this.spikeys.forEach((s) => {
@@ -174,8 +176,6 @@ export default class GameScene extends Phaser.Scene {
   }
 
   addLevel3SpikeyThings() {
-    const { matter } = this;
-
     this.spikeys = [];
 
     // Add the collision detection callback for the balloon.
@@ -187,14 +187,11 @@ export default class GameScene extends Phaser.Scene {
         context: this,
       });
     });
-
   }
 
   addLevel4SpikeyThings() {
-    const { matter } = this;
-
     this.spikeys = [];
-    
+
     // Add the collision detection callback for the balloon.
     this.spikeys.forEach((s) => {
       this.matterCollision.addOnCollideStart({
@@ -204,7 +201,6 @@ export default class GameScene extends Phaser.Scene {
         context: this,
       });
     });
-
   }
 
   addBees() {
@@ -259,7 +255,7 @@ export default class GameScene extends Phaser.Scene {
       yoyo: true,
       duration: 1500,
       repeat: -1,
-    })
+    });
   }
 
   addEndZone() {
@@ -286,7 +282,7 @@ export default class GameScene extends Phaser.Scene {
     this.matter.world.removeConstraint(this.rope.initialJoint);
     this.matter.world.removeConstraint(this.rope.finalJoint);
     this.ropeAnchor.setMass(1).setFrictionAir(0).setFixedRotation(false);
-    if (this.model.soundOn == true) {
+    if (this.model.soundOn === true) {
       this.game.registry.get('pop').play();
     }
     this.startFailSequence();
@@ -312,7 +308,7 @@ export default class GameScene extends Phaser.Scene {
     }
 
     // Update the bees
-    if (!this.ending && this.model.level == 2) {
+    if (!this.ending && this.model.level === 2) {
       const point1 = this.beePath1.getPoint(this.follower1.t, this.follower1.vec);
       const point2 = this.beePath2.getPoint(this.follower2.t, this.follower2.vec);
       this.bee1.x = point1.x;

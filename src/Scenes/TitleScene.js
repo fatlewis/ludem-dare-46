@@ -35,12 +35,24 @@ export default class TitleScene extends Phaser.Scene {
     this.graphics = this.add.graphics();
     this.matter.world.setBounds(0, 0, this.game.config.width, this.game.config.height);
     this.balloons = [
-      new Balloon(this, 75, 400, null, { faceFrame: 1, baseFrame: 1, accessoryFrame: 0, yGravity: -3 }),
-      new Balloon(this, 100, 500, null, { faceFrame: 1, baseFrame: 2, accessoryFrame: 0, yGravity: -3 }),
-      new Balloon(this, 150, 400, null, { faceFrame: 1, baseFrame: 3, accessoryFrame: 0, yGravity: -3 }),
-      new Balloon(this, 200, 500, null, { faceFrame: 1, baseFrame: 4, accessoryFrame: 0, yGravity: -3 }),
-      new Balloon(this, 250, 500, null, { faceFrame: 1, baseFrame: 5, accessoryFrame: 0, yGravity: -3 }),
-      new Balloon(this, 300, 400, null, { faceFrame: 1, baseFrame: 6, accessoryFrame: 0, yGravity: -3 }),
+      new Balloon(this, 75, 400, null, {
+        faceFrame: 1, baseFrame: 1, accessoryFrame: 0, yGravity: -3,
+      }),
+      new Balloon(this, 100, 500, null, {
+        faceFrame: 1, baseFrame: 2, accessoryFrame: 0, yGravity: -3,
+      }),
+      new Balloon(this, 150, 400, null, {
+        faceFrame: 1, baseFrame: 3, accessoryFrame: 0, yGravity: -3,
+      }),
+      new Balloon(this, 200, 500, null, {
+        faceFrame: 1, baseFrame: 4, accessoryFrame: 0, yGravity: -3,
+      }),
+      new Balloon(this, 250, 500, null, {
+        faceFrame: 1, baseFrame: 5, accessoryFrame: 0, yGravity: -3,
+      }),
+      new Balloon(this, 300, 400, null, {
+        faceFrame: 1, baseFrame: 6, accessoryFrame: 0, yGravity: -3,
+      }),
     ];
 
     this.ropeAnchor = this.matter.add.image(175, 575, 'rope', null, {
@@ -52,7 +64,7 @@ export default class TitleScene extends Phaser.Scene {
     });
 
     this.ropes = [];
-    this.balloons.forEach(balloon => {
+    this.balloons.forEach((balloon) => {
       this.add.existing(balloon);
       this.ropes.push(
         Rope.createBetweenObjects(
@@ -60,17 +72,17 @@ export default class TitleScene extends Phaser.Scene {
           balloon.matterObject,
           this.ropeAnchor,
           15,
-          { pointA: { x:-5, y:70 }}
-        )
-      )
+          { pointA: { x: -5, y: 70 } },
+        ),
+      );
     });
-  }  
+  }
 
   update() {
     if (this.ropeAnchor.active) {
       this.graphics.clear();
       this.graphics.lineStyle(1, 0x000000, 1);
-      this.ropes.forEach(rope => rope.drawCurve(this));
+      this.ropes.forEach((rope) => rope.drawCurve(this));
     }
   }
 }
