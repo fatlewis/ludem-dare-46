@@ -1,5 +1,6 @@
 import 'phaser';
 import Button from '../Objects/Button';
+import Fan from '../Objects/Fan';
 
 export default class OptionsScene extends Phaser.Scene {
   constructor() {
