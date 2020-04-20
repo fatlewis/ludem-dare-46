@@ -1,5 +1,6 @@
 import 'phaser';
 import Button from '../Objects/Button';
+import ArrowButton from '../Objects/ArrowButton';
 
 export default class BalloonSelectScene extends Phaser.Scene {
   constructor() {
@@ -10,56 +11,38 @@ export default class BalloonSelectScene extends Phaser.Scene {
     const { config } = this.game;
     this.model = this.sys.game.globals.model;
 
-    this.add.image(config.width / 2, config.height / 2, 'background');
+    this.add.image(config.width / 2, config.height / 2, 'background-customize');
 
-    this.add.text(config.width * 0.1, config.height * 0.11, 'Balloon select scene', { align: 'center', fontSize: '25px', fill: '#FFF' });
-    this.menuButton = new Button(this, config.width * 0.25, config.height * 0.85, 'menuButton', 'menuButtonPressed', 'Title');
-    this.gameButton = new Button(this, config.width * 0.75, config.height * 0.85, 'playButton', 'playButtonPressed', 'Game');
+    this.menuButton = new Button(this, 100, config.height * 0.85, 'menuButton', 'menuButtonPressed', 'Title');
+    this.gameButton = new Button(this, 250, config.height * 0.85, 'playButton', 'playButtonPressed', 'Game');
 
     let framecountcolour = this.model.colourFrame || 0;
     let framecountaccessory = this.model.accessoryFrame || 0;
+    let framecounthair = this.model.hairFrame || 0;
+    let framecountface = this.model.faceFrame || 0;
 
-    const balloon = this.add.sprite(config.width * 0.75, config.height / 2, 'balloons', framecountcolour);
-    const accessory = this.add.sprite(config.width * 0.75, config.height / 2, 'accessories', framecountaccessory);
-    this.add.sprite(config.width * 0.75, config.height / 2, 'face', 0);
+    this.balloon = this.add.sprite(config.width * 0.75, config.height / 2, 'balloons', framecountcolour);
+    this.accessory = this.add.sprite(config.width * 0.75, config.height / 2, 'accessories', framecountaccessory);
+    this.hair = this.add.sprite(config.width * 0.75, config.height / 2, 'hairstyles', framecounthair);
+    this.faces = this.add.sprite(config.width * 0.75, config.height / 2, 'face', framecountface);
 
-    this.colourButton1 = this.add.image(150, 200, 'checkedBox').setInteractive({ useHandCursor: true });
-    this.colourText = this.add.text(200, 190, 'Colour', { fontSize: 24, fill: '#FFF' });
-    this.colourButton2 = this.add.image(350, 200, 'checkedBox').setInteractive({ useHandCursor: true });
+    this.leftFaceButton = new ArrowButton(this, 85, 175, 'leftArrowUp', 'leftArrowDown', 'left', 2, 'face');
+    this.rightFaceButton = new ArrowButton(this, 265, 175, 'rightArrowUp', 'rightArrowDown', 'right', 2, 'face');
+    this.balloon.setFrame(this.model.faceFrame);
 
-    this.faceButton1 = this.add.image(150, 300, 'checkedBox').setInteractive({ useHandCursor: true });
-    this.faceText = this.add.text(200, 290, 'Face', { fontSize: 24, fill: '#FFF' });
-    this.faceButton2 = this.add.image(350, 300, 'checkedBox').setInteractive({ useHandCursor: true });
+    this.leftColourButton = new ArrowButton(this, 85, 250, 'leftArrowUp', 'leftArrowDown', 'left', 9, 'colour');
+    this.rightColourButton = new ArrowButton(this, 265, 250, 'rightArrowUp', 'rightArrowDown', 'right', 9, 'colour');
+    this.balloon.setFrame(this.model.colourFrame);
 
-    this.colourButton1.on('pointerdown', () => {
-      framecountcolour = (framecountcolour - 1) % 9;
-      // JS modulo returns negative numbers, need to add 9 to get back to top of the loop
-      if (framecountcolour < 0) { framecountcolour += 9; }
-      balloon.setFrame(framecountcolour);
-      this.model.colourFrame = framecountcolour;
-    });
+    this.leftHairButton = new ArrowButton(this, 85, 335, 'leftArrowUp', 'leftArrowDown', 'left', 9, 'hair');
+    this.rightHairButton = new ArrowButton(this, 265, 335, 'rightArrowUp', 'rightArrowDown', 'right', 9, 'hair');
+    this.balloon.setFrame(this.model.hairFrame);
 
-    this.colourButton2.on('pointerdown', () => {
-      framecountcolour = (framecountcolour + 1) % 9;
-      balloon.setFrame(framecountcolour);
-      this.model.colourFrame = framecountcolour;
-    });
+    this.leftAccessoryButton = new ArrowButton(this, 85, 410, 'leftArrowUp', 'leftArrowDown', 'left', 7, 'accessory');
+    this.rightAccessoryButton = new ArrowButton(this, 265, 410, 'rightArrowUp', 'rightArrowDown', 'right', 7, 'accessory');
+    this.balloon.setFrame(this.model.accessoryFrame);
 
-    this.faceButton1.on('pointerdown', () => {
-      framecountaccessory = (framecountaccessory - 1) % 7;
-      // JS modulo returns negative numbers, need to add 9 to get back to top of the loop
-      if (framecountaccessory < 0) { framecountaccessory += 7; }
-      accessory.setFrame(framecountaccessory);
-      this.model.accessoryFrame = framecountaccessory;
-    });
-
-    this.faceButton2.on('pointerdown', () => {
-      framecountaccessory = (framecountaccessory + 1) % 7;
-      accessory.setFrame(framecountaccessory);
-      this.model.accessoryFrame = framecountaccessory;
-    });
-
-    const nameForm = this.add.dom(200, 400).createFromCache('nameForm');
+    const nameForm = this.add.dom(580, 480).createFromCache('nameForm');
     this.events.once('render', () => {
       const nameField = nameForm.getChildByName('nameField');
       if (this.model.heroName) {
@@ -72,5 +55,13 @@ export default class BalloonSelectScene extends Phaser.Scene {
         },
       );
     });
+  }
+
+  update() {
+    this.balloon.setFrame(this.model.colourFrame);
+    this.accessory.setFrame(this.model.accessoryFrame);
+    this.hair.setFrame(this.model.hairFrame);
+    this.faces.setFrame(this.model.faceFrame);
+
   }
 }
