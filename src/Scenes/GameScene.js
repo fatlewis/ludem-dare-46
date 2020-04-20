@@ -147,7 +147,7 @@ export default class GameScene extends Phaser.Scene {
 
     this.spikeys = [];
     this.spikeys.push(matter.add.image(1886, 467, 'tree1', null, { isStatic: true }));
-    this.spikeys.push(matter.add.image(1744, 352, 'tree2', null, { isStatic: true }));
+    this.spikeys.push(matter.add.image(1744, 382, 'tree2', null, { isStatic: true }));
     this.spikeys.push(matter.add.image(1616, 460, 'tree3', null, { isStatic: true }));
     this.spikeys.push(matter.add.image(3049, 324, 'tree4', null, { isStatic: true }));
     this.spikeys.push(matter.add.image(635, 504, 'ironFence', null, { isStatic: true }));
