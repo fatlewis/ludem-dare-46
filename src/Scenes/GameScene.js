@@ -319,6 +319,7 @@ export default class GameScene extends Phaser.Scene {
   startGoalSequence() {
     this.ending = true;
     this.endZone.destroy();
+    this.scene.stop('HUD');
 
     const target = 'StageComplete';
     this.cameras.main.fadeOut(500);
@@ -337,6 +338,7 @@ export default class GameScene extends Phaser.Scene {
   startFailSequence() {
     this.ending = true;
     this.endZone.destroy();
+    this.scene.stop('HUD');
 
     const target = 'MissionFail';
     this.cameras.main.fadeOut(500);
@@ -362,7 +364,7 @@ export default class GameScene extends Phaser.Scene {
       screenCenterX,
       150,
     );
-    if (isOutsideCameraCenter) { // } && !this.input.activePointer.leftButtonDown()) {
+    if (isOutsideCameraCenter) {
       const moveDistance = GameScene.getMoveDistance(ropeAnchorX, screenCenterX);
 
       const newScrollX = this.cameras.main.scrollX + moveDistance;
