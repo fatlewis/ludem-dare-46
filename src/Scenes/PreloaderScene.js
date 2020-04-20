@@ -87,13 +87,13 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.spritesheet('bird', 'assets/spikey/BirdRedSprite_01.png', { frameWidth: 163, frameHeight: 135 });
 
     // Fans
-    this.load.spritesheet('fanGreen', 'assets/fan/FanSpriteGreen.png', { frameWidth: 104, frameHeight: 129 });
-    this.load.spritesheet('fanOlive', 'assets/fan/FanSpriteOlive.png', { frameWidth: 104, frameHeight: 129 });
-    this.load.spritesheet('fanOrange', 'assets/fan/FanSpriteOrange.png', { frameWidth: 104, frameHeight: 129 });
-    this.load.spritesheet('fanPink', 'assets/fan/FanSpritePink.png', { frameWidth: 104, frameHeight: 129 });
-    this.load.spritesheet('fanRed', 'assets/fan/FanSpriteRed.png', { frameWidth: 104, frameHeight: 129 });
-    this.load.spritesheet('fanTeal', 'assets/fan/FanSpriteTeal.png', { frameWidth: 104, frameHeight: 129 });
-    this.load.spritesheet('fanYellow', 'assets/fan/FanSpriteYellow.png', { frameWidth: 104, frameHeight: 129 });
+    this.load.spritesheet('fanGreen', 'assets/fan/FanSpriteGreen.png', { frameWidth: 105, frameHeight: 136 });
+    this.load.spritesheet('fanOlive', 'assets/fan/FanSpriteOlive.png', { frameWidth: 105, frameHeight: 136 });
+    this.load.spritesheet('fanOrange', 'assets/fan/FanSpriteOrange.png', { frameWidth: 105, frameHeight: 136 });
+    this.load.spritesheet('fanPink', 'assets/fan/FanSpritePink.png', { frameWidth: 105, frameHeight: 136 });
+    this.load.spritesheet('fanRed', 'assets/fan/FanSpriteRed.png', { frameWidth: 105, frameHeight: 136 });
+    this.load.spritesheet('fanTeal', 'assets/fan/FanSpriteTeal.png', { frameWidth: 105, frameHeight: 136 });
+    this.load.spritesheet('fanYellow', 'assets/fan/FanSpriteYellow.png', { frameWidth: 105, frameHeight: 136 });
 
     // Backgrounds
     this.load.image('background', 'assets/background/MainMenu.png');
