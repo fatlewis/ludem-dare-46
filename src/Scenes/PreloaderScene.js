@@ -115,6 +115,7 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('background-missionFail', 'assets/background/MissionFail_02.png');
     this.load.image('background-credits', 'assets/background/CreditsMenu_01.png');
     this.load.image('background-about', 'assets/background/About.png');
+    this.load.image('background-fan-hallway', 'assets/Extras/Hallway.png');
 
     this.load.image('endButton', 'assets/buttons/FinalLevelButtonUp_01.png');
     this.load.image('sadFamily', 'assets/background/SadFamily_02.png');    

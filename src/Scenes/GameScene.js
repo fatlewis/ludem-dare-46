@@ -28,6 +28,8 @@ export default class GameScene extends Phaser.Scene {
       case 4:
         this.addLevel4();
         break;
+      case 5:
+        this.addLevel5();
       default:
         break;
     }
@@ -84,6 +86,13 @@ export default class GameScene extends Phaser.Scene {
     this.addEndZone();
   }
 
+  addLevel5() {
+    this.levelBackground = this.add.image(0, 0, 'background-fan-hallway').setOrigin(0, 0);
+    this.addLevel5Fan();
+    this.addBalloon();
+    this.addEndZone();
+  }
+
   initialiseCamera() {
     this.cameras.main.scrollX = 0;
     this.cameras.main.scrollY = this.levelBackground.height - this.game.config.height;
@@ -97,6 +106,83 @@ export default class GameScene extends Phaser.Scene {
       speed: 100,
       x: this.fan1.x,
       y: { min: this.fan1.y - 60, max: this.fan1.y + 50 },
+      scale: { start: 1, end: 0 },
+      // angle will need to be 180 for left facing fans
+      angle: 0,
+      blendMode: 'ADD',
+    });
+  }
+
+  addLevel5Fan() {
+    this.fan1 = new Fan(this, 300, 200, 'green', 'right', 'medium');
+    this.fan2 = new Fan(this, 500, 400, 'red', 'left', 'medium');
+    this.fan3 = new Fan(this, 1000, 200, 'olive', 'right', 'medium');
+    this.fan4 = new Fan(this, 1500, 400, 'orange', 'right', 'medium');
+    this.fan5 = new Fan(this, 2000, 200, 'pink', 'left', 'medium');
+    this.fan6 = new Fan(this, 2500, 400, 'teal', 'right', 'medium');
+    this.fan7 = new Fan(this, 3000, 200, 'yellow', 'left', 'medium');
+
+    const particles = this.add.particles('rope');
+    particles.createEmitter({
+      speed: 100,
+      x: this.fan1.x,
+      y: { min: this.fan1.y - 60, max: this.fan1.y + 50 },
+      scale: { start: 1, end: 0 },
+      // angle will need to be 180 for left facing fans
+      angle: 0,
+      blendMode: 'ADD',
+    });
+
+    particles.createEmitter({
+      speed: 100,
+      x: this.fan2.x,
+      y: { min: this.fan2.y - 60, max: this.fan2.y + 50 },
+      scale: { start: 1, end: 0 },
+      // angle will need to be 180 for left facing fans
+      angle: 0,
+      blendMode: 'ADD',
+    });
+
+    particles.createEmitter({
+      speed: 100,
+      x: this.fan3.x,
+      y: { min: this.fan3.y - 60, max: this.fan3.y + 50 },
+      scale: { start: 1, end: 0 },
+      // angle will need to be 180 for left facing fans
+      angle: 0,
+      blendMode: 'ADD',
+    });
+    particles.createEmitter({
+      speed: 100,
+      x: this.fan4.x,
+      y: { min: this.fan4.y - 60, max: this.fan4.y + 50 },
+      scale: { start: 1, end: 0 },
+      // angle will need to be 180 for left facing fans
+      angle: 0,
+      blendMode: 'ADD',
+    });
+    particles.createEmitter({
+      speed: 100,
+      x: this.fan5.x,
+      y: { min: this.fan5.y - 60, max: this.fan5.y + 50 },
+      scale: { start: 1, end: 0 },
+      // angle will need to be 180 for left facing fans
+      angle: 0,
+      blendMode: 'ADD',
+    });
+    particles.createEmitter({
+      speed: 100,
+      x: this.fan6.x,
+      y: { min: this.fan6.y - 60, max: this.fan6.y + 50 },
+      scale: { start: 1, end: 0 },
+      // angle will need to be 180 for left facing fans
+      angle: 0,
+      blendMode: 'ADD',
+    });
+    particles.createEmitter({
+      speed: 100,
+      x: this.fan7.x,
+      y: { min: this.fan7.y - 60, max: this.fan7.y + 50 },
       scale: { start: 1, end: 0 },
       // angle will need to be 180 for left facing fans
       angle: 0,
