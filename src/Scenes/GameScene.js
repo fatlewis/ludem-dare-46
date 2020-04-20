@@ -71,9 +71,10 @@ export default class GameScene extends Phaser.Scene {
   addLevel3() {
     this.levelBackground = this.add.image(0, 0, 'background-level3').setOrigin(0, 0);
     this.initialiseCamera();
+    this.addWindow();
     this.addBalloon(100, this.levelBackground.height - 250);
     this.addLevel3SpikeyThings();
-    this.addEndZone();
+    this.addLevel3EndZone();
   }
 
   addLevel4() {
@@ -517,6 +518,11 @@ export default class GameScene extends Phaser.Scene {
     });
   }
 
+  addWindow() {
+    this.add.image(544, 471, 'level3-insideWindow');
+    this.window = this.add.image(544, 471, 'level3-window');
+  }
+
   addEndZone() {
     const endZoneRectangle = this.add.rectangle(
       this.levelBackground.width,
@@ -524,6 +530,25 @@ export default class GameScene extends Phaser.Scene {
       1,
       this.game.config.height,
       0x000000,
+    );
+    this.endZone = this.matter.add.gameObject(endZoneRectangle, { isStatic: true });
+    this.matterCollision.addOnCollideStart({
+      objectA: this.balloon,
+      objectB: this.endZone,
+      callback: () => {
+        this.startGoalSequence();
+      },
+    });
+  }
+
+  addLevel3EndZone() {
+    const endZoneRectangle = this.add.rectangle(
+      544,
+      471,
+      this.window.width,
+      this.window.height,
+      0x000000,
+      0,
     );
     this.endZone = this.matter.add.gameObject(endZoneRectangle, { isStatic: true });
     this.matterCollision.addOnCollideStart({
