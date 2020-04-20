@@ -19,8 +19,6 @@ export default class Rope {
     const start = firstObject.body.position;
     const end = secondObject.body.position;
 
-console.log(start, end);
-
     const xDistance = Math.abs(start.x - end.x);
     const yDistance = Math.abs(start.y - end.y);
     const distance = Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
@@ -33,7 +31,7 @@ console.log(start, end);
     if (start.y > end.y) { ySpacingDistance = ySpacingDistance * -1 }
 
     // Add initial point and connect it to object
-    const initialPoint = scene.matter.add.circle(start.x, start.y, 1, { mass: 0.1 });
+    const initialPoint = Rope.createPoint(scene, start.x, start.y);
     scene.matter.add.joint(
       firstObject,
       initialPoint,
@@ -53,14 +51,14 @@ console.log(start, end);
       nextY = start.y + (ySpacingDistance * i);
 
       // Add new point
-      const newPoint = scene.matter.add.circle(nextX, nextY, 1, { mass: 0.1 });
+      const newPoint = Rope.createPoint(scene, nextX, nextY);
       scene.matter.add.joint(prevPoint, newPoint, segmentLength);
       ropePoints.push(newPoint);
       prevPoint = newPoint;
     }
 
     // Add final point and connect it to object
-    const finalPoint = scene.matter.add.circle(end.x, end.y, 1, { mass: 0.1 });
+    const finalPoint = Rope.createPoint(scene, end.x, end.y);
     ropePoints.push(finalPoint);
     scene.matter.add.joint(prevPoint, finalPoint, segmentLength);
     scene.matter.add.joint(
@@ -73,5 +71,9 @@ console.log(start, end);
 
     // Return an instance with the list of rope points
     return new Rope(ropePoints);
+  }
+
+  static createPoint(scene, x, y) {
+    return scene.matter.add.circle(x, y, 1, { mass: 0.1 });
   }
 }

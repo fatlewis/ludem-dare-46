@@ -35,12 +35,12 @@ export default class TitleScene extends Phaser.Scene {
     this.graphics = this.add.graphics();
     this.matter.world.setBounds(0, 0, this.game.config.width, this.game.config.height);
     this.balloons = [
-      new Balloon(this, 75, 400, null, { faceFrame: 1, baseFrame: 0, accessoryFrame: 0, yGravity: -3 }),
-      new Balloon(this, 100, 500, null, { faceFrame: 1, baseFrame: 1, accessoryFrame: 0, yGravity: -3 }),
-      new Balloon(this, 150, 400, null, { faceFrame: 1, baseFrame: 2, accessoryFrame: 0, yGravity: -3 }),
-      new Balloon(this, 200, 500, null, { faceFrame: 1, baseFrame: 3, accessoryFrame: 0, yGravity: -3 }),
-      new Balloon(this, 250, 500, null, { faceFrame: 1, baseFrame: 4, accessoryFrame: 0, yGravity: -3 }),
-      new Balloon(this, 300, 400, null, { faceFrame: 1, baseFrame: 5, accessoryFrame: 0, yGravity: -3 }),
+      new Balloon(this, 75, 400, null, { faceFrame: 1, baseFrame: 1, accessoryFrame: 0, yGravity: -3 }),
+      new Balloon(this, 100, 500, null, { faceFrame: 1, baseFrame: 2, accessoryFrame: 0, yGravity: -3 }),
+      new Balloon(this, 150, 400, null, { faceFrame: 1, baseFrame: 3, accessoryFrame: 0, yGravity: -3 }),
+      new Balloon(this, 200, 500, null, { faceFrame: 1, baseFrame: 4, accessoryFrame: 0, yGravity: -3 }),
+      new Balloon(this, 250, 500, null, { faceFrame: 1, baseFrame: 5, accessoryFrame: 0, yGravity: -3 }),
+      new Balloon(this, 300, 400, null, { faceFrame: 1, baseFrame: 6, accessoryFrame: 0, yGravity: -3 }),
     ];
 
     this.ropeAnchor = this.matter.add.image(175, 575, 'rope', null, {
