@@ -127,8 +127,6 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('creditsButtonPressed', 'assets/buttons/ButtonCreditsDown_02.png');
     this.load.image('continueButton', 'assets/buttons/ButtonContinueUp_02.png');
     this.load.image('continueButtonPressed', 'assets/buttons/ButtonContinueDown_02.png');
-    this.load.image('retryButton', 'assets/buttons/ButtonUp_02.png');
-    this.load.image('retryButtonPressed', 'assets/buttons/ButtonDown_02.png');
     this.load.image('leftArrowUp', 'assets/buttons/LeftArrowUp_01.png');
     this.load.image('leftArrowDown', 'assets/buttons/LeftArrowDown_01.png');
     this.load.image('rightArrowUp', 'assets/buttons/RightArrowUp_01.png');
