@@ -7,7 +7,7 @@ export default class PreloaderScene extends Phaser.Scene {
 
   preload() {
     // add logo image
-    const logo = this.add.image(400, 120, 'Logo');
+    const logo = this.add.image(400, 120, 'logo');
     logo.setScale(0.45);
 
     // display progress bar
@@ -94,10 +94,14 @@ export default class PreloaderScene extends Phaser.Scene {
 
     // Backgrounds
     this.load.image('background', 'assets/background/MainMenu.png');
-    this.load.image('background-customize', 'assets/CustomizePage_01.png');
-    this.load.image('background-options', 'assets/OptionsMenu_01.png');
+    this.load.image('background-customize', 'assets/background/CustomizePage_01.png');
+    this.load.image('background-options', 'assets/background/OptionsMenu_01.png');
     this.load.image('background-level1', 'assets/background/level-1/BackgroundLevel1_01.png');
     this.load.image('background-level2', 'assets/background/level-2/BackgroundLevel2.png');
+    this.load.image('background-level3', 'assets/background/level-3/ThirdLevel_01.png');
+    this.load.image('background-level4', 'assets/background/level-2/BackgroundLevel2.png');
+    this.load.image('background-stageComplete', 'assets/background/StageComplete_01.png');
+    this.load.image('background-missionSuccess', 'assets/background/MissionSuccess_01.png');
 
     // Menu items
     this.load.image('logo', 'assets/logo.png');
@@ -113,6 +117,8 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('aboutButtonPressed', 'assets/buttons/ButtonAboutDown_02.png');
     this.load.image('creditsButton', 'assets/buttons/ButtonCreditsUp_02.png');
     this.load.image('creditsButtonPressed', 'assets/buttons/ButtonCreditsDown_02.png');
+    this.load.image('continueButton', 'assets/buttons/ButtonContinueUp_02.png');
+    this.load.image('continueButtonPressed', 'assets/buttons/ButtonContinueDown_02.png');
     this.load.image('leftArrowUp', 'assets/buttons/LeftArrowUp_01.png');
     this.load.image('leftArrowDown', 'assets/buttons/LeftArrowDown_01.png');
     this.load.image('rightArrowUp', 'assets/buttons/RightArrowUp_01.png');

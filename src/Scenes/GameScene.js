@@ -11,6 +11,7 @@ export default class GameScene extends Phaser.Scene {
     const { matter } = this;
 
     this.scene.launch('HUD', { backgroundScene: this });
+    this.ending = false;
 
     this.model = this.sys.game.globals.model;
     switch (this.model.level) {
@@ -19,6 +20,12 @@ export default class GameScene extends Phaser.Scene {
         break;
       case 2:
         this.addLevel2();
+        break;
+      case 3:
+        this.addLevel3();
+        break;
+      case 4:
+        this.addLevel4();
         break;
     }
 
@@ -34,6 +41,8 @@ export default class GameScene extends Phaser.Scene {
         console.log(this.cameras.main.scrollX + this.input.x, this.input.y);
       }
     });
+
+    this.cameras.main.fadeIn(500);
   }
 
   // for use in the chrome dev console via the command:
@@ -54,6 +63,20 @@ export default class GameScene extends Phaser.Scene {
     this.levelBackground = this.add.image(0, 0, 'background-level2').setOrigin(0, 0);
     this.addBalloon();
     this.addLevel2SpikeyThings();
+    this.addEndZone();
+  }
+
+  addLevel3() {
+    this.levelBackground = this.add.image(0, 0, 'background-level3').setOrigin(0, 0);
+    this.addBalloon();
+    this.addLevel3SpikeyThings();
+    this.addEndZone();
+  }
+
+  addLevel4() {
+    this.levelBackground = this.add.image(0, 0, 'background-level4').setOrigin(0, 0);
+    this.addBalloon();
+    this.addLevel4SpikeyThings();
     this.addEndZone();
   }
 
@@ -198,6 +221,40 @@ export default class GameScene extends Phaser.Scene {
     });
   }
 
+  addLevel3SpikeyThings() {
+    const { matter } = this;
+
+    this.spikeys = [];
+
+    // Add the collision detection callback for the balloon.
+    this.spikeys.forEach((s) => {
+      this.matterCollision.addOnCollideStart({
+        objectA: this.balloon,
+        objectB: s,
+        callback: () => { this.popBalloon(); },
+        context: this,
+      });
+    });
+
+  }
+
+  addLevel4SpikeyThings() {
+    const { matter } = this;
+
+    this.spikeys = [];
+    
+    // Add the collision detection callback for the balloon.
+    this.spikeys.forEach((s) => {
+      this.matterCollision.addOnCollideStart({
+        objectA: this.balloon,
+        objectB: s,
+        callback: () => { this.popBalloon(); },
+        context: this,
+      });
+    });
+
+  }
+
   addBees() {
     const { matter } = this;
 
@@ -301,7 +358,7 @@ export default class GameScene extends Phaser.Scene {
     }
 
     // Update the bees
-    if (this.model.level == 2) {
+    if (!this.ending && this.model.level == 2) {
       const point1 = this.beePath1.getPoint(this.follower1.t, this.follower1.vec);
       const point2 = this.beePath2.getPoint(this.follower2.t, this.follower2.vec);
       this.bee1.x = point1.x;
@@ -312,16 +369,18 @@ export default class GameScene extends Phaser.Scene {
   }
 
   startGoalSequence() {
-    const titleScene = this.scene.get('Title');
-    titleScene.events.once('transitioncomplete', () => {
-      titleScene.cameras.main.fadeIn(500);
-    });
+    this.ending = true;
     this.endZone.destroy();
+
+    const target = 'StageComplete';
     this.cameras.main.fadeOut(500);
-    this.scene.transition({
-      duration: 500,
-      target: 'Title',
-    });
+    this.cameras.main.once(
+      Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,
+      () => {
+        this.scene.start(target);
+        this.scene.get(target).cameras.main.fadeIn(500);
+      },
+    );
   }
 
   recenterCamera() {
