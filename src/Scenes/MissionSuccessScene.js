@@ -8,6 +8,7 @@ export default class MissionSuccessScene extends Phaser.Scene {
 
   create() {
     const { config } = this.game;
+    this.model = this.sys.game.globals.model;
     this.add.image(config.width / 2, config.height / 2, 'background-missionSuccess');
     this.menuButton = new Button(this, 170, 520, 'menuButton', 'menuButtonPressed', 'Title');
 

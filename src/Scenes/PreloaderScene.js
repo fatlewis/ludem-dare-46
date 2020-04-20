@@ -103,6 +103,7 @@ export default class PreloaderScene extends Phaser.Scene {
     // Backgrounds
     this.load.image('background', 'assets/background/MainMenu.png');
     this.load.image('background-customize', 'assets/background/CustomizePage_01.png');
+    this.load.image('background-instructions', 'assets/background/HowtoPlay_02.png');
     this.load.image('background-options', 'assets/background/OptionsMenu_01.png');
     this.load.image('background-level1', 'assets/background/level-1/BackgroundLevel1_02.png');
     this.load.image('foreground-level1', 'assets/background/level-1/Foreground_doorframes_01.png');
@@ -134,6 +135,8 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('creditsButtonPressed', 'assets/buttons/ButtonCreditsDown_02.png');
     this.load.image('continueButton', 'assets/buttons/ButtonContinueUp_02.png');
     this.load.image('continueButtonPressed', 'assets/buttons/ButtonContinueDown_02.png');
+    this.load.image('backButton', 'assets/buttons/ButtonBackUp_02.png');
+    this.load.image('backButtonPressed', 'assets/buttons/ButtonBackDown_02.png');
     this.load.image('retryButton', 'assets/buttons/ButtonReplayUp_02.png');
     this.load.image('retryButtonPressed', 'assets/buttons/ButtonReplayDown_02.png');
     this.load.image('leftArrowUp', 'assets/buttons/LeftArrowUp_01.png');
