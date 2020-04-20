@@ -10,7 +10,7 @@ export default class InstructionsScene extends Phaser.Scene {
 
 	    this.add.image(config.width / 2, config.height / 2, 'background-instructions');
 
-	    this.menuButton = new Button(this, 480, config.height * 0.85, 'menuButton', 'menuButtonPressed', 'Title');
+	    this.menuButton = new Button(this, 480, config.height * 0.85, 'backButton', 'backButtonPressed', 'BalloonSelect');
 	    this.gameButton = new Button(this, 630, config.height * 0.85, 'playButton', 'playButtonPressed', 'Game', true);
 
     	const model = this.sys.game.globals.model;
