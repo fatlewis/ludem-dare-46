@@ -115,12 +115,12 @@ export default class GameScene extends Phaser.Scene {
 
   addLevel5Fan() {
     this.fan1 = new Fan(this, 300, 200, 'green', 'right', 'medium');
-    this.fan2 = new Fan(this, 500, 400, 'red', 'left', 'medium');
+    this.fan2 = new Fan(this, 700, 400, 'red', 'left', 'medium');
     this.fan3 = new Fan(this, 1000, 200, 'olive', 'right', 'medium');
-    this.fan4 = new Fan(this, 1500, 400, 'orange', 'right', 'medium');
-    this.fan5 = new Fan(this, 2000, 200, 'pink', 'left', 'medium');
-    this.fan6 = new Fan(this, 2500, 400, 'teal', 'right', 'medium');
-    this.fan7 = new Fan(this, 3000, 200, 'yellow', 'left', 'medium');
+    this.fan4 = new Fan(this, 1500, 400, 'orange', 'left', 'medium');
+    this.fan5 = new Fan(this, 2000, 200, 'pink', 'right', 'medium');
+    this.fan6 = new Fan(this, 2500, 400, 'teal', 'left', 'medium');
+    this.fan7 = new Fan(this, 3000, 200, 'yellow', 'right', 'medium');
 
     const particles = this.add.particles('rope');
     particles.createEmitter({
@@ -139,7 +139,7 @@ export default class GameScene extends Phaser.Scene {
       y: { min: this.fan2.y - 60, max: this.fan2.y + 50 },
       scale: { start: 1, end: 0 },
       // angle will need to be 180 for left facing fans
-      angle: 0,
+      angle: 180,
       blendMode: 'ADD',
     });
 
@@ -158,7 +158,7 @@ export default class GameScene extends Phaser.Scene {
       y: { min: this.fan4.y - 60, max: this.fan4.y + 50 },
       scale: { start: 1, end: 0 },
       // angle will need to be 180 for left facing fans
-      angle: 0,
+      angle: 180,
       blendMode: 'ADD',
     });
     particles.createEmitter({
@@ -176,7 +176,7 @@ export default class GameScene extends Phaser.Scene {
       y: { min: this.fan6.y - 60, max: this.fan6.y + 50 },
       scale: { start: 1, end: 0 },
       // angle will need to be 180 for left facing fans
-      angle: 0,
+      angle: 180,
       blendMode: 'ADD',
     });
     particles.createEmitter({
