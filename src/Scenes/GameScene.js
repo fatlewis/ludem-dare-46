@@ -111,7 +111,7 @@ export default class GameScene extends Phaser.Scene {
     this.add.existing(balloonContainer);
     this.balloon = balloonContainer.matterObject;
 
-    this.ropeAnchor = this.matter.add.image(x, y + 100, 'rope', null, {
+    this.ropeAnchor = this.matter.add.image(x, y + 100, 'nametag', null, {
       mass: 50000,
       ignoreGravity: false,
       frictionAir: 1,
