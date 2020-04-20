@@ -117,7 +117,7 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('leftArrowDown', 'assets/buttons/LeftArrowDown_01.png');
     this.load.image('rightArrowUp', 'assets/buttons/RightArrowUp_01.png');
     this.load.image('rightArrowDown', 'assets/buttons/RightArrowDown_01.png');
-    this.load.image('checkedBox', 'assets/ui/checked.png');
+    this.load.image('checkMark', 'assets/buttons/OptionCheckmark_02.png');
 
     // Audio
     this.load.audio('bgMusic', ['assets/audio/theme.mp3']);
