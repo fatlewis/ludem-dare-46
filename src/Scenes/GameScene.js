@@ -9,17 +9,22 @@ export default class GameScene extends Phaser.Scene {
   create() {
     const { config } = this.game;
     const { matter } = this;
-    this.levelBackground = this.add.image(0, 0, 'background-level1').setOrigin(0, 0);
     this.graphics = this.add.graphics();
-    matter.world.setBounds(0, -40, this.levelBackground.width, config.height);
     matter.add.mouseSpring();
 
     this.scene.launch('HUD', { backgroundScene: this });
 
-    this.addFan();
-    this.addBalloon();
-    this.addSpikeyThings();
-    this.addEndZone();
+    this.model = this.sys.game.globals.model;
+    switch (this.model.level) {
+      case 1:
+        this.addLevel1();
+        break;
+      case 2:
+        this.addLevel2();
+        break;
+    }
+
+    matter.world.setBounds(0, -40, this.levelBackground.width, config.height);
 
     this.debugMode = false;
     this.input.on('pointerdown', () => {
@@ -34,6 +39,21 @@ export default class GameScene extends Phaser.Scene {
   // game.scene.scenes[5].toggleDebugMode()
   toggleDebugMode() {
     this.debugMode = !this.debugMode;
+  }
+
+  addLevel1() {
+    this.levelBackground = this.add.image(0, 0, 'background-level1').setOrigin(0, 0);
+    this.addFan();
+    this.addBalloon();
+    this.addLevel1SpikeyThings();
+    this.addEndZone();
+  }
+
+  addLevel2() {
+    this.levelBackground = this.add.image(0, 0, 'background-level2').setOrigin(0, 0);
+    this.addBalloon();
+    this.addLevel2SpikeyThings();
+    this.addEndZone();
   }
 
   addFan() {
@@ -124,7 +144,7 @@ export default class GameScene extends Phaser.Scene {
     matter.add.joint(prev, this.ropeAnchor, 20);
   }
 
-  addSpikeyThings() {
+  addLevel1SpikeyThings() {
     const { matter } = this;
 
     this.spikeys = [];
@@ -132,6 +152,52 @@ export default class GameScene extends Phaser.Scene {
       isStatic: true,
     }));
     this.spikeys.push(matter.add.image(988, 320, 'knives', null, {
+      isStatic: true,
+    }));
+
+    // Add the collision detection callback for the balloon.
+    this.spikeys.forEach((s) => {
+      this.matterCollision.addOnCollideStart({
+        objectA: this.balloon,
+        objectB: s,
+        callback: () => { this.popBalloon(); },
+        context: this,
+      });
+    });
+  }
+
+  addLevel2SpikeyThings() {
+    const { matter } = this;
+
+    this.spikeys = [];
+    this.spikeys.push(matter.add.image(500, 450, 'tree1', null, {
+      isStatic: true,
+    }));
+    this.spikeys.push(matter.add.image(600, 450, 'tree2', null, {
+      isStatic: true,
+    }));
+    this.spikeys.push(matter.add.image(700, 450, 'tree3', null, {
+      isStatic: true,
+    }));
+    this.spikeys.push(matter.add.image(800, 450, 'tree4', null, {
+      isStatic: true,
+    }));
+    this.spikeys.push(matter.add.image(900, 320, 'bee', null, {
+      isStatic: true,
+    }));
+    this.spikeys.push(matter.add.image(988, 320, 'bee', null, {
+      isStatic: true,
+    }));
+    this.spikeys.push(matter.add.image(1088, 450, 'ironFence', null, {
+      isStatic: true,
+    }));
+    this.spikeys.push(matter.add.image(1188, 450, 'ironFence', null, {
+      isStatic: true,
+    }));
+    this.spikeys.push(matter.add.image(1288, 450, 'woodFence', null, {
+      isStatic: true,
+    }));
+    this.spikeys.push(matter.add.image(1388, 450, 'woodFence', null, {
       isStatic: true,
     }));
 

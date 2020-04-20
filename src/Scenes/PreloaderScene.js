@@ -71,8 +71,16 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('rope', 'assets/balloon/RopeSection.png');
 
     // Spikey things
+    this.load.image('bee', 'assets/spikey/Bee_01.png');
     this.load.image('cactus', 'assets/spikey/Cactus_01.png');
+    this.load.image('candles', 'assets/spikey/Candles_01.png');
+    this.load.image('ironFence', 'assets/spikey/IronFence_02.png');
     this.load.image('knives', 'assets/spikey/Knives_01.png');
+    this.load.image('tree1', 'assets/spikey/Tree_01.png');
+    this.load.image('tree2', 'assets/spikey/Tree_02.png');
+    this.load.image('tree3', 'assets/spikey/Tree_03.png');
+    this.load.image('tree4', 'assets/spikey/Tree_04.png');
+    this.load.image('woodFence', 'assets/spikey/WoodFence_02.png');
 
     // Fans
     this.load.spritesheet('fanGreen', 'assets/fan/FanSpriteGreen.png', { frameWidth: 104, frameHeight: 129 });
@@ -86,6 +94,7 @@ export default class PreloaderScene extends Phaser.Scene {
     // Backgrounds
     this.load.image('background', 'assets/background/MainMenu.png');
     this.load.image('background-level1', 'assets/background/level-1/BackgroundLevel1_01.png');
+    this.load.image('background-level2', 'assets/background/level-2/BackgroundLevel2.png');
 
     // Menu items
     this.load.image('logo', 'assets/logo.png');
