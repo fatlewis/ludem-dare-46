@@ -104,7 +104,7 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('background-level3', 'assets/background/level-3/ThirdLevel_01.png');
     this.load.image('background-level4', 'assets/background/level-4/FourthLevel_01.png');
     this.load.image('background-stageComplete', 'assets/background/StageComplete_01.png');
-    this.load.image('background-missionSuccess', 'assets/background/MissionSuccess_01.png');
+    this.load.image('background-missionSuccess', 'assets/background/MissionSuccess_02.png');
     this.load.image('background-missionFail', 'assets/background/MissionFail_02.png');
 
     this.load.image('endButton', 'assets/buttons/FinalLevelButtonUp_01.png');
@@ -130,6 +130,8 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('leftArrowDown', 'assets/buttons/LeftArrowDown_01.png');
     this.load.image('rightArrowUp', 'assets/buttons/RightArrowUp_01.png');
     this.load.image('rightArrowDown', 'assets/buttons/RightArrowDown_01.png');
+    this.load.image('replayUp', 'assets/buttons/ButtonReplayUp_02.png');
+    this.load.image('replayDown', 'assets/buttons/ButtonReplayDown_02.png');
     this.load.image('checkMark', 'assets/buttons/OptionCheckmark_02.png');
 
     // Audio
