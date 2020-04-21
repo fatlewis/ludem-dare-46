@@ -34,9 +34,9 @@ export default class OptionsScene extends Phaser.Scene {
     this.menuButton = new Button(this, 550, 500, 'menuButton', 'menuButtonPressed', 'Title');
     this.updateAudio();
 
-    const fan = new Fan(this, 170, 100, 'yellow', 'left', 'medium');
-    const fanTwo = new Fan(this, 170, 300, 'teal', 'left', 'medium');
-    const fanThree = new Fan(this, 170, 500, 'pink', 'left', 'medium');
+    this.fan = new Fan(this, 170, 100, 'yellow', 'left', 'medium');
+    this.fanTwo = new Fan(this, 170, 300, 'teal', 'left', 'medium');
+    this.fanThree = new Fan(this, 170, 500, 'pink', 'left', 'medium');
   }
 
   updateAudio() {

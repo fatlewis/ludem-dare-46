@@ -14,9 +14,9 @@ export default class MissionSuccessScene extends Phaser.Scene {
     this.menuButton = new Button(this, 170, 520, 'menuButton', 'menuButtonPressed', 'Title');
 
     this.balloonBase = this.add.sprite(215, 160, 'balloons', this.model.colourFrame).setScale(1.7);
-    const balloonFace = this.add.sprite(215, 160, 'face', this.model.faceFrame).setScale(1.7);
-    const balloonAccessories = this.add.sprite(215, 160, 'accessories', this.model.accessoryFrame).setScale(1.7);
-    const balloonHair = this.add.sprite(215, 160, 'hairstyles', this.model.hairFrame).setScale(1.7);
+    this.add.sprite(215, 160, 'face', this.model.faceFrame).setScale(1.7);
+    this.add.sprite(215, 160, 'accessories', this.model.accessoryFrame).setScale(1.7);
+    this.add.sprite(215, 160, 'hairstyles', this.model.hairFrame).setScale(1.7);
 
     this.happy = this.add.image(130, 305, 'happyFamily');
 

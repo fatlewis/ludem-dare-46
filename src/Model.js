@@ -8,6 +8,6 @@ export default class Model {
     this.hairFrame = 0;
     this.faceFrame = 0;
     this.level = 1;
-    this.heroName;
+    this.heroName = undefined;
   }
 }

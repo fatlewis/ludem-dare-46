@@ -11,7 +11,7 @@ export default class AboutScene extends Phaser.Scene {
     this.model = this.sys.game.globals.model;
 
     this.add.image(config.width / 2, config.height / 2, 'background-about');
-    
+
     this.menuButton = new Button(this, 550, 500, 'menuButton', 'menuButtonPressed', 'Title');
 
     this.addBees();
@@ -77,7 +77,6 @@ export default class AboutScene extends Phaser.Scene {
   }
 
   update() {
-
     const point1 = this.beePath1.getPoint(this.follower1.t, this.follower1.vec);
     const point2 = this.beePath2.getPoint(this.follower2.t, this.follower2.vec);
     this.bee1.x = point1.x;

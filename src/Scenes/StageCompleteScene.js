@@ -1,4 +1,6 @@
 import 'phaser';
+import Balloon from '../Objects/Balloon';
+import Rope from '../Objects/Rope';
 
 export default class StageCompleteScene extends Phaser.Scene {
   constructor() {
@@ -29,6 +31,26 @@ export default class StageCompleteScene extends Phaser.Scene {
     this.button.on('pointerout', () => {
       this.button.setTexture('continueButton');
     });
+
+    const x = 170;
+    const y = 320;
+    const balloonContainer = new Balloon(this, x, y, undefined, { yGravity: -1 });
+    this.add.existing(balloonContainer);
+    this.balloon = balloonContainer.matterObject;
+
+    this.ropeAnchor = this.matter.add.image(x, y + 100, 'nametag', null, {
+      mass: 50000,
+      ignoreGravity: false,
+      frictionAir: 1,
+      fixedRotation: true,
+      isStatic: true,
+    });
+
+    this.rope = Rope.createBetweenObjects(this, this.balloon, this.ropeAnchor, 15, {
+      pointA: { x: -5, y: 70 },
+      pointB: { x: 0, y: -12 },
+    });
+    this.graphics = this.add.graphics();
   }
 
   fadeToScene(scene) {
@@ -39,5 +61,13 @@ export default class StageCompleteScene extends Phaser.Scene {
         this.scene.start(scene);
       },
     );
+  }
+
+  update() {
+    if (this.ropeAnchor.active) {
+      this.graphics.clear();
+      this.graphics.lineStyle(1, 0x000000, 1);
+      this.rope.drawCurve(this);
+    }
   }
 }

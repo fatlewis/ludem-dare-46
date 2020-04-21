@@ -13,10 +13,10 @@ export default class MissionFailScene extends Phaser.Scene {
     this.retryButton = new Button(this, 450, 500, 'replayUp', 'replayDown', 'Game');
     this.menuButton = new Button(this, 650, 500, 'menuButton', 'menuButtonPressed', 'Title');
 
-    const balloonBase = this.add.sprite(210, 455, 'balloons', this.model.colourFrame);
-    const balloonFace = this.add.sprite(210, 455, 'face', this.model.faceFrame);
-    const balloonAccessories = this.add.sprite(210, 455, 'accessories', this.model.accessoryFrame);
-    const balloonHair = this.add.sprite(210, 455, 'hairstyles', this.model.hairFrame);
+    this.add.sprite(210, 455, 'balloons', this.model.colourFrame);
+    this.add.sprite(210, 455, 'face', this.model.faceFrame);
+    this.add.sprite(210, 455, 'accessories', this.model.accessoryFrame);
+    this.add.sprite(210, 455, 'hairstyles', this.model.hairFrame);
 
     this.sad = this.add.image(175, 285, 'sadFamily');
     this.flowers = this.add.image(190, 525, 'flowers');

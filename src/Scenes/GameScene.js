@@ -41,7 +41,10 @@ export default class GameScene extends Phaser.Scene {
     this.input.on('pointerdown', () => {
       if (this.debugMode) {
         // eslint-disable-next-line no-console
-        console.log(this.cameras.main.scrollX + this.input.x, this.cameras.main.scrollY + this.input.y);
+        console.log(
+          this.cameras.main.scrollX + this.input.x,
+          this.cameras.main.scrollY + this.input.y,
+        );
       }
     });
 
@@ -78,7 +81,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   addLevel4() {
-    this.add.rectangle(400, 300, 800, 600, 0xebf6f7,);
+    this.add.rectangle(400, 300, 800, 600, 0xebf6f7);
     this.levelBackground = this.add.image(0, 0, 'background-level4').setOrigin(0, 0);
     this.endButton = this.add.image(770, 275, 'endButton');
     this.addBalloon();
@@ -367,8 +370,8 @@ export default class GameScene extends Phaser.Scene {
       t: 1,
       ease: 'Sine.easeInOut',
       yoyo: true,
-      onYoyo: () => {this.bird1.toggleFlipX()},
-      onRepeat: () => {this.bird1.toggleFlipX()},
+      onYoyo: () => { this.bird1.toggleFlipX(); },
+      onRepeat: () => { this.bird1.toggleFlipX(); },
       duration: 4000,
       repeat: -1,
       delay: 0,
@@ -467,8 +470,8 @@ export default class GameScene extends Phaser.Scene {
       t: 1,
       ease: 'Sine.easeInOut',
       yoyo: true,
-      onYoyo: () => {this.bird1.toggleFlipX()},
-      onRepeat: () => {this.bird1.toggleFlipX()},
+      onYoyo: () => { this.bird1.toggleFlipX(); },
+      onRepeat: () => { this.bird1.toggleFlipX(); },
       duration: 4000,
       repeat: -1,
       delay: 0,
@@ -478,8 +481,8 @@ export default class GameScene extends Phaser.Scene {
       t: 1,
       ease: 'Sine.easeInOut',
       yoyo: true,
-      onYoyo: () => {this.bird2.toggleFlipX()},
-      onRepeat: () => {this.bird2.toggleFlipX()},
+      onYoyo: () => { this.bird2.toggleFlipX(); },
+      onRepeat: () => { this.bird2.toggleFlipX(); },
       duration: 4000,
       repeat: -1,
       delay: 1000,
@@ -489,8 +492,8 @@ export default class GameScene extends Phaser.Scene {
       t: 1,
       ease: 'Sine.easeInOut',
       yoyo: true,
-      onYoyo: () => {this.bird3.toggleFlipX()},
-      onRepeat: () => {this.bird3.toggleFlipX()},
+      onYoyo: () => { this.bird3.toggleFlipX(); },
+      onRepeat: () => { this.bird3.toggleFlipX(); },
       duration: 4000,
       repeat: -1,
       delay: 2000,
@@ -500,8 +503,8 @@ export default class GameScene extends Phaser.Scene {
       t: 1,
       ease: 'Sine.easeInOut',
       yoyo: true,
-      onYoyo: () => {this.bird4.toggleFlipX()},
-      onRepeat: () => {this.bird4.toggleFlipX()},
+      onYoyo: () => { this.bird4.toggleFlipX(); },
+      onRepeat: () => { this.bird4.toggleFlipX(); },
       duration: 4000,
       repeat: -1,
       delay: 3000,
@@ -511,8 +514,8 @@ export default class GameScene extends Phaser.Scene {
       t: 1,
       ease: 'Sine.easeInOut',
       yoyo: true,
-      onYoyo: () => {this.bird5.toggleFlipX()},
-      onRepeat: () => {this.bird5.toggleFlipX()},
+      onYoyo: () => { this.bird5.toggleFlipX(); },
+      onRepeat: () => { this.bird5.toggleFlipX(); },
       duration: 4000,
       repeat: -1,
       delay: 4000,
