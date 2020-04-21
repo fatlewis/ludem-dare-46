@@ -78,6 +78,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   addLevel4() {
+    this.add.rectangle(400, 300, 800, 600, 0xebf6f7,);
     this.levelBackground = this.add.image(0, 0, 'background-level4').setOrigin(0, 0);
     this.endButton = this.add.image(770, 275, 'endButton');
     this.addBalloon();
