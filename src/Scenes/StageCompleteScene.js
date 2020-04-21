@@ -29,6 +29,20 @@ export default class StageCompleteScene extends Phaser.Scene {
     this.button.on('pointerout', () => {
       this.button.setTexture('continueButton');
     });
+
+    if (this.model.soundOn === true) {
+        const successSound = this.game.registry.get('success');
+        successSound.play();
+        if (this.model.bgMusicPlaying === true) {
+          const bgMusicSound = this.game.registry.get('bgMusic');
+          bgMusicSound.stop();
+          successSound.once(Phaser.Sound.Events.COMPLETE, () => {
+            if (this.model.soundOn === true) {
+              bgMusicSound.play();
+            }
+          });
+        }
+    }
   }
 
   fadeToScene(scene) {

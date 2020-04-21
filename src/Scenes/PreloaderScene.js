@@ -152,6 +152,8 @@ export default class PreloaderScene extends Phaser.Scene {
     // Audio
     this.load.audio('bgMusic', ['assets/audio/theme.mp3']);
     this.load.audio('pop', ['assets/audio/pop.mp3']);
+    this.load.audio('failure', ['assets/audio/failure.mp3']);
+    this.load.audio('success', ['assets/audio/success.mp3']);
 
     // DOM Elements
     this.load.html('nameForm', 'assets/text/NameForm.html');
@@ -160,6 +162,8 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.on('complete', () => {
       this.game.registry.set('bgMusic', this.sound.add('bgMusic', { volume: 0.5, loop: true }));
       this.game.registry.set('pop', this.sound.add('pop', { volume: 0.5 }));
+      this.game.registry.set('failure', this.sound.add('failure', { volume: 0.5 }));
+      this.game.registry.set('success', this.sound.add('success', { volume: 0.5 }));
       this.ready();
     });
   }

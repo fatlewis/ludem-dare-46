@@ -22,5 +22,19 @@ export default class MissionFailScene extends Phaser.Scene {
     this.flowers = this.add.image(190, 525, 'flowers');
 
     this.add.text(490, 295, this.model.heroName, { align: 'center', fontSize: '25px', fill: '#000' });
+
+    if (this.model.soundOn === true) {
+     	const failureSound = this.game.registry.get('failure');
+    	failureSound.play();
+     	if (this.model.bgMusicPlaying === true) {
+     		const bgMusicSound = this.game.registry.get('bgMusic');
+     		bgMusicSound.stop();
+     		failureSound.once(Phaser.Sound.Events.COMPLETE, () => {
+     			if (this.model.soundOn === true) {
+     				bgMusicSound.play();
+     			}
+     		});
+     	}
+	}
   }
 }
